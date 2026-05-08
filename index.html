@@ -838,9 +838,32 @@ function doImp() {
 
 /* \u2550\u2550 Notifications \u2550\u2550 */
 function onNotifBtn() {
-  var w=S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
-  if(!w.length){alert('\uC784\uBC15\uD55C \uC2DD\uC7AC\uB8CC\uAC00 \uC5C6\uC5B4\uC694 \u2705');return;}
-  alert('\u26A0\uFE0F \uC720\uD1B5\uAE30\uD55C \uC784\uBC15 ('+w.length+'\uAC1C)\n\n'+w.slice(0,5).map(function(i){ return '\u2022 '+i.name+' ('+dlbl(dLeft(i.exp))+')'; }).join('\n'));
+  var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
+  var warning = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
+  if(!expired.length && !warning.length){ alert('\uC784\uBC15\uD558\uAC70\uB098 \uB9CC\uB8CC\uB41C \uC2DD\uC7AC\uB8CC\uAC00 \uC5C6\uC5B4\uC694 \u2705'); return; }
+  var totalLoss = 0;
+  for(var i=0;i<expired.length;i++){ totalLoss += Number(expired[i].price)||0; }
+  var msg = '';
+  if(totalLoss > 0) {
+    msg += '\uD83D\uDCB8 \uB9CC\uB8CC \uC190\uC2E4 \uCD1D\uC561: -' + totalLoss.toLocaleString() + '\uC6D0\n';
+    msg += '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n';
+  }
+  if(expired.length) {
+    msg += '\uD83D\uDEA8 \uB9CC\uB8CC\uB41C \uC2DD\uC7AC\uB8CC (' + expired.length + '\uAC1C)\n';
+    for(var i=0;i<expired.length;i++){
+      var p = Number(expired[i].price)||0;
+      msg += '\u2022 ' + expired[i].name + '(\uB9CC\uB8CC\uB428)' + (p?'/-'+p.toLocaleString()+'\uC6D0':'') + '\n';
+    }
+  }
+  if(warning.length) {
+    if(expired.length) msg += '\n';
+    msg += '\u26A0\uFE0F \uC784\uBC15 \uC2DD\uC7AC\uB8CC (' + warning.length + '\uAC1C)\n';
+    for(var i=0;i<warning.length;i++){
+      var p = Number(warning[i].price)||0;
+      msg += '\u2022 ' + warning[i].name + '(' + dlbl(dLeft(warning[i].exp)) + ')' + (p?'/'+p.toLocaleString()+'\uC6D0':'') + '\n';
+    }
+  }
+  alert(msg.trim());
 }
 async function reqNotif() {
   if(!('Notification' in window)){alert('\uC774 \uBE0C\uB77C\uC6B0\uC800\uB294 \uC54C\uB9BC\uC744 \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uC544\uC694');return;}
@@ -865,7 +888,7 @@ function checkExp(){
 }
 function badge(){
   var b=document.getElementById('nbadge'); if(!b) return;
-  var n=S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; }).length;
+  var n=S.items.filter(function(i){ var d=dLeft(i.exp); return d<=S.cfg.notifyDays; }).length;
   b.style.display=n>0?'block':'none';
 }
 
