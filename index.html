@@ -181,7 +181,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .door-bin-sauce{cursor:pointer;transition:background .15s;}
 .door-bin-sauce:active{transform:scale(.97);}
 .sauce-bin-wrap{padding:8px 10px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.sauce-bin-lbl{font-size:.68rem;font-weight:700;color:rgba(80,130,190,.8);text-align:center;}
+.sauce-bin-lbl{font-size:.75rem;font-weight:700;color:rgba(80,130,190,.8);text-align:center;}
 .sauce-bottles{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;align-items:flex-end;}
 .sauce-btl{display:flex;flex-direction:column;align-items:center;}
 .sauce-btl-cap{width:10px;height:7px;border-radius:3px 3px 0 0;box-shadow:0 -1px 2px rgba(0,0,0,.12);}
@@ -426,7 +426,7 @@ function load() {
   try { S.items = JSON.parse(ls('items') || '[]'); } catch(e) { S.items = []; }
   try { var c = JSON.parse(ls('cfg') || '{}'); S.cfg.notifyDays = c.notifyDays||3; S.cfg.notifOn = !!c.notifOn; } catch(e) {}
   try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
-  try { var sc = JSON.parse(ls('sauces') || 'null'); S.sauces = sc !== null ? sc : SAUCE_LIST.map(function(s){ return s.id; }); } catch(e) { S.sauces = SAUCE_LIST.map(function(s){ return s.id; }); }
+  try { var sc = JSON.parse(ls('sauces') || 'null'); S.sauces = sc !== null ? sc : []; } catch(e) { S.sauces = []; }
 }
 function esc(s) {
   if (!s && s !== 0) return '';
