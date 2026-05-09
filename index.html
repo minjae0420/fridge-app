@@ -438,6 +438,7 @@ var S = {
   eggs:6,
   sauces:[],
   bannerDismissed:false,
+  fridgeScale:1.0,
   cy:_n.getFullYear(), cm:_n.getMonth()
 };
 S.form = emptyForm();
@@ -471,6 +472,7 @@ function load() {
   try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
   try { var sc = JSON.parse(ls('sauces3') || 'null'); S.sauces = Array.isArray(sc) ? sc : []; } catch(e) { S.sauces = []; }
   try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
+  try { var fs = parseFloat(ls('fridgeScale') || '1'); S.fridgeScale = isNaN(fs) ? 1 : Math.max(0.4, Math.min(1.3, fs)); } catch(e) { S.fridgeScale = 1; }
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -494,6 +496,13 @@ function catUrg(id) {
   if (!its.length) return null;
   var mn = Math.min.apply(null, its.map(function(i){ return dLeft(i.exp); }));
   return dcls(mn);
+}
+
+/* \u2550\u2550 Fridge Scale \u2550\u2550 */
+function setFridgeScale(d) {
+  S.fridgeScale = Math.round(Math.max(0.4, Math.min(1.3, S.fridgeScale + d)) * 10) / 10;
+  lset('fridgeScale', String(S.fridgeScale));
+  render();
 }
 
 /* \u2550\u2550 Door \u2550\u2550 */
@@ -768,7 +777,15 @@ function vFridge() {
   var empty = S.items.length === 0
     ? '<div class="empty" onclick="ev()"><div class="ei">\uD83D\uDED2</div><div class="et">\uB0C9\uC7A5\uACE0\uAC00 \uBE44\uC5B4\uC788\uC5B4\uC694!<br><span class="link" onclick="go(\'add\')">+ \uC2DD\uC7AC\uB8CC \uCD94\uAC00\uD558\uAE30</span></div></div>'
     : '';
-  return '<div class="fridge-wrap" onclick="toggleDoor()">'
+  var sc = S.fridgeScale;
+  var shrink = sc < 1 ? Math.round(440 * (1 - sc)) : 0;
+  var wrapStyle = 'transform:scale('+sc+');transform-origin:top center;'+(shrink?'margin-bottom:-'+shrink+'px':'');
+  return '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">'
+    + '<button onclick="setFridgeScale(-0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">\u2212</button>'
+    + '<span style="font-size:.72rem;color:var(--muted);min-width:38px;text-align:center">'+Math.round(sc*100)+'%</span>'
+    + '<button onclick="setFridgeScale(0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>'
+    + '</div>'
+    + '<div class="fridge-wrap" onclick="toggleDoor()" style="'+wrapStyle+'">'
     + '<div class="fridge-scene">'
     + '<div class="fridge-body">'
     + '<div class="fridge-led"></div>'
