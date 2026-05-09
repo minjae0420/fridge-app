@@ -178,6 +178,14 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .etd-egg{width:26px;height:34px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
 .etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#ffffff 0%,#f4f2ee 45%,#e2ddd4 100%);box-shadow:inset 0 -1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.9);}
 .etd-egg.off{background:radial-gradient(ellipse at 50% 55%,rgba(150,128,95,.22),rgba(170,145,108,.14));box-shadow:inset 0 2px 4px rgba(0,0,0,.1);}
+.door-bin-sauce{cursor:pointer;transition:background .15s;}
+.door-bin-sauce:active{transform:scale(.97);}
+.sauce-bin-wrap{padding:8px 10px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:6px;}
+.sauce-bin-lbl{font-size:.68rem;font-weight:700;color:rgba(80,130,190,.8);text-align:center;}
+.sauce-bottles{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;align-items:flex-end;}
+.sauce-btl{display:flex;flex-direction:column;align-items:center;}
+.sauce-btl-cap{width:10px;height:7px;border-radius:3px 3px 0 0;box-shadow:0 -1px 2px rgba(0,0,0,.12);}
+.sauce-btl-body{width:16px;height:34px;border-radius:3px 3px 5px 5px;box-shadow:inset 3px 0 0 rgba(255,255,255,.18),0 1px 4px rgba(0,0,0,.25);}
 /* &#9472;&#9472; Stats &#9472;&#9472; */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center;}
@@ -380,6 +388,16 @@ var SHELVES = [
 var MONTHS = ['1\uC6D4','2\uC6D4','3\uC6D4','4\uC6D4','5\uC6D4','6\uC6D4','7\uC6D4','8\uC6D4','9\uC6D4','10\uC6D4','11\uC6D4','12\uC6D4'];
 var DAYS   = ['\uC77C','\uC6D4','\uD654','\uC218','\uBAA9','\uAE08','\uD1A0'];
 var WORKER = 'https://fridge-ai-project.ju880164.workers.dev';
+var SAUCE_LIST = [
+  {id:'honey',     name:'허니머스터드', color:'#f5c518', cap:'#c49800'},
+  {id:'ketchup',   name:'케찹',                          color:'#cc2200', cap:'#8a1500'},
+  {id:'mayo',      name:'마요네즈',              color:'#f0ecd8', cap:'#c4c090'},
+  {id:'oyster',    name:'굴소스',                    color:'#3d2010', cap:'#5c3820'},
+  {id:'soy',       name:'간장',                          color:'#1a0e06', cap:'#3a2010'},
+  {id:'gochujang', name:'고추장',                    color:'#c0311a', cap:'#8a2010'},
+  {id:'sriracha',  name:'스리라차',              color:'#e85020', cap:'#b03010'},
+  {id:'tonkatsu',  name:'돈가스소스',       color:'#6b3818', cap:'#4a2810'}
+];
 
 var _n = new Date();
 var S = {
@@ -390,6 +408,7 @@ var S = {
   imp:[],
   door:false,
   eggs:6,
+  sauces:[],
   cy:_n.getFullYear(), cm:_n.getMonth()
 };
 S.form = emptyForm();
@@ -407,6 +426,7 @@ function load() {
   try { S.items = JSON.parse(ls('items') || '[]'); } catch(e) { S.items = []; }
   try { var c = JSON.parse(ls('cfg') || '{}'); S.cfg.notifyDays = c.notifyDays||3; S.cfg.notifOn = !!c.notifOn; } catch(e) {}
   try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
+  try { var sc = JSON.parse(ls('sauces') || 'null'); S.sauces = sc !== null ? sc : SAUCE_LIST.map(function(s){ return s.id; }); } catch(e) { S.sauces = SAUCE_LIST.map(function(s){ return s.id; }); }
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -490,6 +510,55 @@ function adjEggs(d) {
   S.eggs = Math.max(0, Math.min(60, S.eggs + d));
   var el = document.getElementById('egg-cnt');
   if (el) el.textContent = S.eggs;
+}
+
+/* ══ Sauces ══ */
+function saveSauces() { lset('sauces', JSON.stringify(S.sauces)); }
+function sauceBinHtml() {
+  var bottles = '';
+  for (var i = 0; i < SAUCE_LIST.length; i++) {
+    var s = SAUCE_LIST[i];
+    if (S.sauces.indexOf(s.id) >= 0) {
+      bottles += '<div class="sauce-btl">'
+        + '<div class="sauce-btl-cap" style="background:'+s.cap+'"></div>'
+        + '<div class="sauce-btl-body" style="background:'+s.color+'"></div>'
+        + '</div>';
+    }
+  }
+  return '<div class="sauce-bin-wrap">'
+    + '<div class="sauce-bin-lbl">소스 &middot; '+S.sauces.length+'종</div>'
+    + '<div class="sauce-bottles">'+(bottles||'<span style="font-size:.6rem;color:rgba(100,150,190,.5)">비어있음</span>')+'</div>'
+    + '</div>';
+}
+function openSauceModal() {
+  var h = '<div class="mhandle"></div>'
+    + '<div style="font-size:1rem;font-weight:700;margin-bottom:14px">🫙 소스</div>'
+    + '<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">';
+  for (var i = 0; i < SAUCE_LIST.length; i++) {
+    var s = SAUCE_LIST[i];
+    var have = S.sauces.indexOf(s.id) >= 0;
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;cursor:pointer" onclick="toggleSauce(\''+s.id+'\')">'
+      + '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0">'
+      + '<div style="width:10px;height:6px;border-radius:2px 2px 0 0;background:'+s.cap+'"></div>'
+      + '<div style="width:14px;height:22px;border-radius:2px 2px 4px 4px;background:'+s.color+';box-shadow:inset 2px 0 0 rgba(255,255,255,.18)"></div>'
+      + '</div>'
+      + '<span style="flex:1;font-size:.9rem">'+s.name+'</span>'
+      + '<div id="sc-'+s.id+'" style="width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#fff;background:'+(have?'var(--blue)':'transparent')+'">'+(have?'&#x2713;':'')+'</div>'
+      + '</div>';
+  }
+  h += '</div><button class="btn-s" onclick="closeModal();render()">닫기</button>';
+  showModal(h);
+}
+function toggleSauce(id) {
+  var idx = S.sauces.indexOf(id);
+  if (idx >= 0) { S.sauces.splice(idx, 1); } else { S.sauces.push(id); }
+  saveSauces();
+  var el = document.getElementById('sc-'+id);
+  if (el) {
+    var have = S.sauces.indexOf(id) >= 0;
+    el.style.background = have ? 'var(--blue)' : 'transparent';
+    el.innerHTML = have ? '&#x2713;' : '';
+  }
 }
 
 /* \u2550\u2550 Navigation \u2550\u2550 */
@@ -593,7 +662,9 @@ function vFridge() {
     + '<div class="door-bin door-bin-egg" onclick="event.stopPropagation();openEggModal()">'
     + eggTrayHtml()
     + '</div>'
-    + '<div class="door-bin"></div>'
+    + '<div class="door-bin door-bin-sauce" onclick="event.stopPropagation();openSauceModal()">'
+    + sauceBinHtml()
+    + '</div>'
     + '<div class="door-bin"></div>'
     + '</div>'
     + '</div>'
