@@ -126,7 +126,6 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 }
 .fridge-door.open{
   transform:rotateY(-138deg);
-  pointer-events:none;
 }
 .door-face{
   position:absolute;inset:0;
@@ -175,9 +174,9 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .door-bin-egg:active{transform:scale(.97);}
 .etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:5px;}
 .etd-lbl{font-size:.48rem;font-weight:700;color:rgba(80,130,190,.6);letter-spacing:.08em;text-transform:uppercase;text-align:center;}
-.etd-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
-.etd-egg{aspect-ratio:3/4;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
-.etd-egg.on{background:radial-gradient(ellipse at 38% 30%,#fffbe0 0%,#f8e868 40%,#e2c238 100%);box-shadow:0 1px 3px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.55);}
+.etd-grid{display:grid;grid-template-columns:repeat(5,20px);justify-content:center;gap:4px;}
+.etd-egg{width:20px;height:26px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
+.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#ffffff 0%,#f4f2ee 45%,#e2ddd4 100%);box-shadow:0 1px 3px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.9);}
 .etd-egg.off{background:rgba(170,205,230,.18);border:1px solid rgba(140,185,215,.25);}
 /* &#9472;&#9472; Stats &#9472;&#9472; */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
