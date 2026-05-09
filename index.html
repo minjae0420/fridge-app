@@ -173,11 +173,11 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .door-bin-egg{cursor:pointer;transition:background .15s;}
 .door-bin-egg:active{transform:scale(.97);}
 .etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:5px;}
-.etd-lbl{font-size:.48rem;font-weight:700;color:rgba(80,130,190,.6);letter-spacing:.08em;text-transform:uppercase;text-align:center;}
-.etd-grid{display:grid;grid-template-columns:repeat(5,20px);justify-content:center;gap:4px;}
-.etd-egg{width:20px;height:26px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
-.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#ffffff 0%,#f4f2ee 45%,#e2ddd4 100%);box-shadow:0 1px 3px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.9);}
-.etd-egg.off{background:rgba(170,205,230,.18);border:1px solid rgba(140,185,215,.25);}
+.etd-lbl{font-size:.68rem;font-weight:700;color:rgba(80,130,190,.8);letter-spacing:.03em;text-align:center;}
+.etd-grid{display:grid;grid-template-columns:repeat(5,26px);justify-content:center;gap:5px;background:rgba(190,168,135,.32);border-radius:8px;padding:5px;box-shadow:inset 0 1px 3px rgba(0,0,0,.08);}
+.etd-egg{width:26px;height:34px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
+.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#ffffff 0%,#f4f2ee 45%,#e2ddd4 100%);box-shadow:inset 0 -1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.9);}
+.etd-egg.off{background:radial-gradient(ellipse at 50% 55%,rgba(150,128,95,.22),rgba(170,145,108,.14));box-shadow:inset 0 2px 4px rgba(0,0,0,.1);}
 /* &#9472;&#9472; Stats &#9472;&#9472; */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center;}
@@ -487,7 +487,7 @@ function openEggModal() {
   showModal(h);
 }
 function adjEggs(d) {
-  S.eggs = Math.max(0, Math.min(30, S.eggs + d));
+  S.eggs = Math.max(0, Math.min(60, S.eggs + d));
   var el = document.getElementById('egg-cnt');
   if (el) el.textContent = S.eggs;
 }
