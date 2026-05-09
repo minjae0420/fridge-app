@@ -450,7 +450,7 @@ function vHome() {
   var body = S.tab==='fridge' ? vFridge() : S.tab==='list' ? vList() : vCal();
   return '<div class="view">'
     + '<div class="stats">'
-    + '<div class="stat"><div class="stat-n">'+S.items.length+'</div><div class="stat-l">\uC804\uCCB4</div></div>'
+    + '<div class="stat"><div class="stat-n" style="color:#87ceeb">'+S.items.length+'</div><div class="stat-l">\uC804\uCCB4</div></div>'
     + '<div class="stat"><div class="stat-n" style="color:var(--yellow)">'+wrn+'</div><div class="stat-l">\uC784\uBC15</div></div>'
     + '<div class="stat"><div class="stat-n" style="color:var(--red)">'+exp+'</div><div class="stat-l">\uB9CC\uB8CC\uB428</div></div>'
     + '</div>'
