@@ -8,12 +8,12 @@
 :root{
   --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
   --text:#e6edf3;--muted:#8b949e;--blue:#58a6ff;--green:#3fb950;
-  --yellow:#caee12;--orange:#f0883e;--red:#f85149;--r:12px;--nh:64px;
+  --yellow:#ffe033;--orange:#f0883e;--red:#f85149;--r:12px;--nh:64px;
 }
 body.light{
   --bg:#f5f7fa;--surface:#ffffff;--surface2:#eef1f6;--border:#d0d7de;
   --text:#1c2128;--muted:#57606a;--blue:#0969da;--green:#1a7f37;
-  --yellow:#b8960a;--orange:#bc4c00;--red:#cf222e;
+  --yellow:#ffe033;--orange:#bc4c00;--red:#cf222e;
 }
 body.light .hdr{background:rgba(245,247,250,.95);}
 body.light .bnav{background:#ffffff;}
@@ -22,6 +22,32 @@ body.light .hdr-logo{background:linear-gradient(135deg,#0969da,#1a7f37);-webkit-
 body.light .fridge-body{border:2px solid #87ceeb;box-shadow:0 8px 32px rgba(135,206,235,.3),0 0 0 4px rgba(135,206,235,.15),inset 0 1px 0 rgba(255,255,255,.9);}
 body.light .door-face{border:2px solid #87ceeb;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),4px 0 20px rgba(135,206,235,.2);}
 body.light .fridge-wrap{filter:drop-shadow(0 0 12px rgba(135,206,235,.4));}
+body.light .warn-banner{background:linear-gradient(135deg,#fff0f0,#ffe8e0);border-color:rgba(248,81,73,.35);box-shadow:0 4px 20px rgba(248,81,73,.1);}
+body.light .warn-banner-price{color:#d32f2f;}
+body.light .warn-banner-title{color:#e65100;}
+
+/* ── Warning Banner ── */
+.warn-banner{margin-bottom:16px;
+  background:linear-gradient(135deg,#2d0f0f,#3a1500);
+  border:1.5px solid rgba(248,81,73,.45);border-radius:var(--r);
+  padding:16px;animation:slideDown .35s ease;
+  box-shadow:0 4px 20px rgba(248,81,73,.18),inset 0 1px 0 rgba(255,255,255,.05);}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.warn-banner-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.warn-banner-icon{font-size:1.3rem;flex-shrink:0;}
+.warn-banner-title{font-size:.85rem;color:var(--orange);font-weight:800;flex:1;letter-spacing:.02em;}
+.warn-banner-close{background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;padding:4px;flex-shrink:0;line-height:1;}
+.warn-banner-price{font-size:2rem;font-weight:900;color:var(--red);letter-spacing:-1px;line-height:1;margin-bottom:6px;}
+.warn-banner-msg{font-size:.88rem;color:var(--text);line-height:1.45;opacity:.9;}
+
+/* ── Receipt history ── */
+.rec-hist{margin-top:20px;}
+.rec-hist-ttl{font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:8px;letter-spacing:.04em;}
+.rec-thumb{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--surface2);border-radius:var(--r);margin-bottom:7px;cursor:pointer;}
+.rec-thumb img{width:50px;height:50px;object-fit:cover;border-radius:8px;flex-shrink:0;}
+.rec-thumb-n{font-size:.9rem;font-weight:600;}
+.rec-thumb-d{font-size:.78rem;color:var(--muted);margin-top:2px;}
+
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
   background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;
@@ -287,10 +313,11 @@ select.inp{appearance:none;
 .drop-area .di{font-size:2.6rem;margin-bottom:9px;}
 .drop-area .dt{color:var(--muted);font-size:.86rem;line-height:1.5;}
 .scan-img{width:100%;border-radius:var(--r);margin-bottom:13px;max-height:260px;object-fit:contain;}
-.rrow{display:flex;align-items:center;gap:9px;padding:10px 11px;background:var(--surface2);border-radius:var(--r);margin-bottom:6px;}
-.rrow input[type=checkbox]{width:16px;height:16px;accent-color:var(--blue);flex-shrink:0;}
-.rname{flex:1;font-size:.9rem;}
-.rqty{font-size:.76rem;color:var(--muted);}
+.rrow{display:flex;align-items:flex-start;gap:9px;padding:10px 11px;background:var(--surface2);border-radius:var(--r);margin-bottom:6px;}
+.rrow input[type=checkbox]{width:16px;height:16px;accent-color:var(--blue);flex-shrink:0;margin-top:10px;}
+.rfields{flex:1;display:flex;flex-direction:column;gap:5px;}
+.rfields .inp{padding:7px 10px;font-size:.88rem;}
+.rfields select.inp{font-size:.8rem;padding:7px 28px 7px 10px;}
 
 /* &#9472;&#9472; Settings &#9472;&#9472; */
 .ss{margin-bottom:20px;}
@@ -361,8 +388,10 @@ select.inp{appearance:none;
 </nav>
 
 <div id="mc"></div>
-<input type="file" id="fi-exp" accept="image/*" capture="environment" style="display:none" onchange="onExpFile(this)">
-<input type="file" id="fi-rec" accept="image/*" capture="environment" style="display:none" onchange="onRecFile(this)">
+<input type="file" id="fi-exp-cam"  accept="image/*" capture="environment" style="display:none" onchange="onExpFile(this)">
+<input type="file" id="fi-exp-file" accept="image/*" style="display:none" onchange="onExpFile(this)">
+<input type="file" id="fi-rec-cam"  accept="image/*" capture="environment" style="display:none" onchange="onRecFile(this)">
+<input type="file" id="fi-rec-file" accept="image/*" style="display:none" onchange="onRecFile(this)">
 
 <noscript><div style="position:fixed;inset:0;background:#0d1117;color:#e6edf3;display:flex;align-items:center;justify-content:center;font-size:1rem;text-align:center;padding:24px;">JavaScript&#44032; &#54596;&#50836;&#54633;&#45768;&#45796;.<br>&#48652;&#46972;&#50864;&#51200;&#50640;&#49436; JavaScript&#47484; &#54876;&#49457;&#54868;&#54644;&#51452;&#49464;&#50836;.</div></noscript>
 
@@ -389,6 +418,14 @@ var MONTHS = ['1\uC6D4','2\uC6D4','3\uC6D4','4\uC6D4','5\uC6D4','6\uC6D4','7\uC6
 var DAYS   = ['\uC77C','\uC6D4','\uD654','\uC218','\uBAA9','\uAE08','\uD1A0'];
 var WORKER = 'https://fridge-ai-project.ju880164.workers.dev';
 
+var BANNER_TEMPLATES = [
+  function(name,price,days){ return ['💸 지갑 경보', days===0?'오늘 안에 '+name+'을 안 먹으면 '+(price?price+'원이 ':'')+'소멸됩니다!':'D-'+days+', '+name+(price?' ('+price+'원)':'')+'이 사라질 위기예요!']; },
+  function(name,price,days){ return ['🔥 긴급 알림', '방금 너의 지갑에서 '+(price?price+'원이 ':'')+'사라질 뻔했어 — '+name+' D-'+days+'!']; },
+  function(name,price,days){ return ['⚠️ 유통기한 D-'+days, name+(price?', '+price+'원짜리':'')+'를 아직 살릴 수 있어요. 지금 바로 확인하세요!']; },
+  function(name,price,days){ return ['💰 절약 찬스', name+' 유통기한이 '+(days===0?'오늘':'D-'+days)+'! '+(price?price+'원 '+(days===0?'오늘만 기회예요!':'아직 지킬 수 있어요!'):'어서 드세요!')]; },
+  function(name,price,days){ return ['🧊 냉장고 경고', name+'이 '+(days===0?'오늘 만료돼요':'D-'+days+'이에요')+'. '+(price?price+'원짜리 '+name+', 버리기 아깝잖아요!':'어서 드세요!')]; }
+];
+
 var _n = new Date();
 var S = {
   view:'home', tab:'fridge', filter:'all',
@@ -396,9 +433,11 @@ var S = {
   editId:null, form:null,
   scan:{img:null, items:[], loading:false},
   imp:[],
+  receipts:[],
   door:false,
   eggs:6,
   sauces:[],
+  bannerDismissed:false,
   cy:_n.getFullYear(), cm:_n.getMonth()
 };
 S.form = emptyForm();
@@ -412,11 +451,26 @@ function ls(k)   { try { return localStorage.getItem('fn2-'+k); } catch(e) { ret
 function lset(k,v){ try { localStorage.setItem('fn2-'+k,v); } catch(e) {} }
 function saveI() { lset('items', JSON.stringify(S.items)); }
 function saveC() { lset('cfg',   JSON.stringify(S.cfg)); }
+function saveR() { lset('receipts', JSON.stringify(S.receipts)); }
+function compressImg(dataUrl) {
+  return new Promise(function(resolve) {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var ratio = Math.min(600/img.width, 1);
+      canvas.width = img.width*ratio; canvas.height = img.height*ratio;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/jpeg', 0.5));
+    };
+    img.src = dataUrl;
+  });
+}
 function load() {
   try { S.items = JSON.parse(ls('items') || '[]'); } catch(e) { S.items = []; }
   try { var c = JSON.parse(ls('cfg') || '{}'); S.cfg.notifyDays = c.notifyDays||3; S.cfg.notifOn = !!c.notifOn; } catch(e) {}
   try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
   try { var sc = JSON.parse(ls('sauces3') || 'null'); S.sauces = Array.isArray(sc) ? sc : []; } catch(e) { S.sauces = []; }
+  try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -629,12 +683,35 @@ function render() {
   badge();
 }
 
+/* \u2550\u2550 Warning Banner \u2550\u2550 */
+function renderBanner() {
+  if (S.bannerDismissed) return '';
+  var urgent = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
+  urgent.sort(function(a,b){ return dLeft(a.exp)-dLeft(b.exp); });
+  if (!urgent.length) return '';
+  var item = urgent[0];
+  var days = dLeft(item.exp);
+  var price = item.price ? Number(item.price).toLocaleString() : '';
+  var tmpl = BANNER_TEMPLATES[Math.floor(Date.now()/3600000) % BANNER_TEMPLATES.length];
+  var res = tmpl(item.name, price, days);
+  return '<div class="warn-banner">'
+    +'<div class="warn-banner-top">'
+    +'<span class="warn-banner-icon">\ud83d\udea8</span>'
+    +'<span class="warn-banner-title">'+res[0]+'</span>'
+    +'<button class="warn-banner-close" onclick="S.bannerDismissed=true;render()">\u2715</button>'
+    +'</div>'
+    +(price ? '<div class="warn-banner-price">-'+price+'\uc6d0</div>' : '')
+    +'<div class="warn-banner-msg">'+res[1]+'</div>'
+    +'</div>';
+}
+
 /* \u2550\u2550 Home \u2550\u2550 */
 function vHome() {
   var exp = S.items.filter(function(i){ return dLeft(i.exp) < 0; }).length;
   var wrn = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0 && d<=S.cfg.notifyDays; }).length;
   var body = S.tab==='fridge' ? vFridge() : S.tab==='list' ? vList() : vCal();
   return '<div class="view">'
+    + renderBanner()
     + '<div class="stats">'
     + '<div class="stat"><div class="stat-n" style="color:#87ceeb">'+S.items.length+'</div><div class="stat-l">\uC804\uCCB4</div></div>'
     + '<div class="stat"><div class="stat-n" style="color:var(--yellow)">'+wrn+'</div><div class="stat-l">\uC784\uBC15</div></div>'
@@ -840,7 +917,7 @@ function vAdd() {
     +'<div class="sect"><label class="lbl">\uCE74\uD14C\uACE0\uB9AC</label><div class="cat-grid">'+catBtns+'</div></div>'
     +'<div class="sect"><label class="lbl">\uC720\uD1B5\uAE30\uD55C</label>'
     +'<div class="row2"><input class="inp" type="date" id="f-exp" value="'+f.exp+'" oninput="sf(\'exp\',this.value)">'
-    +'<button class="ocr-btn" onclick="document.getElementById(\'fi-exp\').click()">\uD83D\uDCF7 \uC778\uC2DD</button></div>'
+    +'<button class="ocr-btn" onclick="showImgPicker(\'exp\')">\uD83D\uDCF7 \uC778\uC2DD</button></div>'
     +'<div id="expst"></div></div>'
     +'<div class="sect"><label class="lbl">\uAD6C\uB9E4\uC77C</label>'
     +'<input class="inp" type="date" value="'+f.buy+'" oninput="sf(\'buy\',this.value)"></div>'
@@ -862,8 +939,8 @@ function vScan() {
   var h = '<div class="view"><div class="ptitle">\uC601\uC218\uC99D \uC2A4\uCE94</div>'
     +'<p class="muted sm mb10">\uC601\uC218\uC99D\uC744 \uCD2C\uC601\uD558\uBA74 AI\uAC00 \uC2DD\uC7AC\uB8CC\uB97C \uC790\uB3D9\uC73C\uB85C \uCD94\uCD9C\uD574\uC694.</p>';
   if (!sc.img) {
-    h += '<div class="drop-area" onclick="document.getElementById(\'fi-rec\').click()">'
-      +'<div class="di">\uD83E\uDDFE</div><div class="dt">\uC601\uC218\uC99D \uC0AC\uC9C4 \uCD2C\uC601 / \uC5C5\uB85C\uB4DC<br><small>\uD0ED\uD558\uC5EC \uCE74\uBA54\uB77C \uC5F4\uAE30</small></div></div>';
+    h += '<div class="drop-area" onclick="showImgPicker(\'rec\')">'
+      +'<div class="di">\uD83E\uDDFE</div><div class="dt">\uC601\uC218\uC99D \uC0AC\uC9C4 \uCD2C\uC601 / \uC5C5\uB85C\uB4DC<br><small>\uD0ED\uD558\uC5EC \uCE74\uBA54\uB77C \uB610\uB294 \uC568\uBC94 \uC120\uD0DD</small></div></div>';
   } else {
     h += '<img class="scan-img" src="'+sc.img+'" alt="\uC601\uC218\uC99D">'
       +'<button class="btn-s mb10" onclick="clearScan()">\uB2E4\uC2DC \uCD2C\uC601</button>';
@@ -875,12 +952,31 @@ function vScan() {
   if (sc.items.length > 0) {
     h += '<div style="margin-top:4px"><div style="font-weight:700;margin-bottom:10px">\uCD94\uCD9C\uB41C \uC2DD\uC7AC\uB8CC ('+sc.items.length+'\uAC1C)</div>';
     for (var i=0;i<sc.items.length;i++) {
-      h += '<div class="rrow"><input type="checkbox"'+(sc.items[i].sel?' checked':'')+' onchange="toggleRI('+i+',this.checked)">'
-        +'<div class="rname">'+esc(sc.items[i].name)+'</div>'
-        +(sc.items[i].qty?'<div class="rqty">'+esc(sc.items[i].qty)+'</div>':'')+'</div>';
+      var selOpts = '';
+      for(var j=0;j<CATS.length;j++) {
+        selOpts += '<option value="'+CATS[j].id+'"'+((sc.items[i].cat||'\uAE30\uD0C0')===CATS[j].id?' selected':'')+'>'+CATS[j].e+' '+CATS[j].l+'</option>';
+      }
+      h += '<div class="rrow">'
+        +'<input type="checkbox"'+(sc.items[i].sel?' checked':'')+' onchange="toggleRI('+i+',this.checked)">'
+        +'<div class="rfields">'
+        +'<input class="inp" value="'+esc(sc.items[i].name)+'" placeholder="\uC0C1\uD488\uBA85" oninput="editRI('+i+',\'name\',this.value)">'
+        +'<input class="inp" type="number" value="'+esc(sc.items[i].price||'')+'" placeholder="\uAC00\uACA9 (\uC6D0)" oninput="editRI('+i+',\'price\',this.value)">'
+        +'<select class="inp" onchange="editRI('+i+',\'cat\',this.value)">'+selOpts+'</select>'
+        +'</div></div>';
     }
     h += '<div class="stack mt8"><button class="btn-p" onclick="openImp()">\uC120\uD0DD \uD56D\uBAA9 \uCD94\uAC00\uD558\uAE30</button>'
       +'<button class="btn-s" onclick="clearScan()">\uCDE8\uC18C</button></div></div>';
+  }
+  if (S.receipts.length > 0 && !sc.img) {
+    h += '<div class="rec-hist"><div class="rec-hist-ttl">\uC774\uC804 \uC601\uC218\uC99D</div>';
+    for (var i=0;i<S.receipts.length;i++) {
+      h += '<div class="rec-thumb" onclick="viewReceipt(\''+S.receipts[i].id+'\')">'
+        +'<img src="'+S.receipts[i].img+'" alt="\uC601\uC218\uC99D">'
+        +'<div><div class="rec-thumb-n">'+S.receipts[i].count+'\uAC1C \uCD94\uAC00\uB428</div>'
+        +'<div class="rec-thumb-d">'+S.receipts[i].date+'</div></div>'
+        +'</div>';
+    }
+    h += '</div>';
   }
   h += '<div style="height:14px"></div></div>';
   return h;
@@ -1040,24 +1136,41 @@ function parseReceipt(txt) {
     for (var j=0;j<SKIP.length;j++) { if(low.indexOf(SKIP[j])>=0){skip=true;break;} }
     if (skip) continue;
     var kor=(line.match(/[\uAC00-\uD7A3]/g)||[]).length;
-    if (kor<2||line.length>28) continue;
+    if (kor<2||line.length>40) continue;
     var qm=line.match(/(\d+)\s*(\uAC1C|\uD329|\uBD09|\uBCD1|\uCE94|g|kg|ml|l|\uBB36\uC74C)/i);
     var qty=qm?qm[1]+qm[2]:'';
-    var name=line.replace(/[\d,]+\s*\uC6D0?$/,'').replace(/^\s*[\d,]+\s*/,'').replace(/\s{2,}/g,' ').trim();
-    if (name.length>=2) items.push({name:name,qty:qty});
+    var price='';
+    var pm=line.match(/([\d,]{3,})\s*\uC6D0?\s*$/);
+    if (pm) {
+      price=pm[1].replace(/,/g,'');
+    } else {
+      for (var j2=i+1;j2<=Math.min(i+2,lines.length-1);j2++) {
+        var next=lines[j2];
+        if ((next.match(/[\uAC00-\uD7A3]/g)||[]).length>=2) break;
+        var nums=(next.match(/([\d,]{3,})/g)||[]).map(function(p){ return parseInt(p.replace(/,/g,'')); });
+        if (nums.length) { price=String(Math.max.apply(null,nums)); break; }
+      }
+    }
+    var name=line.replace(/[\d,]+\s*\uC6D0?\s*$/,'').replace(/^\s*[\d,]+\s*/,'').replace(/\s{2,}/g,' ').trim();
+    if (name.length>=2) items.push({name:name, qty:qty, price:price, cat:'\uAE30\uD0C0'});
   }
   return items;
 }
 function toggleRI(i,v) { if(S.scan.items[i]) S.scan.items[i].sel=v; }
+function editRI(i,k,v) { if(S.scan.items[i]) S.scan.items[i][k]=v; }
 function openImp() {
   S.imp=S.scan.items.filter(function(i){ return i.sel; });
   if(!S.imp.length) { alert('\uAC00\uC838\uC62C \uD56D\uBAA9\uC744 \uC120\uD0DD\uD574\uC8FC\uC138\uC694'); return; }
-  var copts=''; for(var i=0;i<CATS.length;i++) copts+='<option value="'+CATS[i].id+'">'+CATS[i].e+' '+CATS[i].l+'</option>';
   var h='<div class="mhandle"></div>'
     +'<div style="font-size:1.05rem;font-weight:700;margin-bottom:4px">\uC720\uD1B5\uAE30\uD55C \uC785\uB825</div>'
     +'<p class="muted sm" style="margin-bottom:13px">\uAC01 \uC2DD\uC7AC\uB8CC\uC758 \uC720\uD1B5\uAE30\uD55C\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</p>';
   for(var i=0;i<S.imp.length;i++) {
-    h+='<div class="irow"><div class="irow-h"><span class="iname">'+esc(S.imp[i].name)+'</span>'+(S.imp[i].qty?'<span class="muted sm">'+esc(S.imp[i].qty)+'</span>':'')+'</div>'
+    var copts='';
+    for(var j=0;j<CATS.length;j++) copts+='<option value="'+CATS[j].id+'"'+((S.imp[i].cat||'\uAE30\uD0C0')===CATS[j].id?' selected':'')+'>'+CATS[j].e+' '+CATS[j].l+'</option>';
+    h+='<div class="irow"><div class="irow-h"><span class="iname">'+esc(S.imp[i].name)+'</span>'
+      +(S.imp[i].qty?'<span class="muted sm">'+esc(S.imp[i].qty)+'</span>':'')
+      +(S.imp[i].price?'<span class="muted sm">'+Number(S.imp[i].price).toLocaleString()+'\uC6D0</span>':'')
+      +'</div>'
       +'<div class="ifields"><input class="inp" type="date" id="id-'+i+'">'
       +'<select class="inp" id="ic-'+i+'" style="font-size:.8rem">'+copts+'</select>'
       +'</div></div>';
@@ -1065,47 +1178,82 @@ function openImp() {
   h+='<div class="stack mt8"><button class="btn-p" onclick="doImp()">'+S.imp.length+'\uAC1C \uCD94\uAC00\uD558\uAE30</button><button class="btn-s" onclick="closeModal()">\uCDE8\uC18C</button></div>';
   showModal(h);
 }
-function doImp() {
-  var t=today(), n=0;
+async function doImp() {
+  var t=today(), toAdd=[];
   for(var i=0;i<S.imp.length;i++) {
     var el=document.getElementById('id-'+i); if(!el||!el.value) continue;
     var cel=document.getElementById('ic-'+i);
-    S.items.push({id:uid(),name:S.imp[i].name,cat:cel?cel.value:'\uAE30\uD0C0',exp:el.value,buy:t,qty:S.imp[i].qty||'1',unit:'\uAC1C',price:'',note:''});
-    n++;
+    toAdd.push({id:uid(),name:S.imp[i].name,cat:cel?cel.value:(S.imp[i].cat||'\uAE30\uD0C0'),exp:el.value,buy:t,qty:S.imp[i].qty||'1',unit:'\uAC1C',price:S.imp[i].price||'',note:''});
   }
+  if (!toAdd.length) { alert('\uC720\uD1B5\uAE30\uD55C\uC744 \uC785\uB825\uD55C \uD56D\uBAA9\uC774 \uC5C6\uC5B4\uC694'); return; }
+  for(var i=0;i<toAdd.length;i++) S.items.push(toAdd[i]);
+  try {
+    var compressed = await compressImg(S.scan.img);
+    S.receipts.unshift({id:uid(), date:t, img:compressed, count:toAdd.length});
+    if(S.receipts.length>10) S.receipts=S.receipts.slice(0,10);
+    saveR();
+  } catch(e) {}
   saveI(); closeModal(); S.scan={img:null,items:[],loading:false};
-  if(n>0){go('home');setTimeout(function(){alert(n+'\uAC1C \uCD94\uAC00\uB410\uC5B4\uC694! \uD83C\uDF89');},100);}
-  else alert('\uC720\uD1B5\uAE30\uD55C\uC744 \uC785\uB825\uD55C \uD56D\uBAA9\uC774 \uC5C6\uC5B4\uC694');
+  go('home'); setTimeout(function(){alert(toAdd.length+'\uAC1C \uCD94\uAC00\uB410\uC5B4\uC694! \uD83C\uDF89');},100);
+}
+function viewReceipt(id) {
+  var r=null;
+  for(var i=0;i<S.receipts.length;i++) { if(S.receipts[i].id===id){r=S.receipts[i];break;} }
+  if (!r) return;
+  showModal('<div class="mhandle"></div>'
+    +'<img src="'+r.img+'" style="width:100%;border-radius:8px;margin-bottom:10px" alt="\uC601\uC218\uC99D">'
+    +'<p class="muted sm" style="text-align:center">'+r.date+' \u00B7 '+r.count+'\uAC1C \uCD94\uAC00\uB428</p>'
+    +'<button class="btn-s mt8" onclick="closeModal()">\uB2EB\uAE30</button>');
 }
 
 /* \u2550\u2550 Notifications \u2550\u2550 */
 function onNotifBtn() {
   var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
   var warning = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
-  if(!expired.length && !warning.length){ alert('\uC784\uBC15\uD558\uAC70\uB098 \uB9CC\uB8CC\uB41C \uC2DD\uC7AC\uB8CC\uAC00 \uC5C6\uC5B4\uC694 \u2705'); return; }
+  if(!expired.length && !warning.length){
+    showModal('<div class="mhandle"></div>'
+      +'<div style="text-align:center;padding:24px 0">'
+      +'<div style="font-size:3rem;margin-bottom:12px">\u2705</div>'
+      +'<div style="font-size:1.1rem;font-weight:700;margin-bottom:6px">\uBAA8\uB450 \uC548\uC804\uD574\uC694!</div>'
+      +'<div style="font-size:.88rem;color:var(--muted)">\uC784\uBC15\uD558\uAC70\uB098 \uB9CC\uB8CC\uB41C \uC2DD\uC7AC\uB8CC\uAC00 \uC5C6\uC5B4\uC694</div>'
+      +'</div>'
+      +'<button class="btn-s" onclick="closeModal()">\uB2EB\uAE30</button>');
+    return;
+  }
   var totalLoss = 0;
   for(var i=0;i<expired.length;i++){ totalLoss += Number(expired[i].price)||0; }
-  var msg = '';
+  var h = '<div class="mhandle"></div>';
   if(totalLoss > 0) {
-    msg += '\uD83D\uDCB8 \uB9CC\uB8CC \uC190\uC2E4 \uCD1D\uC561: -' + totalLoss.toLocaleString() + '\uC6D0\n';
-    msg += '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n';
+    h += '<div style="background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.2);border-radius:var(--r);padding:16px;text-align:center;margin-bottom:16px">'
+      +'<div style="font-size:.78rem;color:var(--muted);margin-bottom:4px">\uD83D\uDCB8 \uBC84\uB9B0 \uB3C8</div>'
+      +'<div style="font-size:2.2rem;font-weight:900;color:var(--red);letter-spacing:-.5px">-'+totalLoss.toLocaleString()+'\uC6D0</div>'
+      +'</div>';
   }
   if(expired.length) {
-    msg += '\uD83D\uDEA8 \uB9CC\uB8CC\uB41C \uC2DD\uC7AC\uB8CC (' + expired.length + '\uAC1C)\n';
+    h += '<div style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">\uD83D\uDEA8 \uB9CC\uB8CC\uB428 ('+expired.length+'\uAC1C)</div>';
     for(var i=0;i<expired.length;i++){
       var p = Number(expired[i].price)||0;
-      msg += '\u2022 ' + expired[i].name + '(\uB9CC\uB8CC\uB428)' + (p?'/-'+p.toLocaleString()+'\uC6D0':'') + '\n';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;background:var(--surface2);border-radius:10px;margin-bottom:6px">'
+        +'<div><div style="font-size:.95rem;font-weight:700">'+esc(expired[i].name)+'</div>'
+        +'<div style="font-size:.72rem;color:var(--red);margin-top:2px">\uB9CC\uB8CC\uB428</div></div>'
+        +(p?'<div style="font-size:1.05rem;font-weight:800;color:var(--red)">-'+p.toLocaleString()+'\uC6D0</div>':'')
+        +'</div>';
     }
   }
   if(warning.length) {
-    if(expired.length) msg += '\n';
-    msg += '\u26A0\uFE0F \uC784\uBC15 \uC2DD\uC7AC\uB8CC (' + warning.length + '\uAC1C)\n';
+    h += '<div style="font-size:.72rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.06em;margin:'+(expired.length?'14px':'0')+'px 0 8px">\u26A0\uFE0F \uC784\uBC15 ('+warning.length+'\uAC1C)</div>';
     for(var i=0;i<warning.length;i++){
       var p = Number(warning[i].price)||0;
-      msg += '\u2022 ' + warning[i].name + '(' + dlbl(dLeft(warning[i].exp)) + ')' + (p?'/'+p.toLocaleString()+'\uC6D0':'') + '\n';
+      var d = dLeft(warning[i].exp);
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;background:var(--surface2);border-radius:10px;margin-bottom:6px">'
+        +'<div><div style="font-size:.95rem;font-weight:700">'+esc(warning[i].name)+'</div>'
+        +'<div style="font-size:.72rem;color:var(--yellow);margin-top:2px">'+dlbl(d)+'</div></div>'
+        +(p?'<div style="font-size:1.05rem;font-weight:800;color:var(--yellow)">'+p.toLocaleString()+'\uC6D0</div>':'')
+        +'</div>';
     }
   }
-  alert(msg.trim());
+  h += '<button class="btn-s mt8" onclick="closeModal()">\uB2EB\uAE30</button>';
+  showModal(h);
 }
 async function reqNotif() {
   if(!('Notification' in window)){alert('\uC774 \uBE0C\uB77C\uC6B0\uC800\uB294 \uC54C\uB9BC\uC744 \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uC544\uC694');return;}
@@ -1132,6 +1280,15 @@ function badge(){
   var b=document.getElementById('nbadge'); if(!b) return;
   var n=S.items.filter(function(i){ var d=dLeft(i.exp); return d<=S.cfg.notifyDays; }).length;
   b.style.display=n>0?'block':'none';
+}
+
+/* \u2550\u2550 Image Picker \u2550\u2550 */
+function showImgPicker(type) {
+  showModal('<div class="mhandle"></div>'
+    +'<div style="font-size:1rem;font-weight:700;margin-bottom:16px;text-align:center">\uc0ac\uc9c4 \uac00\uc838\uc624\uae30</div>'
+    +'<button class="btn-p" onclick="closeModal();setTimeout(function(){document.getElementById(\'fi-'+type+'-cam\').click()},100)">\ud83d\udcf7 \uce74\uba54\ub77c\ub85c \ucd2c\uc601</button>'
+    +'<button class="btn-s mt8" onclick="closeModal();setTimeout(function(){document.getElementById(\'fi-'+type+'-file\').click()},100)">\ud83d\uddbc\ufe0f \uc568\ubc94\uc5d0\uc11c \uac00\uc838\uc624\uae30</button>'
+    +'<button class="btn-s mt8" onclick="closeModal()">\ucde8\uc18c</button>');
 }
 
 /* \u2550\u2550 Modal \u2550\u2550 */
