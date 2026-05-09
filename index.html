@@ -122,6 +122,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
   transition:transform .65s cubic-bezier(.4,0,.2,1);
   border-radius:20px;
   cursor:pointer;
+  transform-style:preserve-3d;
 }
 .fridge-door.open{
   transform:rotateY(-138deg);
@@ -134,6 +135,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
   border:1.5px solid #aaccee;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.8),4px 0 20px rgba(0,0,0,.12);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
 .door-handle{
   position:absolute;right:14px;top:50%;transform:translateY(-50%);
@@ -144,6 +146,31 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .door-emo{font-size:3.4rem;opacity:.5;}
 .door-brand{font-size:.7rem;font-weight:700;color:rgba(80,130,200,.35);letter-spacing:.2em;text-transform:uppercase;}
 .door-sub{font-size:.58rem;color:rgba(80,130,200,.22);letter-spacing:.06em;}
+.door-back{
+  position:absolute;inset:0;
+  transform:rotateY(180deg);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:20px;
+  background:linear-gradient(160deg,#e4eff8 0%,#eef5ff 60%,#f5faff 100%);
+  border:1.5px solid #aaccee;
+  padding:12px 10px;
+  display:flex;flex-direction:column;gap:7px;
+  box-shadow:inset 4px 0 16px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.8);
+}
+.door-bin{
+  flex:1;
+  background:linear-gradient(180deg,rgba(210,232,250,.35),rgba(190,220,245,.5));
+  border:1px solid rgba(150,200,232,.45);
+  border-radius:8px;
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.07),inset 0 -2px 0 rgba(255,255,255,.6),
+             0 1px 0 rgba(255,255,255,.4);
+  position:relative;overflow:hidden;
+}
+.door-bin::after{
+  content:'';position:absolute;top:0;left:6px;right:6px;height:3px;
+  background:linear-gradient(180deg,rgba(180,218,245,.7),rgba(160,205,238,.4));
+  border-radius:0 0 3px 3px;
+}
 /* &#9472;&#9472; Stats &#9472;&#9472; */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center;}
@@ -518,6 +545,11 @@ function vFridge() {
     + '<div class="door-emo">\uD83E\uDDCA</div>'
     + '<div class="door-brand">Freshness</div>'
     + '<div class="door-sub">\uC720\uD1B5\uAE30\uD55C \uC138\uC774\uD37C</div>'
+    + '</div>'
+    + '<div class="door-back">'
+    + '<div class="door-bin"></div>'
+    + '<div class="door-bin"></div>'
+    + '<div class="door-bin"></div>'
     + '</div>'
     + '</div>'
     + '</div></div>'
