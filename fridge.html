@@ -560,6 +560,7 @@ var S = {
   door:false,
   eggs:6,
   sauces:[],
+  frozen:[],
   bannerDismissed:false,
   fridgeScale:1.0,
   cy:_n.getFullYear(), cm:_n.getMonth(),
@@ -597,6 +598,7 @@ function load() {
   try { var sc = JSON.parse(ls('sauces3') || 'null'); S.sauces = Array.isArray(sc) ? sc : []; } catch(e) { S.sauces = []; }
   try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
   try { var fs = parseFloat(ls('fridgeScale') || '1'); S.fridgeScale = isNaN(fs) ? 1 : Math.max(0.4, Math.min(1.3, fs)); } catch(e) { S.fridgeScale = 1; }
+  try { S.frozen = JSON.parse(ls('frozen') || '[]'); } catch(e) { S.frozen = []; }
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -809,6 +811,113 @@ function updateSauceBin() {
   }
 }
 
+/* ══ Frozen Food ══ */
+var FROZEN_CATS = [
+  {id:'육류/수산', e:'🥩'},
+  {id:'채소/과일', e:'🥦'},
+  {id:'유제품',   e:'🥛'},
+  {id:'가공식품', e:'🍱'},
+  {id:'기타',     e:'📦'}
+];
+function saveF() { lset('frozen', JSON.stringify(S.frozen)); }
+function frozenIceBlock(catId, size) {
+  var e = '📦';
+  for (var i = 0; i < FROZEN_CATS.length; i++) { if (FROZEN_CATS[i].id === catId) { e = FROZEN_CATS[i].e; break; } }
+  var sz = size || 26;
+  var esz = Math.round(sz * 0.55);
+  return '<div style="position:relative;width:'+sz+'px;height:'+Math.round(sz*1.15)+'px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">'
+    + '<span style="font-size:'+sz+'px;line-height:1;filter:opacity(.85)">🧊</span>'
+    + '<span style="position:absolute;font-size:'+esz+'px;opacity:.8;top:50%;left:50%;transform:translate(-50%,-52%)">'+e+'</span>'
+    + '</div>';
+}
+function frozenBinHtml() {
+  var cnt = S.frozen.length;
+  var blocks = '';
+  var show = Math.min(cnt, 6);
+  for (var i = 0; i < show; i++) blocks += frozenIceBlock(S.frozen[i].cat, 22);
+  return '<div class="etd-wrap">'
+    + '<div class="etd-lbl">얼린음식 &middot; '+cnt+'개</div>'
+    + '<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px;padding:2px">'
+    + (blocks || '<span style="font-size:.58rem;color:rgba(100,150,190,.5)">비어있음</span>')
+    + '</div></div>';
+}
+function openFrozenModal() {
+  var sorted = S.frozen.slice().sort(function(a,b){ return dLeft(a.exp)-dLeft(b.exp); });
+  var list = '';
+  for (var i = 0; i < sorted.length; i++) {
+    var it = sorted[i], d = dLeft(it.exp), cl = dcls(d);
+    list += '<div id="frz-'+it.id+'" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:6px">'
+      + frozenIceBlock(it.cat, 30)
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(it.name)+'</div>'
+      + '<div style="font-size:.72rem;color:var(--muted);margin-top:1px">'+esc(it.cat)+(it.qty?' · '+esc(it.qty)+esc(it.unit||''):'')+'</div>'
+      + '</div>'
+      + '<div class="dday '+cl+'" style="font-size:.7rem;min-width:46px;padding:4px 7px">'+dlbl(d)+'</div>'
+      + '<button onclick="deleteFrozen(\''+it.id+'\')" style="border:none;background:var(--red);color:#fff;border-radius:7px;padding:3px 8px;font-size:.75rem;cursor:pointer;flex-shrink:0">삭제</button>'
+      + '</div>';
+  }
+  var h = '<div class="mhandle"></div>'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'
+    + '<div style="font-size:1rem;font-weight:700">🧊 얼린음식</div>'
+    + '<button onclick="closeModal();openAddFrozen()" style="border:none;background:var(--blue);color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;cursor:pointer;font-weight:600">+ 추가</button>'
+    + '</div>'
+    + '<div style="max-height:340px;overflow-y:auto;margin-bottom:10px">'
+    + (list || '<div style="text-align:center;color:var(--muted);font-size:.85rem;padding:24px">얼린 음식이 없어요</div>')
+    + '</div>'
+    + '<button class="btn-s" onclick="closeModal()">닫기</button>';
+  showModal(h);
+}
+function deleteFrozen(id) {
+  S.frozen = S.frozen.filter(function(i){ return i.id !== id; });
+  saveF();
+  var el = document.getElementById('frz-'+id);
+  if (el) el.remove();
+  updateFrozenBin();
+}
+function updateFrozenBin() {
+  var wrap = document.querySelector('.door-bin-frozen .etd-wrap');
+  if (wrap) wrap.parentElement.innerHTML = frozenBinHtml();
+}
+function openAddFrozen() {
+  var catBtns = '';
+  for (var i = 0; i < FROZEN_CATS.length; i++) {
+    catBtns += '<button class="cat-btn'+(i===0?' on':'')+'" '
+      + 'onclick="this.closest(\'.frz-cat-grid\').querySelectorAll(\'.cat-btn\').forEach(function(b){b.classList.remove(\'on\')});this.classList.add(\'on\');S._fcat=\''+FROZEN_CATS[i].id+'\'">'
+      + '<span class="ce">'+FROZEN_CATS[i].e+'</span>'+FROZEN_CATS[i].id+'</button>';
+  }
+  S._fcat = FROZEN_CATS[0].id;
+  var units = ['개','팩','봉','캔','병','kg','g','L','ml','묶음','기타'];
+  var uopts = '';
+  for (var i = 0; i < units.length; i++) uopts += '<option value="'+units[i]+'">'+units[i]+'</option>';
+  var h = '<div class="mhandle"></div>'
+    + '<div style="font-size:1rem;font-weight:700;margin-bottom:14px">🧊 얼린음식 추가</div>'
+    + '<div class="sect"><label class="lbl">이름</label>'
+    + '<input class="inp" id="fi-name" type="text" placeholder="예: 삼겹살, 시금치..."></div>'
+    + '<div class="sect"><label class="lbl">카테고리</label>'
+    + '<div class="cat-grid frz-cat-grid" style="grid-template-columns:repeat(3,1fr)">'+catBtns+'</div></div>'
+    + '<div class="sect"><label class="lbl">유통기한</label>'
+    + '<input class="inp" id="fi-exp" type="date"></div>'
+    + '<div class="sect"><label class="lbl">구매일</label>'
+    + '<input class="inp" id="fi-buy" type="date" value="'+today()+'"></div>'
+    + '<div class="sect"><label class="lbl">수량</label>'
+    + '<div class="rowq"><input class="inp" id="fi-qty" type="text" placeholder="1">'
+    + '<select class="inp" id="fi-unit">'+uopts+'</select></div></div>'
+    + '<div class="stack"><button class="btn-p" onclick="saveFrozenItem()">추가하기</button>'
+    + '<button class="btn-s" onclick="closeModal();openFrozenModal()">뒤로</button></div>';
+  showModal(h);
+}
+function saveFrozenItem() {
+  var name = (document.getElementById('fi-name').value||'').trim();
+  var exp  = document.getElementById('fi-exp').value;
+  var buy  = document.getElementById('fi-buy').value;
+  var qty  = document.getElementById('fi-qty').value || '1';
+  var unit = document.getElementById('fi-unit').value || '개';
+  if (!name) { document.getElementById('fi-name').focus(); return; }
+  if (!exp)  { document.getElementById('fi-exp').focus(); return; }
+  S.frozen.push({id:uid(), name:name, cat:S._fcat||'기타', exp:exp, buy:buy, qty:qty, unit:unit});
+  saveF(); render(); closeModal(); openFrozenModal();
+}
+
 /* ══ Navigation ══ */
 function go(v) {
   if (v === 'add' && !S.editId) S.form = emptyForm();
@@ -1016,7 +1125,9 @@ function vFridge() {
     + '<div class="door-sub">유통기한 세이퍼</div>'
     + '</div>'
     + '<div class="door-back">'
-    + '<div class="door-bin"></div>'
+    + '<div class="door-bin door-bin-frozen" onclick="event.stopPropagation();openFrozenModal()" style="cursor:pointer">'
+    + frozenBinHtml()
+    + '</div>'
     + '<div class="door-bin door-bin-egg" onclick="event.stopPropagation();openEggModal()">'
     + eggTrayHtml()
     + '</div>'
