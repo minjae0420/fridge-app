@@ -26,53 +26,61 @@ body.light .warn-banner{background:linear-gradient(135deg,#fff0f0,#ffe8e0);borde
 body.light .warn-banner-price{color:#d32f2f;}
 body.light .warn-banner-title{color:#e65100;}
 
-/* ── Landing page ── */
-.landing{
-  position:fixed;inset:0;z-index:300;
-  background:var(--bg);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:40px 32px 120px;
-  transition:opacity .45s ease;
-}
-.landing.out{opacity:0;pointer-events:none;}
-.land-icon{font-size:6.5rem;margin-bottom:28px;animation:landFloat 3s ease-in-out infinite;}
-@keyframes landFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.land-title{
-  font-size:2.1rem;font-weight:900;text-align:center;margin-bottom:14px;
-  background:linear-gradient(135deg,var(--blue),var(--green));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.land-sub{font-size:.97rem;color:var(--muted);text-align:center;line-height:1.7;}
-.land-features{display:flex;flex-direction:column;gap:12px;margin-top:32px;width:100%;max-width:300px;}
-.land-feat{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;}
-.land-feat-icon{font-size:1.4rem;flex-shrink:0;}
-.land-feat-txt{font-size:.86rem;color:var(--text);line-height:1.35;}
-.land-feat-txt strong{display:block;font-size:.9rem;margin-bottom:2px;}
-.land-btn-wrap{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;padding:20px 24px 36px;background:linear-gradient(to top,var(--bg) 70%,transparent);}
-.land-btn{
-  display:block;width:100%;padding:18px;border:none;border-radius:16px;
-  background:linear-gradient(135deg,var(--blue),var(--green));
-  color:#fff;font-size:1.05rem;font-weight:700;
-  cursor:pointer;letter-spacing:.02em;
-  box-shadow:0 8px 28px rgba(88,166,255,.35);
-  transition:transform .15s,box-shadow .15s;
-}
-.land-btn:active{transform:scale(.97);box-shadow:0 4px 14px rgba(88,166,255,.3);}
-
 /* ── Warning Banner ── */
-.warn-banner{margin-bottom:16px;
+.warn-banner{margin-bottom:16px;position:relative;
   background:linear-gradient(135deg,#2d0f0f,#3a1500);
   border:1.5px solid rgba(248,81,73,.45);border-radius:var(--r);
-  padding:16px;animation:slideDown .35s ease;
+  padding:14px 14px 14px 12px;animation:slideDown .35s ease;
   box-shadow:0 4px 20px rgba(248,81,73,.18),inset 0 1px 0 rgba(255,255,255,.05);}
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-.warn-banner-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.warn-banner-icon{font-size:1.3rem;flex-shrink:0;}
-.warn-banner-title{font-size:.85rem;color:var(--orange);font-weight:800;flex:1;letter-spacing:.02em;}
-.warn-banner-close{background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;padding:4px;flex-shrink:0;line-height:1;}
-.warn-banner-price{font-size:2rem;font-weight:900;color:var(--red);letter-spacing:-1px;line-height:1;margin-bottom:6px;}
-.warn-banner-msg{font-size:.88rem;color:var(--text);line-height:1.45;opacity:.9;}
+.warn-banner-close{position:absolute;top:10px;right:10px;background:none;border:none;
+  color:rgba(255,255,255,.4);font-size:.95rem;cursor:pointer;padding:4px;line-height:1;}
+.warn-banner-close:hover{color:rgba(255,255,255,.8);}
+/* 배너 안 3D 말풍선 — 왼쪽 꼬리 */
+.banner-bubble{
+  position:relative;flex:1;min-width:0;
+  background:linear-gradient(145deg,#3a1800 0%,#2a1000 55%,#1e0a00 100%);
+  border:1.5px solid rgba(240,136,62,.6);
+  border-top-color:rgba(240,136,62,.85);
+  border-left-color:rgba(240,136,62,.85);
+  border-radius:14px;
+  padding:10px 14px;
+  font-size:.82rem;
+  line-height:1.55;
+  color:#ffd0a0;
+  font-weight:500;
+  word-break:keep-all;
+  box-shadow:
+    3px 4px 0 rgba(0,0,0,.5),
+    4px 7px 14px rgba(0,0,0,.35),
+    inset 0 1.5px 0 rgba(255,200,100,.12),
+    inset 1.5px 0 0 rgba(255,200,100,.07),
+    inset 0 -1.5px 0 rgba(0,0,0,.4);
+  animation:bubblePop .44s cubic-bezier(.34,1.56,.64,1);
+}
+/* 왼쪽 꼬리 — 테두리 */
+.banner-bubble::before{
+  content:'';position:absolute;left:-13px;top:50%;transform:translateY(-50%);
+  border:13px solid transparent;
+  border-right-color:rgba(240,136,62,.65);
+  border-left:none;
+}
+/* 왼쪽 꼬리 — 안쪽 */
+.banner-bubble::after{
+  content:'';position:absolute;left:-10px;top:50%;transform:translateY(-50%);
+  border:10px solid transparent;
+  border-right-color:#3a1800;
+  border-left:none;
+}
+body.light .warn-banner{background:linear-gradient(135deg,#fff0f0,#ffe8e0);border-color:rgba(248,81,73,.35);}
+body.light .banner-bubble{
+  background:linear-gradient(145deg,#fff5ee 0%,#ffe8d6 50%,#ffd9be 100%);
+  border-color:rgba(200,100,30,.55);color:#7a2a00;
+  box-shadow:3px 4px 0 rgba(180,80,20,.35),4px 7px 14px rgba(180,80,20,.15),
+    inset 0 1.5px 0 rgba(255,255,255,.9),inset 0 -1.5px 0 rgba(180,80,20,.15);
+}
+body.light .banner-bubble::before{border-right-color:rgba(200,100,30,.55);}
+body.light .banner-bubble::after{border-right-color:#fff5ee;}
 
 /* ── Receipt history ── */
 .rec-hist{margin-top:20px;}
@@ -107,6 +115,13 @@ main{padding:16px 16px calc(var(--nh) + 16px);}
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
   width:100%;max-width:480px;height:var(--nh);background:var(--surface);
   border-top:1px solid var(--border);display:flex;z-index:100;}
+/* ── News ── */
+.news-card{background:var(--surface2);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;cursor:pointer;border:1px solid var(--border);transition:background .15s;text-decoration:none;display:block;}
+.news-card:hover{background:var(--border);}
+.news-title{font-size:.93rem;font-weight:700;line-height:1.45;margin-bottom:6px;color:var(--text);}
+.news-meta{font-size:.74rem;color:var(--muted);display:flex;gap:8px;align-items:center;}
+.news-src{color:var(--blue);font-weight:600;}
+.news-section{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px;}
 .nb{flex:1;border:none;background:transparent;color:var(--muted);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:3px;font-size:.66rem;transition:color .15s;cursor:pointer;}
@@ -246,7 +261,6 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .sauce-btl{display:flex;flex-direction:column;align-items:center;}
 .sauce-btl-cap{width:10px;height:7px;border-radius:3px 3px 0 0;box-shadow:0 -1px 2px rgba(0,0,0,.12);}
 .sauce-btl-body{width:16px;height:34px;border-radius:3px 3px 5px 5px;box-shadow:inset 3px 0 0 rgba(255,255,255,.18),0 1px 4px rgba(0,0,0,.25);}
-
 /* ── Stats ── */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center;}
@@ -291,8 +305,8 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .cal-nav:hover{background:var(--border);}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
 .cal-lbl{text-align:center;font-size:.65rem;color:var(--muted);padding:4px 0;font-weight:600;}
-.cal-day{aspect-ratio:1;border-radius:7px;display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;padding:4px 1px 2px;transition:background .12s;}
+.cal-day{min-height:54px;border-radius:7px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;padding:4px 2px 3px;transition:background .12s;}
 .cal-day.click{cursor:pointer;}
 .cal-day.click:hover{background:var(--surface2);}
 .cal-day.today{background:rgba(88,166,255,.12);}
@@ -301,6 +315,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .cal-day.today .cal-dn{color:var(--blue);font-weight:800;}
 .cal-dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;margin-top:2px;}
 .cal-dot{width:5px;height:5px;border-radius:50%;}
+.cal-name{font-size:.55rem;line-height:1.25;text-align:center;margin-top:2px;overflow:hidden;font-weight:700;max-width:100%;word-break:break-all;}
 
 /* ── Forms ── */
 .ptitle{font-size:1.2rem;font-weight:700;margin-bottom:18px;}
@@ -401,33 +416,81 @@ select.inp{appearance:none;
 .cm-emo{font-size:2.6rem;}
 .cm-ttl{font-size:1.15rem;font-weight:700;}
 .cm-cnt{font-size:.8rem;color:var(--muted);}
+
+/* ── Mascot ── */
+.mascot-wrap{display:flex;flex-direction:column;align-items:center;margin:4px 0 14px;gap:6px;}
+@keyframes mascotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.mascot-happy .mascot-svg{animation:mascotBob 2.8s ease-in-out infinite;filter:drop-shadow(0 5px 12px rgba(88,166,255,.22));}
+.mascot-worried .mascot-svg{animation:mascotWobble 1s ease-in-out infinite alternate;filter:drop-shadow(0 5px 12px rgba(240,136,62,.22));}
+@keyframes mascotWobble{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.mascot-panicked .mascot-svg{animation:mascotShake .22s ease-in-out infinite alternate;filter:drop-shadow(0 5px 12px rgba(248,81,73,.3));}
+@keyframes mascotShake{from{transform:rotate(-6deg) scale(1)}to{transform:rotate(6deg) scale(1.04)}}
+
+/* ── 3D Speech Bubble ── */
+.mascot-bubble{
+  position:relative;
+  /* 빛이 왼쪽 위에서 오는 느낌의 그라디언트 */
+  background:linear-gradient(145deg,#263c52 0%,#1a2d40 55%,#142234 100%);
+  border:1.5px solid #3a6680;
+  border-top-color:#4a80a0;
+  border-left-color:#4a80a0;
+  border-radius:20px;
+  padding:13px 20px;
+  font-size:.88rem;
+  line-height:1.65;
+  max-width:282px;
+  text-align:center;
+  margin-top:14px;
+  word-break:keep-all;
+  color:#c8e6f8;
+  font-weight:500;
+  /* 핵심: 하드 오프셋 쉐도우로 두께감 */
+  box-shadow:
+    3px 5px 0 #0d1c28,
+    5px 9px 16px rgba(0,0,0,.45),
+    inset 0 1.5px 0 rgba(255,255,255,.1),
+    inset 1.5px 0 0 rgba(255,255,255,.06),
+    inset 0 -1.5px 0 rgba(0,0,0,.35);
+  animation:bubblePop .44s cubic-bezier(.34,1.56,.64,1);
+}
+body.light .mascot-bubble{
+  background:linear-gradient(145deg,#f5faff 0%,#e0effa 50%,#cce3f5 100%);
+  border:1.5px solid #87ceeb;
+  border-top-color:#aaddee;
+  border-left-color:#aaddee;
+  color:#1a3a5c;
+  box-shadow:
+    3px 5px 0 rgba(74,140,180,.55),
+    5px 9px 16px rgba(74,159,200,.25),
+    inset 0 1.5px 0 rgba(255,255,255,.95),
+    inset 1.5px 0 0 rgba(255,255,255,.7),
+    inset 0 -1.5px 0 rgba(100,170,210,.2);
+}
+@keyframes bubblePop{from{opacity:0;transform:scale(.58) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+/* 말풍선 꼬리 — 테두리 */
+.mascot-bubble::before{
+  content:'';position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  border:14px solid transparent;
+  border-bottom-color:#3a6680;
+  border-top:none;
+}
+/* 말풍선 꼬리 — 안쪽 (색상 맞춤) */
+.mascot-bubble::after{
+  content:'';position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  border:11px solid transparent;
+  border-bottom-color:#263c52;
+  border-top:none;
+}
+body.light .mascot-bubble::before{border-bottom-color:#87ceeb;}
+body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
+.mascot-name{font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:4px;}
+/* 홈 화면 작은 마스코트 메시지 */
+.mascot-msg{font-size:.78rem;color:var(--muted);font-weight:500;background:var(--surface2);
+  border-radius:20px;padding:4px 12px;}
 </style>
 </head>
 <body ontouchstart="">
-
-<!-- Landing page -->
-<div class="landing" id="landing">
-  <div class="land-icon">🧊</div>
-  <div class="land-title">냉장고 파먹기</div>
-  <div class="land-sub">식재료 유통기한을 스마트하게<br>관리하고 낭비를 줄여요</div>
-  <div class="land-features">
-    <div class="land-feat">
-      <span class="land-feat-icon">📅</span>
-      <div class="land-feat-txt"><strong>유통기한 알림</strong>만료 임박 식재료를 자동으로 알려드려요</div>
-    </div>
-    <div class="land-feat">
-      <span class="land-feat-icon">📷</span>
-      <div class="land-feat-txt"><strong>영수증 스캔</strong>사진 한 장으로 식재료를 한 번에 등록</div>
-    </div>
-    <div class="land-feat">
-      <span class="land-feat-icon">🧊</span>
-      <div class="land-feat-txt"><strong>냉장고 시각화</strong>카테고리별로 한눈에 파악</div>
-    </div>
-  </div>
-  <div class="land-btn-wrap">
-    <button class="land-btn" onclick="startApp()">냉장고 관리 시작하기 →</button>
-  </div>
-</div>
 
 <header class="hdr">
   <span class="hdr-logo">&#x1F9CA; &#45257;&#51109;&#44256; &#54028;&#47673;&#44592;</span>
@@ -443,6 +506,7 @@ select.inp{appearance:none;
   <button class="nb on" id="nb-home"     onclick="go('home')">    <span class="ni">&#x1F9CA;</span>냉장고</button>
   <button class="nb"    id="nb-add"      onclick="go('add')">     <span class="ni">&#x2795;</span>추가</button>
   <button class="nb"    id="nb-scan"     onclick="go('scan')">    <span class="ni">&#x1F4F7;</span>영수증</button>
+  <button class="nb"    id="nb-news"     onclick="go('news')">    <span class="ni">&#x1F4F0;</span>뉴스</button>
   <button class="nb"    id="nb-settings" onclick="go('settings')"><span class="ni">&#x2699;&#xFE0F;</span>설정</button>
 </nav>
 
@@ -498,7 +562,8 @@ var S = {
   sauces:[],
   bannerDismissed:false,
   fridgeScale:1.0,
-  cy:_n.getFullYear(), cm:_n.getMonth()
+  cy:_n.getFullYear(), cm:_n.getMonth(),
+  news:{tab:'all', loading:false, error:null, cache:{}}
 };
 S.form = emptyForm();
 
@@ -544,6 +609,14 @@ function dLeft(d) {
 }
 function dlbl(d) { if (d < 0) return 'D+'+(-d); if (d === 0) return 'D-Day'; return 'D-'+d; }
 function dcls(d) { if (d < 0) return 'c-expired'; if (d <= 2) return 'c-danger'; if (d <= 5) return 'c-warning'; return 'c-safe'; }
+function searchRecipe(q) { window.open('https://www.10000recipe.com/recipe/list.html?q='+encodeURIComponent(q),'_blank'); }
+function searchRecipeById(id) { var it=S.items.filter(function(i){return i.id===id;})[0]; if(it) searchRecipe(it.name); }
+function searchRecipeUrgent() {
+  var exp=S.items.filter(function(i){return dLeft(i.exp)<0;});
+  var wrn=S.items.filter(function(i){var d=dLeft(i.exp);return d>=0&&d<=S.cfg.notifyDays;});
+  var names=exp.concat(wrn).map(function(i){return i.name;}).join(' ');
+  if(names) searchRecipe(names);
+}
 function ucol(c) {
   if (c==='c-expired') return 'var(--red)';
   if (c==='c-danger')  return 'var(--orange)';
@@ -555,13 +628,6 @@ function catUrg(id) {
   if (!its.length) return null;
   var mn = Math.min.apply(null, its.map(function(i){ return dLeft(i.exp); }));
   return dcls(mn);
-}
-
-/* ══ Landing ══ */
-function startApp() {
-  var l = document.getElementById('landing');
-  l.classList.add('out');
-  setTimeout(function(){ l.style.display = 'none'; }, 450);
 }
 
 /* ══ Fridge Scale ══ */
@@ -708,7 +774,7 @@ function addSauce() {
     + '</div>';
   var listEl = document.getElementById('sauce-list');
   if (listEl) {
-    if (listEl.innerHTML.indexOf('없습니다') >= 0) listEl.innerHTML = '';
+    if (listEl.innerHTML.indexOf('등록된') >= 0) listEl.innerHTML = '';
     listEl.insertAdjacentHTML('beforeend', item);
   }
   nameEl.value = '';
@@ -753,6 +819,7 @@ function go(v) {
   if (nb) nb.classList.add('on');
   render();
   window.scrollTo(0, 0);
+  if (v === 'news') fetchNews();
 }
 function render() {
   var m = document.getElementById('main');
@@ -760,29 +827,100 @@ function render() {
   if (S.view === 'home')     m.innerHTML = vHome();
   else if (S.view === 'add') m.innerHTML = vAdd();
   else if (S.view === 'scan')m.innerHTML = vScan();
+  else if (S.view === 'news')m.innerHTML = vNews();
   else                       m.innerHTML = vSettings();
   badge();
+  startBannerCycle();
 }
 
 /* ══ Warning Banner ══ */
+function tinyMascotSvg(mood) {
+  var eyes, mouth, extra;
+  if (mood === 'panicked') {
+    eyes = '<circle cx="35" cy="56" r="11" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="11" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="35" cy="57" r="6.5" fill="#1a3a5c"/>'
+         + '<circle cx="63" cy="57" r="6.5" fill="#1a3a5c"/>'
+         + '<circle cx="38" cy="53" r="2.5" fill="white"/>'
+         + '<circle cx="66" cy="53" r="2.5" fill="white"/>';
+    mouth = '<ellipse cx="49" cy="78" rx="7" ry="5" fill="#1a3a5c"/>'
+          + '<ellipse cx="49" cy="77" rx="5" ry="3.5" fill="white"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>'
+          + '<ellipse cx="24" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".55"/>'
+          + '<circle cx="24" cy="43.5" r="3" fill="#87ceeb" opacity=".55"/>';
+  } else {
+    eyes = '<circle cx="35" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<path d="M27 46 Q35 42 39 46" stroke="#1a3a5c" stroke-width="2" fill="none" stroke-linecap="round"/>'
+         + '<path d="M59 46 Q63 42 71 46" stroke="#1a3a5c" stroke-width="2" fill="none" stroke-linecap="round"/>'
+         + '<circle cx="37" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="65" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="39.5" cy="53.5" r="2.2" fill="white"/>'
+         + '<circle cx="67.5" cy="53.5" r="2.2" fill="white"/>';
+    mouth = '<path d="M35 78 Q49 72 63 78" stroke="#1a3a5c" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>';
+  }
+  return '<svg width="60" height="72" viewBox="0 0 98 132" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));animation:mascotShake .28s ease-in-out infinite alternate;">'
+    + '<defs><linearGradient id="tbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8f4fd"/><stop offset="100%" stop-color="#c8e6f8"/></linearGradient>'
+    + '<linearGradient id="tfz" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d0e8f8"/><stop offset="100%" stop-color="#a8d2ee"/></linearGradient></defs>'
+    + '<rect x="2" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="81" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="14" y="5" width="70" height="26" rx="10" fill="url(#tfz)" stroke="#87ceeb" stroke-width="2"/>'
+    + '<rect x="29" y="13" width="40" height="6" rx="3" fill="#87ceeb"/>'
+    + extra
+    + '<rect x="14" y="28" width="70" height="88" rx="12" fill="url(#tbg)" stroke="#87ceeb" stroke-width="2"/>'
+    + '<line x1="16" y1="31" x2="82" y2="31" stroke="#c8e6f5" stroke-width="1.5"/>'
+    + '<rect x="20" y="35" width="11" height="46" rx="5.5" fill="rgba(255,255,255,0.55)"/>'
+    + '<rect x="31" y="84" width="36" height="6" rx="3" fill="#87ceeb"/>'
+    + eyes + mouth
+    + '<rect x="21" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="55" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '</svg>';
+}
+
+var _bannerInterval = null;
+function startBannerCycle() {
+  if (_bannerInterval) clearInterval(_bannerInterval);
+  _bannerInterval = setInterval(function() {
+    var banner = document.getElementById('fn-banner');
+    if (!banner || S.bannerDismissed) { clearInterval(_bannerInterval); return; }
+    var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
+    var urgent = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
+    var all = urgent.concat(expired);
+    if (all.length < 2) return;
+    var item = all[Math.floor(Math.random() * all.length)];
+    var days = dLeft(item.exp);
+    var bannerMood = days < 0 ? 'panicked' : 'worried';
+    var msgMood = days < 0 ? 'expired' : days <= 2 ? 'danger' : 'warning';
+    var mascotWrap = banner.querySelector('.banner-mascot');
+    var oldBubble = banner.querySelector('.banner-bubble');
+    if (mascotWrap) mascotWrap.innerHTML = tinyMascotSvg(bannerMood);
+    if (oldBubble) {
+      var newBubble = oldBubble.cloneNode(false);
+      newBubble.innerHTML = getMascotMsg(msgMood, item.name, item.price);
+      oldBubble.parentNode.replaceChild(newBubble, oldBubble);
+    }
+  }, 4500);
+}
+
 function renderBanner() {
   if (S.bannerDismissed) return '';
+  var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
   var urgent = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
-  urgent.sort(function(a,b){ return dLeft(a.exp)-dLeft(b.exp); });
-  if (!urgent.length) return '';
-  var item = urgent[0];
+  if (!urgent.length && !expired.length) return '';
+  var all = urgent.concat(expired).sort(function(a,b){ return dLeft(a.exp)-dLeft(b.exp); });
+  var item = all[0];
   var days = dLeft(item.exp);
-  var price = item.price ? Number(item.price).toLocaleString() : '';
-  var tmpl = BANNER_TEMPLATES[Math.floor(Date.now()/3600000) % BANNER_TEMPLATES.length];
-  var res = tmpl(item.name, price, days);
-  return '<div class="warn-banner">'
-    +'<div class="warn-banner-top">'
-    +'<span class="warn-banner-icon">🚨</span>'
-    +'<span class="warn-banner-title">'+res[0]+'</span>'
+  var bannerMood = days < 0 ? 'panicked' : 'worried';
+  var msgMood = days < 0 ? 'expired' : days <= 2 ? 'danger' : 'warning';
+  return '<div class="warn-banner" id="fn-banner">'
     +'<button class="warn-banner-close" onclick="S.bannerDismissed=true;render()">✕</button>'
+    +'<div style="display:flex;align-items:center;gap:10px">'
+    +'<div class="banner-mascot">'+tinyMascotSvg(bannerMood)+'</div>'
+    +'<div class="banner-bubble">'+getMascotMsg(msgMood, item.name, item.price)+'</div>'
     +'</div>'
-    +(price ? '<div class="warn-banner-price">-'+price+'원</div>' : '')
-    +'<div class="warn-banner-msg">'+res[1]+'</div>'
     +'</div>';
 }
 
@@ -956,14 +1094,19 @@ function vCal() {
   for (var d=1;d<=nd;d++) {
     var ds = y+'-'+pad(m+1)+'-'+pad(d);
     var its = em[ds]||[];
-    var dots = '';
+    var dots = '', names = '';
     for (var j=0;j<its.length;j++) {
       var cl=dcls(dLeft(its[j].exp));
       dots += '<span class="cal-dot" style="background:'+ucol(cl)+'"></span>';
     }
+    if (its.length > 0) {
+      var cl0 = dcls(dLeft(its[0].exp));
+      var nm = its[0].name.length > 4 ? its[0].name.substring(0,4)+'…' : its[0].name;
+      names = '<div class="cal-name" style="color:'+ucol(cl0)+'">'+esc(nm)+(its.length>1?'<br><span style="color:var(--muted);font-weight:400">+'+(its.length-1)+'개</span>':'')+'</div>';
+    }
     cells += '<div class="cal-day'+(ds===ts?' today':'')+(its.length?' click':'')+'"'
       +(its.length?' onclick="openCalDay(\''+ds+'\')"':'')+' >'
-      +'<span class="cal-dn">'+d+'</span>'+(dots?'<div class="cal-dots">'+dots+'</div>':'')
+      +'<span class="cal-dn">'+d+'</span>'+(dots?'<div class="cal-dots">'+dots+'</div>':'')+names
       +'</div>';
   }
   var tot = Math.ceil((fd+nd)/7)*7;
@@ -1076,6 +1219,85 @@ function vScan() {
   return h;
 }
 
+/* ══ News ══ */
+var NEWS_TABS = [
+  {id:'all',    label:'전체',     q:'식재료 농산물 제철음식'},
+  {id:'price',  label:'#가격',    q:'장바구니 물가 농축수산물 가격'},
+  {id:'season', label:'#제철',    q:'제철 식재료 제철 과일 채소 제철 음식'},
+  {id:'trend',  label:'#뜨는음식', q:'요즘 유행 음식 트렌드 핫한 음식 밥집'}
+];
+function timeAgo(dateStr) {
+  var d = new Date(dateStr), now = Date.now();
+  var diff = Math.floor((now - d) / 60000);
+  if (diff < 60) return diff + '분 전';
+  if (diff < 1440) return Math.floor(diff/60) + '시간 전';
+  return Math.floor(diff/1440) + '일 전';
+}
+function setNewsTab(id) {
+  S.news.tab = id;
+  render();
+  fetchNews();
+}
+function vNews() {
+  var cur = S.news.cache[S.news.tab] || {items:[], lastFetch:0};
+  var h = '<div class="view"><div class="ptitle">📰 식재료 뉴스</div>';
+  h += '<div class="tabs" style="margin-bottom:16px">';
+  NEWS_TABS.forEach(function(tab) {
+    h += '<button class="tab '+(S.news.tab===tab.id?'on':'')+'" onclick="setNewsTab(\''+tab.id+'\')">'+tab.label+'</button>';
+  });
+  h += '</div>';
+  if (S.news.loading) {
+    h += '<div style="text-align:center;padding:60px 0"><div style="font-size:2rem;margin-bottom:12px">🔄</div><div style="color:var(--muted);font-size:.9rem">뉴스 불러오는 중...</div></div>';
+  } else if (S.news.error) {
+    h += '<div style="text-align:center;padding:60px 0"><div style="font-size:2rem;margin-bottom:12px">😢</div><div style="color:var(--muted);font-size:.9rem">'+esc(S.news.error)+'</div>'
+      +'<button class="btn-s" style="margin-top:16px" onclick="S.news.cache[S.news.tab]={};fetchNews()">다시 시도</button></div>';
+  } else if (!cur.items.length) {
+    h += '<div style="text-align:center;padding:60px 0"><div style="font-size:2rem;margin-bottom:12px">📭</div><div style="color:var(--muted);font-size:.9rem">뉴스가 없어요</div></div>';
+  } else {
+    for (var i = 0; i < cur.items.length; i++) {
+      var item = cur.items[i];
+      h += '<a class="news-card" href="'+esc(item.link)+'" target="_blank" rel="noopener">'
+        +'<div class="news-title">'+esc(item.title)+'</div>'
+        +'<div class="news-meta"><span class="news-src">'+esc(item.source)+'</span>'+(item.ago?'<span>·</span><span>'+esc(item.ago)+'</span>':'')+'</div>'
+        +'</a>';
+    }
+    h += '<div style="text-align:center;margin-top:16px"><button class="btn-s" onclick="S.news.cache[S.news.tab]={};fetchNews()">새로고침</button></div>';
+  }
+  return h + '</div>';
+}
+async function fetchNews() {
+  if (S.news.loading) return;
+  var cur = S.news.cache[S.news.tab] || {items:[], lastFetch:0};
+  if (Date.now() - (cur.lastFetch||0) < 1800000 && cur.items && cur.items.length) return;
+  S.news.loading = true; S.news.error = null;
+  if (S.view === 'news') render();
+  var tabDef = NEWS_TABS.filter(function(t){ return t.id===S.news.tab; })[0] || NEWS_TABS[0];
+  var q = encodeURIComponent(tabDef.q);
+  var rss = 'https://news.google.com/rss/search?q='+q+'&hl=ko&gl=KR&ceid=KR:ko';
+  try {
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 9000);
+    var res = await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(rss), {signal:ctrl.signal});
+    clearTimeout(t);
+    var data = await res.json();
+    if (data.status !== 'ok' || !data.items) throw new Error('no items');
+    var items = data.items.slice(0, 20).map(function(it) {
+      return {
+        title: (it.title||'').replace(/\s*-\s*[^-]+$/, '').trim(),
+        link:  it.link || it.guid || '',
+        source: it.author || '',
+        ago:   it.pubDate ? timeAgo(it.pubDate) : ''
+      };
+    }).filter(function(it){ return it.title && it.link; });
+    S.news.cache[S.news.tab] = {items:items, lastFetch:Date.now()};
+    S.news.error = items.length ? null : '관련 뉴스가 없어요.';
+  } catch(e) {
+    S.news.error = '뉴스를 불러오지 못했어요 😢 잠시 후 다시 시도해주세요.';
+  }
+  S.news.loading = false;
+  if (S.view === 'news') render();
+}
+
 /* ══ Settings ══ */
 function vSettings() {
   var s=S.cfg;
@@ -1100,7 +1322,7 @@ function vSettings() {
     +'<div class="srow"><span class="srow-l">등록된 식재료</span><span class="muted">'+S.items.length+'개</span></div>'
     +'<button class="btn-d mt8" onclick="clearAll()">모든 데이터 삭제</button></div>'
     +'<div class="ss"><div class="ss-ttl">정보</div>'
-    +'<div class="srow"><span class="srow-l">냉장고 파먹기</span><span class="muted">v3.0</span></div>'
+    +'<div class="srow"><span class="srow-l">냉장고 파머기</span><span class="muted">v3.0</span></div>'
     +'</div></div>';
 }
 
@@ -1153,6 +1375,7 @@ function openDetail(id) {
     +(item.note?'<div class="dcell" style="margin-bottom:14px"><div class="dcell-l">메모</div><div class="dcell-v" style="font-weight:400">'+esc(item.note)+'</div></div>':'')
     +'<div class="stack">'
     +'<button class="btn-p" onclick="editItem(\''+id+'\')">수정하기</button>'
+    +'<button class="btn-s" style="background:var(--surface2)" onclick="searchRecipeById(\''+id+'\')">🍳 만개의 레시피에서 찾기</button>'
     +'<button class="btn-d" onclick="delItem(\''+id+'\')">삭제하기</button>'
     +'<button class="btn-s" onclick="closeModal()">닫기</button>'
     +'</div>';
@@ -1167,7 +1390,7 @@ function editItem(id) {
   closeModal(); go('add');
 }
 
-/* ══ OCR ══ */
+/* ══ OCR via Google Vision / Cloudflare Worker ══ */
 async function gVision(imgData) {
   var b64 = imgData.split(',')[1];
   var res = await fetch(WORKER, {
@@ -1180,6 +1403,7 @@ async function gVision(imgData) {
   if (data.responses && data.responses[0] && data.responses[0].error) throw new Error(data.responses[0].error.message);
   return (data.responses && data.responses[0] && data.responses[0].fullTextAnnotation && data.responses[0].fullTextAnnotation.text) || '';
 }
+
 function onExpFile(input) {
   var file=input.files[0]; if(!file) return;
   var rd=new FileReader();
@@ -1299,11 +1523,166 @@ function viewReceipt(id) {
     +'<button class="btn-s mt8" onclick="closeModal()">닫기</button>');
 }
 
+/* ══ Mascot ══ */
+var MASCOT_MSGS = {
+  expired:[
+    '☠️ {name}: "오늘 안 먹으면 내일은 실험체입니다."',
+    '🧫 {name}의 유통기한이 아니라 카운트다운이었습니다.',
+    '🧪 냉장고 과학 프로젝트 시작 3…2…1… 주인공: {name}',
+    '⚠️ {name}이/가 독립을 준비하고 있어.',
+    '🚑 지금 먹으면 {name}, 내일 먹으면 도전.',
+    '{name} 상태: "샐러드"에서 "퇴비"로 이동 중.',
+    '🍤 {name}이/가 진화하기 전에 처리해줘.',
+    '🚨 냉장고 내부에서 {name} 부패 세력이 성장 중입니다.',
+    '🧊 냉장고 던전 보스 출현! 이름: {name}',
+    '💸 방금 너의 지갑에서 {price}원이 사라졌어. {name} 때문에.',
+    '🤑 {price}원짜리 {name}이/가 지금 쓰레기통으로 향하고 있어.',
+    '💰 오늘의 손실: {name} {price}원. 냉장고가 울고 있어.',
+  ],
+  danger:[
+    '🥺 {name}: "나 오늘까지만 신선할 수 있어…"',
+    '{name}이/가 생의 의지를 잃고 있습니다.',
+    '{name}이/가 곧 자연으로 돌아갑니다.',
+    '{name}: "마지막 신호를 보내는 중이야."',
+    '{name}: "언제 먹어줄 거야?" 하고 울고 있어.',
+    '{name}이/가 점점 바나나브레드의 길로 가고 있어.',
+    '{name}이/가 오늘을 넘기기 힘들어 보여…',
+    '{name}이/가 위험한 생각을 시작했어.',
+    '너 지금 {name}랑 거리두기 하는 중이지?',
+    '{name} 싱그러움 HP: 12%… 제발 먹어줘.',
+    '{name} 생존 확률 감소 중… 빨리 구해줘!',
+    '{name} 컨디션: 아슬아슬',
+    '🎯 오늘의 퀘스트: {name} 소비하기',
+    '⚔️ 냉장고 보스전 시작: {name} 처치!',
+    '🔥 긴급 미션! {name} 소비하기. 남은 시간: 1일',
+    '🍳 {name} 어떻게 할지 모르겠으면 만개의 레시피 눌러봐!',
+    '💸 {price}원짜리 {name}이/가 사라지기 직전이야. 지금 당장!',
+  ],
+  warning:[
+    '⏰ {name} 유통기한이 얼마 남지 않았어요.',
+    '{name}, 오늘 먹으면 가장 맛있어요!',
+    '📦 {name} 버리기 전에 먼저 확인해보세요!',
+    '아껴둔 {name}, 슬슬 먹을 때가 됐어요!',
+    '🏆 오늘 {name} 소비하면 냉장고 정리 완료!',
+    '🎲 {name}으로 요리 한 번 해볼까요?',
+    '🛡️ 음식물 쓰레기를 막아라! {name} 아직 살릴 수 있어요.',
+    '{name}: "나 아직 먹을 수 있는데…"',
+    '🍳 {name}으로 뭐 만들지? 만개의 레시피에서 찾아봐!',
+    '📖 {name} 레시피 고민된다면 아래 버튼 눌러봐!',
+  ],
+  happy:[
+    '✨ 냉장고 상태 완벽해요! 잘 관리하고 있어요 🎉',
+    '🌟 모든 식재료가 신선해요! 대단한걸요?',
+    '💪 냉장고 관리 만렙 달성! 오늘도 파이팅!',
+    '🎊 임박하거나 만료된 식재료가 없어요! 최고!',
+    '🧊 냉장고가 오늘도 행복해요~ 감사합니다!',
+    '✅ 이번 주도 음식물 쓰레기 0회 도전 중!',
+  ]
+};
+
+function getMascotMsg(mood, itemName, itemPrice) {
+  var pool = MASCOT_MSGS[mood] || MASCOT_MSGS.happy;
+  var filtered = itemPrice ? pool : pool.filter(function(m){ return m.indexOf('{price}') === -1; });
+  if (!filtered.length) filtered = pool;
+  var msg = filtered[Math.floor(Math.random() * filtered.length)];
+  if (itemName) {
+    msg = msg.replace(/\{name\}이\/가/g, itemName+'이/가').replace(/\{name\}/g, itemName);
+  } else {
+    msg = msg.replace(/\{name\}이\/가/g, '식재료가').replace(/\{name\}/g, '식재료');
+  }
+  if (itemPrice) {
+    msg = msg.replace(/\{price\}/g, Number(itemPrice).toLocaleString());
+  }
+  return msg;
+}
+
+function mascotSvg(mood) {
+  var eyes, mouth, extra;
+  if (mood === 'happy') {
+    eyes = '<circle cx="35" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="37" cy="55" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="65" cy="55" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="39.5" cy="52.5" r="2.2" fill="white"/>'
+         + '<circle cx="67.5" cy="52.5" r="2.2" fill="white"/>';
+    mouth = '<path d="M33 74 Q49 88 65 74" stroke="#1a3a5c" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    extra = '<text x="49" y="18" text-anchor="middle" font-size="9" fill="#87ceeb" opacity=".7">❄</text>';
+  } else if (mood === 'worried') {
+    eyes = '<circle cx="35" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<path d="M27 46 Q35 42 39 46" stroke="#1a3a5c" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+         + '<path d="M59 46 Q63 42 71 46" stroke="#1a3a5c" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+         + '<circle cx="37" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="65" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="39.5" cy="53.5" r="2.2" fill="white"/>'
+         + '<circle cx="67.5" cy="53.5" r="2.2" fill="white"/>';
+    mouth = '<path d="M35 78 Q49 72 63 78" stroke="#1a3a5c" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>';
+  } else {
+    eyes = '<circle cx="35" cy="56" r="12" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="12" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="35" cy="57" r="7" fill="#1a3a5c"/>'
+         + '<circle cx="63" cy="57" r="7" fill="#1a3a5c"/>'
+         + '<circle cx="38" cy="53" r="2.8" fill="white"/>'
+         + '<circle cx="66" cy="53" r="2.8" fill="white"/>';
+    mouth = '<ellipse cx="49" cy="78" rx="7" ry="5" fill="#1a3a5c"/>'
+          + '<ellipse cx="49" cy="77" rx="5" ry="3.5" fill="white"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>'
+          + '<ellipse cx="24" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".55"/>'
+          + '<circle cx="24" cy="43.5" r="3" fill="#87ceeb" opacity=".55"/>';
+  }
+  var gid = mood || 'h';
+  return '<svg width="98" height="122" viewBox="0 0 98 132" xmlns="http://www.w3.org/2000/svg">'
+    + '<defs>'
+    + '<linearGradient id="mbg'+gid+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8f4fd"/><stop offset="100%" stop-color="#c8e6f8"/></linearGradient>'
+    + '<linearGradient id="mfz'+gid+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d0e8f8"/><stop offset="100%" stop-color="#a8d2ee"/></linearGradient>'
+    + '</defs>'
+    + '<ellipse cx="49" cy="129" rx="27" ry="5" fill="rgba(0,0,0,0.07)"/>'
+    + '<rect x="2" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="81" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="14" y="5" width="70" height="26" rx="10" fill="url(#mfz'+gid+')" stroke="#87ceeb" stroke-width="2"/>'
+    + '<rect x="29" y="13" width="40" height="6" rx="3" fill="#87ceeb"/>'
+    + extra
+    + '<rect x="14" y="28" width="70" height="88" rx="12" fill="url(#mbg'+gid+')" stroke="#87ceeb" stroke-width="2"/>'
+    + '<line x1="16" y1="31" x2="82" y2="31" stroke="#c8e6f5" stroke-width="1.5"/>'
+    + '<rect x="20" y="35" width="11" height="46" rx="5.5" fill="rgba(255,255,255,0.55)"/>'
+    + '<rect x="31" y="84" width="36" height="6" rx="3" fill="#87ceeb"/>'
+    + eyes
+    + '<ellipse cx="24" cy="69" rx="8" ry="4.5" fill="rgba(255,120,120,0.3)"/>'
+    + '<ellipse cx="74" cy="69" rx="8" ry="4.5" fill="rgba(255,120,120,0.3)"/>'
+    + mouth
+    + '<rect x="21" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="55" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '</svg>';
+}
+
+function renderMascot() {
+  var exp = S.items.filter(function(i){ return dLeft(i.exp) < 0; }).length;
+  var wrn = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; }).length;
+  var mood = exp > 0 ? 'panicked' : wrn > 0 ? 'worried' : 'happy';
+  var msg = exp > 0 ? '만료된 식재료가 있어요 😨' : wrn > 0 ? '임박한 식재료가 있어요!' : '냉장고 상태 좋아요 ✨';
+  return '<div class="mascot-wrap mascot-'+mood+'">'
+    + '<div class="mascot-svg">'+mascotSvg(mood)+'</div>'
+    + '<div class="mascot-msg">'+msg+'</div>'
+    + '</div>';
+}
+
+function mascotModalHeader(mood, itemName) {
+  return '<div class="mascot-wrap mascot-'+mood+'">'
+    +'<div class="mascot-name">🧊 냉장고 마스코트</div>'
+    +'<div class="mascot-svg">'+mascotSvg(mood)+'</div>'
+    +'<div class="mascot-bubble">'+getMascotMsg(mood, itemName)+'</div>'
+    +'</div>';
+}
+
 /* ══ Notifications ══ */
 function onNotifBtn() {
   var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
   var warning = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
-  if(!expired.length && !warning.length){
+
+  if (!expired.length && !warning.length) {
     showModal('<div class="mhandle"></div>'
       +'<div style="text-align:center;padding:24px 0">'
       +'<div style="font-size:3rem;margin-bottom:12px">✅</div>'
@@ -1313,13 +1692,15 @@ function onNotifBtn() {
       +'<button class="btn-s" onclick="closeModal()">닫기</button>');
     return;
   }
+
   var totalLoss = 0;
   for(var i=0;i<expired.length;i++){ totalLoss += Number(expired[i].price)||0; }
   var h = '<div class="mhandle"></div>';
+
   if(totalLoss > 0) {
-    h += '<div style="background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.2);border-radius:var(--r);padding:16px;text-align:center;margin-bottom:16px">'
-      +'<div style="font-size:.78rem;color:var(--muted);margin-bottom:4px">💸 버린 돈</div>'
-      +'<div style="font-size:2.2rem;font-weight:900;color:var(--red);letter-spacing:-.5px">-'+totalLoss.toLocaleString()+'원</div>'
+    h += '<div style="background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.2);border-radius:var(--r);padding:14px;text-align:center;margin-bottom:14px">'
+      +'<div style="font-size:.75rem;color:var(--muted);margin-bottom:3px">💸 버린 돈</div>'
+      +'<div style="font-size:2rem;font-weight:900;color:var(--red);letter-spacing:-.5px">-'+totalLoss.toLocaleString()+'원</div>'
       +'</div>';
   }
   if(expired.length) {
@@ -1345,7 +1726,8 @@ function onNotifBtn() {
         +'</div>';
     }
   }
-  h += '<button class="btn-s mt8" onclick="closeModal()">닫기</button>';
+  h += '<button class="btn-p mt8" onclick="searchRecipeUrgent()" style="background:linear-gradient(135deg,#e8572a,#c43b12)">🍳 임박 재료로 레시피 찾기</button>';
+  h += '<button class="btn-s" onclick="closeModal()">닫기</button>';
   showModal(h);
 }
 async function reqNotif() {
@@ -1363,11 +1745,22 @@ function checkExp(){
   for(var i=0;i<S.items.length;i++){
     var d=dLeft(S.items[i].exp);
     if(d>=0&&d<=S.cfg.notifyDays&&notified[S.items[i].id]!==td){
-      new Notification('🧊 '+S.items[i].name,{body:d===0?'오늘 만료돼요!':d+'일 후 만료돼요'});
+      var nMood = d<=2 ? 'danger' : 'warning';
+      var nMsg = getMascotMsg(nMood, S.items[i].name);
+      new Notification('🧊 '+S.items[i].name, {body: nMsg});
       notified[S.items[i].id]=td;dirty=true;
     }
   }
   if(dirty)lset('notified',JSON.stringify(notified));
+}
+function autoPopup(){
+  var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
+  var warning = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
+  if(!expired.length && !warning.length) return;
+  var shownToday = ls('autopop');
+  if(shownToday === new Date().toDateString()) return;
+  lset('autopop', new Date().toDateString());
+  setTimeout(function(){ onNotifBtn(); }, 1800);
 }
 function badge(){
   var b=document.getElementById('nbadge'); if(!b) return;
@@ -1410,8 +1803,10 @@ load();
 loadTheme();
 go('home');
 checkExp();
+autoPopup();
 setInterval(checkExp, 30*60*1000);
 requestAnimationFrame(function(){ requestAnimationFrame(openDoor); });
+setTimeout(function(){ fetchNews(); }, 2000);
 </script>
 </body>
 </html>
