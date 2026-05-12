@@ -1623,7 +1623,8 @@ async function analyzeReceipt() {
   S.scan.loading=false; render();
 }
 function parseReceipt(txt) {
-  var SKIP=['합계','소계','부가세','vat','카드','현금','거스름','영수증','가맹점','사업자','전화','주소','tel','승인','할인','포인트','적립','잔액','결제','매출','점포','면세','과세','봉사료','총액','수량','단가','금액'];
+  var SKIP=['합계','소계','부가세','vat','카드','현금','거스름','영수증','가맹점','사업자','전화','주소','tel','승인','할인','포인트','적립','잔액','결제','매출','점포','면세','과세','봉사료','총액','수량','단가','금액',
+    '상품번호','상품코드','품목번호','바코드','코드','번호','구매일','판매일','영업','시간','날짜','일자','거래','영수','점원','cashier','receipt','total','subtotal','tax','cash','credit','member','고객','회원','전표','교환','반품','취소','오류','error','품명','단위','규격','비고','note'];
   var lines=txt.split('\n').map(function(l){ return l.trim(); }).filter(function(l){ return !!l; });
   var items=[];
   for (var i=0;i<lines.length;i++) {
@@ -1631,23 +1632,21 @@ function parseReceipt(txt) {
     for (var j=0;j<SKIP.length;j++) { if(low.indexOf(SKIP[j])>=0){skip=true;break;} }
     if (skip) continue;
     var kor=(line.match(/[가-힣]/g)||[]).length;
-    if (kor<2||line.length>40) continue;
+    if (kor<2||line.length>50) continue;
+    // 숫자만 있거나 숫자+특수문자로만 이뤄진 줄 제외
+    if (/^[\d\s\-\.\,\*\/\(\)\[\]#@]+$/.test(line)) continue;
     var qm=line.match(/(\d+)\s*(개|팩|봉|병|캔|g|kg|ml|l|묶음)/i);
     var qty=qm?qm[1]+qm[2]:'';
-    var price='';
-    var pm=line.match(/([\d,]{3,})\s*원?\s*$/);
-    if (pm) {
-      price=pm[1].replace(/,/g,'');
-    } else {
-      for (var j2=i+1;j2<=Math.min(i+2,lines.length-1);j2++) {
-        var next=lines[j2];
-        if ((next.match(/[가-힣]/g)||[]).length>=2) break;
-        var nums=(next.match(/([\d,]{3,})/g)||[]).map(function(p){ return parseInt(p.replace(/,/g,'')); });
-        if (nums.length) { price=String(Math.max.apply(null,nums)); break; }
-      }
-    }
-    var name=line.replace(/[\d,]+\s*원?\s*$/,'').replace(/^\s*[\d,]+\s*/,'').replace(/\s{2,}/g,' ').trim();
-    if (name.length>=2) items.push({name:name, qty:qty, price:price, cat:'기타'});
+    // 숫자·단위·특수문자 제거 후 식재료명 추출
+    var name=line
+      .replace(/\d+\s*(개|팩|봉|병|캔|g|kg|ml|l|묶음)/gi,'')
+      .replace(/[\d,]+\s*원?\s*$/,'')
+      .replace(/^\s*[\d,]+\s*/,'')
+      .replace(/[*#@\[\]\/\\|]/g,' ')
+      .replace(/\s{2,}/g,' ').trim();
+    // 정제 후에도 한글 2자 이상 있어야 식재료로 인정
+    var nameKor=(name.match(/[가-힣]/g)||[]).length;
+    if (nameKor>=2) items.push({name:name, qty:qty, price:'', cat:'기타'});
   }
   return items;
 }
