@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>&#45257;&#51109;&#44256; &#54028;&#47673;&#44592;</title>
+<title>신선해 — fresh hae</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
@@ -261,6 +262,8 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .sauce-btl{display:flex;flex-direction:column;align-items:center;}
 .sauce-btl-cap{width:10px;height:7px;border-radius:3px 3px 0 0;box-shadow:0 -1px 2px rgba(0,0,0,.12);}
 .sauce-btl-body{width:16px;height:34px;border-radius:3px 3px 5px 5px;box-shadow:inset 3px 0 0 rgba(255,255,255,.18),0 1px 4px rgba(0,0,0,.25);}
+.door-bin-frozen{cursor:pointer;transition:background .15s;}
+.door-bin-frozen:active{transform:scale(.97);}
 /* ── Stats ── */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center;}
@@ -294,7 +297,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .dday{padding:5px 10px;border-radius:8px;font-size:.8rem;font-weight:700;text-align:center;flex-shrink:0;min-width:55px;}
 .dday.c-expired{background:rgba(248,81,73,.14);color:var(--red);}
 .dday.c-danger{background:rgba(240,136,62,.14);color:var(--orange);}
-.dday.c-warning{background:rgba(227,179,65,.14);color:var(--yellow);border:1.5px solid rgba(255,224,51,.5);}
+.dday.c-warning{background:rgba(227,179,65,.14);color:var(--yellow);}
 .dday.c-safe{background:rgba(63,185,80,.14);color:var(--green);}
 
 /* ── Calendar ── */
@@ -381,8 +384,44 @@ select.inp{appearance:none;
 .toggle.on::after{transform:translateX(19px);}
 
 /* ── Modal ── */
+/* ── Landing ── */
+#landing{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;cursor:pointer;
+  background:linear-gradient(160deg,#071a2e 0%,#0d2a1a 45%,#071a2e 100%);
+  transition:opacity .65s ease,transform .65s ease;}
+#landing.hide{opacity:0;transform:scale(1.06);pointer-events:none;}
+.ld-mascot{animation:ldFloat 2.4s ease-in-out infinite;}
+@keyframes ldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.ld-title{margin-top:22px;font-size:3.2rem;font-weight:900;letter-spacing:.04em;font-family:'Noto Serif KR',serif;
+  background:linear-gradient(135deg,#7ee8a2 0%,#80ff72 40%,#87ceeb 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 14px rgba(126,232,162,.65)) drop-shadow(0 0 32px rgba(126,232,162,.35));
+  animation:ldFadeUp .8s .2s both;}
+.ld-sub{font-size:1rem;color:rgba(255,255,255,.45);letter-spacing:.22em;margin-top:6px;
+  text-transform:lowercase;animation:ldFadeUp .8s .4s both;}
+.ld-hint{position:absolute;bottom:52px;font-size:.75rem;color:rgba(255,255,255,.28);
+  letter-spacing:.08em;animation:ldPulse 2s 1s ease-in-out infinite;}
+@keyframes ldFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ldPulse{0%,100%{opacity:.28}50%{opacity:.7}}
+.ld-glow{position:absolute;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(63,185,80,.18) 0%,transparent 70%);
+  pointer-events:none;animation:ldGlowPulse 2.5s ease-in-out infinite;}
+@keyframes ldGlowPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+.ld-sparks{position:absolute;inset:0;pointer-events:none;}
+.ld-spark{position:absolute;font-size:.9rem;animation:ldSparkAnim var(--dur,2.2s) var(--delay,0s) ease-in-out infinite;}
+@keyframes ldSparkAnim{0%,100%{opacity:0;transform:scale(.5) rotate(0deg)}50%{opacity:1;transform:scale(1.2) rotate(180deg)}}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;
   display:flex;align-items:flex-end;animation:fadein .18s;}
+.report-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;
+  display:flex;align-items:center;justify-content:center;animation:fadein .25s;padding:16px;}
+.report-card{background:var(--surface);border-radius:20px;width:100%;max-width:380px;
+  padding:24px 20px 20px;max-height:88vh;overflow-y:auto;animation:popIn .35s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.report-stat{background:var(--surface2);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.report-stat-l{font-size:.8rem;color:var(--muted);}
+.report-stat-v{font-size:1.1rem;font-weight:800;}
+.report-item{font-size:.82rem;padding:7px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;}
+.report-item:last-child{border-bottom:none;}
 .modal{background:var(--surface);border-radius:var(--r) var(--r) 0 0;width:100%;
   max-width:480px;margin:0 auto;padding:20px 16px 26px;animation:slideup .22s;
   max-height:88vh;overflow-y:auto;}
@@ -492,8 +531,28 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
 </head>
 <body ontouchstart="">
 
+<div id="landing" onclick="dismissLanding()">
+  <div class="ld-glow"></div>
+  <div class="ld-sparks">
+    <span class="ld-spark" style="top:12%;left:18%;--dur:2.1s;--delay:0s">✦</span>
+    <span class="ld-spark" style="top:8%;left:62%;--dur:2.6s;--delay:.4s">✧</span>
+    <span class="ld-spark" style="top:18%;right:14%;--dur:2s;--delay:.2s">✦</span>
+    <span class="ld-spark" style="top:42%;left:8%;--dur:2.4s;--delay:.7s">✧</span>
+    <span class="ld-spark" style="top:38%;right:9%;--dur:2.2s;--delay:1s">✦</span>
+    <span class="ld-spark" style="bottom:28%;left:16%;--dur:2.8s;--delay:.3s">✧</span>
+    <span class="ld-spark" style="bottom:22%;right:18%;--dur:2.3s;--delay:.8s">✦</span>
+    <span class="ld-spark" style="bottom:38%;left:50%;--dur:2.5s;--delay:.5s">✧</span>
+    <span class="ld-spark" style="top:28%;left:38%;--dur:3s;--delay:1.2s">⋆</span>
+    <span class="ld-spark" style="bottom:16%;right:35%;--dur:2.7s;--delay:.6s">⋆</span>
+  </div>
+  <div class="ld-mascot" id="ld-mascot"></div>
+  <div class="ld-title">신선해</div>
+  <div class="ld-sub">fresh hae 🌿</div>
+  <div class="ld-hint">탭하여 시작하기</div>
+</div>
+
 <header class="hdr">
-  <span class="hdr-logo">&#x1F9CA; &#45257;&#51109;&#44256; &#54028;&#47673;&#44592;</span>
+  <span class="hdr-logo" style="font-family:'Noto Serif KR',serif;letter-spacing:.04em">신선해 <span style="font-size:.7em;opacity:.6;font-family:inherit">fresh hae</span></span>
   <div style="display:flex;gap:7px;align-items:center;">
     <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="테마 전환">&#x2600;&#xFE0F;</button>
     <button class="icon-btn" onclick="onNotifBtn()">&#x1F514;<span class="badge" id="nbadge"></span></button>
@@ -596,9 +655,9 @@ function load() {
   try { var c = JSON.parse(ls('cfg') || '{}'); S.cfg.notifyDays = c.notifyDays||3; S.cfg.notifOn = !!c.notifOn; } catch(e) {}
   try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
   try { var sc = JSON.parse(ls('sauces3') || 'null'); S.sauces = Array.isArray(sc) ? sc : []; } catch(e) { S.sauces = []; }
+  try { S.frozen = JSON.parse(ls('frozen') || '[]'); } catch(e) { S.frozen = []; }
   try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
   try { var fs = parseFloat(ls('fridgeScale') || '1'); S.fridgeScale = isNaN(fs) ? 1 : Math.max(0.4, Math.min(1.3, fs)); } catch(e) { S.fridgeScale = 1; }
-  try { S.frozen = JSON.parse(ls('frozen') || '[]'); } catch(e) { S.frozen = []; }
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -846,7 +905,7 @@ function openFrozenModal() {
   var list = '';
   for (var i = 0; i < sorted.length; i++) {
     var it = sorted[i], d = dLeft(it.exp), cl = dcls(d);
-    var cl = cl === 'c-warning' ? 'c-danger' : cl;
+    if (cl === 'c-warning') cl = 'c-danger';
     var frozenDays = it.frozenAt ? Math.round((new Date() - new Date(it.frozenAt)) / 86400000) : null;
     list += '<div id="frz-'+it.id+'" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:6px">'
       + frozenIceBlock(it.cat, 30)
@@ -952,46 +1011,48 @@ function render() {
 
 /* ══ Warning Banner ══ */
 function tinyMascotSvg(mood) {
-  var eyes, mouth, extra = '';
+  var eyes, mouth, extra;
   if (mood === 'panicked') {
-    eyes = '<circle cx="37" cy="52" r="12" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="63" cy="52" r="12" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="37" cy="53" r="7.5" fill="#1e2d3a"/>'
-         + '<circle cx="63" cy="53" r="7.5" fill="#1e2d3a"/>'
-         + '<circle cx="40.5" cy="49.5" r="2.8" fill="white"/>'
-         + '<circle cx="66.5" cy="49.5" r="2.8" fill="white"/>'
-         + '<path d="M25 38 Q33 32 41 37" stroke="#1e2d3a" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
-         + '<path d="M59 37 Q67 32 75 38" stroke="#1e2d3a" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
-    mouth = '<ellipse cx="50" cy="74" rx="7.5" ry="5" fill="#1e2d3a"/>'
-          + '<ellipse cx="50" cy="73" rx="5.2" ry="3.5" fill="rgba(255,210,210,.9)"/>';
-    extra = '<path d="M11 60 Q9 53 14 48 Q19 53 17 60Z" fill="#87ceeb" opacity=".6"/>'
-          + '<path d="M89 60 Q87 53 92 48 Q97 53 95 60Z" fill="#87ceeb" opacity=".6"/>';
+    eyes = '<circle cx="35" cy="56" r="11" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="11" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="35" cy="57" r="6.5" fill="#1a3a5c"/>'
+         + '<circle cx="63" cy="57" r="6.5" fill="#1a3a5c"/>'
+         + '<circle cx="38" cy="53" r="2.5" fill="white"/>'
+         + '<circle cx="66" cy="53" r="2.5" fill="white"/>';
+    mouth = '<ellipse cx="49" cy="78" rx="7" ry="5" fill="#1a3a5c"/>'
+          + '<ellipse cx="49" cy="77" rx="5" ry="3.5" fill="white"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>'
+          + '<ellipse cx="24" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".55"/>'
+          + '<circle cx="24" cy="43.5" r="3" fill="#87ceeb" opacity=".55"/>';
   } else {
-    eyes = '<circle cx="37" cy="52" r="10" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="63" cy="52" r="10" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="38.5" cy="53.5" r="5.5" fill="#1e2d3a"/>'
-         + '<circle cx="64.5" cy="53.5" r="5.5" fill="#1e2d3a"/>'
-         + '<circle cx="40.5" cy="51" r="2.1" fill="white"/>'
-         + '<circle cx="66.5" cy="51" r="2.1" fill="white"/>'
-         + '<path d="M27 40 Q36 35 43 40" stroke="#1e2d3a" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
-         + '<path d="M57 40 Q64 35 73 40" stroke="#1e2d3a" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
-    mouth = '<path d="M36 74 Q50 69 64 74" stroke="#1e2d3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
-    extra = '';
+    eyes = '<circle cx="35" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<path d="M27 46 Q35 42 39 46" stroke="#1a3a5c" stroke-width="2" fill="none" stroke-linecap="round"/>'
+         + '<path d="M59 46 Q63 42 71 46" stroke="#1a3a5c" stroke-width="2" fill="none" stroke-linecap="round"/>'
+         + '<circle cx="37" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="65" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="39.5" cy="53.5" r="2.2" fill="white"/>'
+         + '<circle cx="67.5" cy="53.5" r="2.2" fill="white"/>';
+    mouth = '<path d="M35 78 Q49 72 63 78" stroke="#1a3a5c" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>';
   }
-  return '<svg width="60" height="72" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2));animation:mascotShake .28s ease-in-out infinite alternate;">'
-    + '<circle cx="22" cy="20" r="17" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<circle cx="78" cy="20" r="17" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<circle cx="22" cy="20" r="10" fill="#f5c0d0"/>'
-    + '<circle cx="78" cy="20" r="10" fill="#f5c0d0"/>'
-    + '<circle cx="50" cy="56" r="40" fill="#f5f0e8" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<ellipse cx="16" cy="64" rx="10" ry="7" fill="rgba(255,150,150,.2)"/>'
-    + '<ellipse cx="84" cy="64" rx="10" ry="7" fill="rgba(255,150,150,.2)"/>'
-    + '<path d="M24 93 Q50 101 76 93" stroke="#5aaec8" stroke-width="7" fill="none" stroke-linecap="round"/>'
-    + '<path d="M24 93 Q50 99 76 93" stroke="#87ceeb" stroke-width="4" fill="none" stroke-linecap="round"/>'
-    + eyes
-    + '<ellipse cx="50" cy="67" rx="5" ry="3.8" fill="#1e2d3a"/>'
-    + '<circle cx="48" cy="65.5" r="1.5" fill="rgba(255,255,255,.5)"/>'
-    + mouth + extra
+  return '<svg width="60" height="72" viewBox="0 0 98 132" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));animation:mascotShake .28s ease-in-out infinite alternate;">'
+    + '<defs><linearGradient id="tbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8f4fd"/><stop offset="100%" stop-color="#c8e6f8"/></linearGradient>'
+    + '<linearGradient id="tfz" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d0e8f8"/><stop offset="100%" stop-color="#a8d2ee"/></linearGradient></defs>'
+    + '<rect x="2" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="81" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="14" y="5" width="70" height="26" rx="10" fill="url(#tfz)" stroke="#87ceeb" stroke-width="2"/>'
+    + '<rect x="29" y="13" width="40" height="6" rx="3" fill="#87ceeb"/>'
+    + extra
+    + '<rect x="14" y="28" width="70" height="88" rx="12" fill="url(#tbg)" stroke="#87ceeb" stroke-width="2"/>'
+    + '<line x1="16" y1="31" x2="82" y2="31" stroke="#c8e6f5" stroke-width="1.5"/>'
+    + '<rect x="20" y="35" width="11" height="46" rx="5.5" fill="rgba(255,255,255,0.55)"/>'
+    + '<rect x="31" y="84" width="36" height="6" rx="3" fill="#87ceeb"/>'
+    + eyes + mouth
+    + '<rect x="21" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="55" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
     + '</svg>';
 }
 
@@ -1131,7 +1192,7 @@ function vFridge() {
     + '<div class="door-sub">유통기한 세이퍼</div>'
     + '</div>'
     + '<div class="door-back">'
-    + '<div class="door-bin door-bin-frozen" onclick="event.stopPropagation();openFrozenModal()" style="cursor:pointer">'
+    + '<div class="door-bin door-bin-frozen" onclick="event.stopPropagation();openFrozenModal()">'
     + frozenBinHtml()
     + '</div>'
     + '<div class="door-bin door-bin-egg" onclick="event.stopPropagation();openEggModal()">'
@@ -1714,59 +1775,64 @@ function getMascotMsg(mood, itemName, itemPrice) {
 }
 
 function mascotSvg(mood) {
-  var eyes, mouth, extra = '';
+  var eyes, mouth, extra;
   if (mood === 'happy') {
-    eyes = '<path d="M31 52 Q39 44 47 52" stroke="#1e2d3a" stroke-width="3.2" fill="none" stroke-linecap="round"/>'
-         + '<path d="M53 52 Q61 44 69 52" stroke="#1e2d3a" stroke-width="3.2" fill="none" stroke-linecap="round"/>';
-    mouth = '<path d="M33 70 Q50 87 67 70" stroke="#1e2d3a" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
-    extra = '<text x="50" y="8" text-anchor="middle" font-size="11" fill="#87ceeb" opacity=".55">❄</text>'
-          + '<circle cx="13" cy="50" r="2.5" fill="#ffe033" opacity=".7"/>'
-          + '<circle cx="87" cy="50" r="2.5" fill="#ffe033" opacity=".7"/>';
+    eyes = '<circle cx="35" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="37" cy="55" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="65" cy="55" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="39.5" cy="52.5" r="2.2" fill="white"/>'
+         + '<circle cx="67.5" cy="52.5" r="2.2" fill="white"/>';
+    mouth = '<path d="M33 74 Q49 88 65 74" stroke="#1a3a5c" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    extra = '<text x="49" y="18" text-anchor="middle" font-size="9" fill="#87ceeb" opacity=".7">❄</text>';
   } else if (mood === 'worried') {
-    eyes = '<circle cx="37" cy="52" r="10.5" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="63" cy="52" r="10.5" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="38.5" cy="53.5" r="5.8" fill="#1e2d3a"/>'
-         + '<circle cx="64.5" cy="53.5" r="5.8" fill="#1e2d3a"/>'
-         + '<circle cx="40.5" cy="51" r="2.2" fill="white"/>'
-         + '<circle cx="66.5" cy="51" r="2.2" fill="white"/>'
-         + '<path d="M27 40 Q36 35 43 41" stroke="#1e2d3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
-         + '<path d="M57 41 Q64 35 73 40" stroke="#1e2d3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
-    mouth = '<path d="M36 74 Q50 69 64 74" stroke="#1e2d3a" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    eyes = '<circle cx="35" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="10" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<path d="M27 46 Q35 42 39 46" stroke="#1a3a5c" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+         + '<path d="M59 46 Q63 42 71 46" stroke="#1a3a5c" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+         + '<circle cx="37" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="65" cy="56" r="5.5" fill="#1a3a5c"/>'
+         + '<circle cx="39.5" cy="53.5" r="2.2" fill="white"/>'
+         + '<circle cx="67.5" cy="53.5" r="2.2" fill="white"/>';
+    mouth = '<path d="M35 78 Q49 72 63 78" stroke="#1a3a5c" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>';
   } else {
-    eyes = '<circle cx="37" cy="51" r="13" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="63" cy="51" r="13" fill="white" stroke="#d8d2c8" stroke-width="1.5"/>'
-         + '<circle cx="37" cy="52" r="8" fill="#1e2d3a"/>'
-         + '<circle cx="63" cy="52" r="8" fill="#1e2d3a"/>'
-         + '<circle cx="40.5" cy="48.5" r="3" fill="white"/>'
-         + '<circle cx="66.5" cy="48.5" r="3" fill="white"/>'
-         + '<path d="M25 38 Q33 32 41 37" stroke="#1e2d3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
-         + '<path d="M59 37 Q67 32 75 38" stroke="#1e2d3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
-    mouth = '<ellipse cx="50" cy="75" rx="8" ry="5.5" fill="#1e2d3a"/>'
-          + '<ellipse cx="50" cy="74" rx="5.5" ry="3.8" fill="rgba(255,210,210,.9)"/>';
-    extra = '<path d="M11 60 Q9 53 14 48 Q19 53 17 60Z" fill="#87ceeb" opacity=".65"/>'
-          + '<path d="M89 60 Q87 53 92 48 Q97 53 95 60Z" fill="#87ceeb" opacity=".65"/>';
+    eyes = '<circle cx="35" cy="56" r="12" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="63" cy="56" r="12" fill="white" stroke="#b8d8ee" stroke-width="1.5"/>'
+         + '<circle cx="35" cy="57" r="7" fill="#1a3a5c"/>'
+         + '<circle cx="63" cy="57" r="7" fill="#1a3a5c"/>'
+         + '<circle cx="38" cy="53" r="2.8" fill="white"/>'
+         + '<circle cx="66" cy="53" r="2.8" fill="white"/>';
+    mouth = '<ellipse cx="49" cy="78" rx="7" ry="5" fill="#1a3a5c"/>'
+          + '<ellipse cx="49" cy="77" rx="5" ry="3.5" fill="white"/>';
+    extra = '<ellipse cx="74" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".65"/>'
+          + '<circle cx="74" cy="43.5" r="3" fill="#87ceeb" opacity=".65"/>'
+          + '<ellipse cx="24" cy="48" rx="3.5" ry="5.5" fill="#87ceeb" opacity=".55"/>'
+          + '<circle cx="24" cy="43.5" r="3" fill="#87ceeb" opacity=".55"/>';
   }
-  return '<svg width="98" height="122" viewBox="0 0 100 132" xmlns="http://www.w3.org/2000/svg">'
-    + '<ellipse cx="50" cy="130" rx="24" ry="4" fill="rgba(0,0,0,.08)"/>'
-    + '<ellipse cx="37" cy="122" rx="13" ry="8.5" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.2"/>'
-    + '<ellipse cx="63" cy="122" rx="13" ry="8.5" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.2"/>'
-    + '<ellipse cx="50" cy="106" rx="27" ry="23" fill="#f5f0e8" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<ellipse cx="50" cy="108" rx="17" ry="14" fill="rgba(255,255,255,.52)"/>'
-    + '<ellipse cx="15" cy="100" rx="11" ry="8" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.2" transform="rotate(-30 15 100)"/>'
-    + '<ellipse cx="85" cy="100" rx="11" ry="8" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.2" transform="rotate(30 85 100)"/>'
-    + '<circle cx="22" cy="20" r="17" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<circle cx="78" cy="20" r="17" fill="#ede8e0" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<circle cx="22" cy="20" r="10" fill="#f5c0d0"/>'
-    + '<circle cx="78" cy="20" r="10" fill="#f5c0d0"/>'
-    + '<circle cx="50" cy="54" r="40" fill="#f5f0e8" stroke="#cec8bc" stroke-width="1.5"/>'
-    + '<ellipse cx="16" cy="62" rx="10" ry="7" fill="rgba(255,150,150,.22)"/>'
-    + '<ellipse cx="84" cy="62" rx="10" ry="7" fill="rgba(255,150,150,.22)"/>'
-    + '<path d="M23 91 Q50 100 77 91" stroke="#5aaec8" stroke-width="8" fill="none" stroke-linecap="round"/>'
-    + '<path d="M23 91 Q50 98 77 91" stroke="#87ceeb" stroke-width="4.5" fill="none" stroke-linecap="round"/>'
+  var gid = mood || 'h';
+  return '<svg width="98" height="122" viewBox="0 0 98 132" xmlns="http://www.w3.org/2000/svg">'
+    + '<defs>'
+    + '<linearGradient id="mbg'+gid+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8f4fd"/><stop offset="100%" stop-color="#c8e6f8"/></linearGradient>'
+    + '<linearGradient id="mfz'+gid+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d0e8f8"/><stop offset="100%" stop-color="#a8d2ee"/></linearGradient>'
+    + '</defs>'
+    + '<ellipse cx="49" cy="129" rx="27" ry="5" fill="rgba(0,0,0,0.07)"/>'
+    + '<rect x="2" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="81" y="63" width="15" height="10" rx="5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="14" y="5" width="70" height="26" rx="10" fill="url(#mfz'+gid+')" stroke="#87ceeb" stroke-width="2"/>'
+    + '<rect x="29" y="13" width="40" height="6" rx="3" fill="#87ceeb"/>'
+    + extra
+    + '<rect x="14" y="28" width="70" height="88" rx="12" fill="url(#mbg'+gid+')" stroke="#87ceeb" stroke-width="2"/>'
+    + '<line x1="16" y1="31" x2="82" y2="31" stroke="#c8e6f5" stroke-width="1.5"/>'
+    + '<rect x="20" y="35" width="11" height="46" rx="5.5" fill="rgba(255,255,255,0.55)"/>'
+    + '<rect x="31" y="84" width="36" height="6" rx="3" fill="#87ceeb"/>'
     + eyes
-    + '<ellipse cx="50" cy="67" rx="5" ry="3.8" fill="#1e2d3a"/>'
-    + '<circle cx="48" cy="65.5" r="1.6" fill="rgba(255,255,255,.5)"/>'
-    + mouth + extra
+    + '<ellipse cx="24" cy="69" rx="8" ry="4.5" fill="rgba(255,120,120,0.3)"/>'
+    + '<ellipse cx="74" cy="69" rx="8" ry="4.5" fill="rgba(255,120,120,0.3)"/>'
+    + mouth
+    + '<rect x="21" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
+    + '<rect x="55" y="111" width="22" height="11" rx="5.5" fill="#d4eeff" stroke="#87ceeb" stroke-width="1.5"/>'
     + '</svg>';
 }
 
@@ -1865,6 +1931,44 @@ function checkExp(){
   }
   if(dirty)lset('notified',JSON.stringify(notified));
 }
+function weeklyReport(){
+  var ts = today();
+  var weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate()-7);
+  var weekAgoStr = weekAgo.toISOString().split('T')[0];
+  var shownKey = ls('weeklyReport');
+  if(shownKey === ts) return;
+  var bought = S.items.filter(function(i){ return i.buy && i.buy>=weekAgoStr && i.buy<=ts; });
+  var wasted = S.items.filter(function(i){ return i.exp>=weekAgoStr && i.exp<=ts && dLeft(i.exp)<0; });
+  if(!bought.length && !wasted.length) return;
+  lset('weeklyReport', ts);
+  var totalSpent = bought.reduce(function(s,i){ return s+(Number(i.price)||0); },0);
+  var totalWasted = wasted.reduce(function(s,i){ return s+(Number(i.price)||0); },0);
+  var mood = wasted.length===0 ? 'happy' : totalWasted>5000 ? 'panicked' : 'worried';
+  var mascotMsg = wasted.length===0
+    ? getMascotMsg('happy')
+    : getMascotMsg(totalWasted>5000?'expired':'danger', wasted[0].name, wasted[0].price);
+  var h = '<div class="report-overlay" id="report-overlay">'
+    +'<div class="report-card">'
+    +'<div style="text-align:center;font-size:1rem;font-weight:800;margin-bottom:16px">📊 이번 주 냉장고 리포트</div>'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">'
+    +mascotSvg(mood).replace('width="98" height="122"','width="70" height="85"')
+    +'<div class="banner-bubble" style="font-size:.85rem">'+mascotMsg+'</div>'
+    +'</div>'
+    +'<div class="report-stat"><span class="report-stat-l">🛒 이번 주 구매</span><span class="report-stat-v">'+bought.length+'개</span></div>'
+    +(totalSpent?'<div class="report-stat"><span class="report-stat-l">💳 총 지출</span><span class="report-stat-v" style="color:var(--blue)">'+totalSpent.toLocaleString()+'원</span></div>':'')
+    +'<div class="report-stat"><span class="report-stat-l">🚨 만료된 음식</span><span class="report-stat-v" style="color:var(--red)">'+wasted.length+'개</span></div>'
+    +(totalWasted?'<div class="report-stat"><span class="report-stat-l">💸 버린 돈</span><span class="report-stat-v" style="color:var(--red)">-'+totalWasted.toLocaleString()+'원</span></div>':'');
+  if(wasted.length){
+    h += '<div style="font-size:.75rem;font-weight:700;color:var(--muted);margin:12px 0 6px">만료된 식재료</div>';
+    for(var i=0;i<wasted.length;i++){
+      var p=Number(wasted[i].price)||0;
+      h += '<div class="report-item"><span>'+esc(wasted[i].name)+'</span>'+(p?'<span style="color:var(--red)">-'+p.toLocaleString()+'원</span>':'')+'</div>';
+    }
+  }
+  h += '<button class="btn-p" style="margin-top:16px" onclick="document.getElementById(\'report-overlay\').remove()">이번 주 보지 않기 ✓</button>'
+    +'</div></div>';
+  document.body.insertAdjacentHTML('beforeend', h);
+}
 function autoPopup(){
   var expired = S.items.filter(function(i){ return dLeft(i.exp) < 0; });
   var warning = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0&&d<=S.cfg.notifyDays; });
@@ -1916,6 +2020,17 @@ loadTheme();
 go('home');
 checkExp();
 autoPopup();
+document.getElementById('ld-mascot').innerHTML = mascotSvg('happy').replace('width="98" height="122"','width="110" height="138"');
+var _landingDismissed = false;
+function dismissLanding() {
+  if (_landingDismissed) return;
+  _landingDismissed = true;
+  var lp = document.getElementById('landing');
+  if (!lp) return;
+  lp.classList.add('hide');
+  setTimeout(function(){ lp.remove(); weeklyReport(); }, 700);
+}
+setTimeout(dismissLanding, 2000);
 setInterval(checkExp, 30*60*1000);
 requestAnimationFrame(function(){ requestAnimationFrame(openDoor); });
 setTimeout(function(){ fetchNews(); }, 2000);
