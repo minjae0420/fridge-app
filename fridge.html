@@ -846,6 +846,7 @@ function openFrozenModal() {
   var list = '';
   for (var i = 0; i < sorted.length; i++) {
     var it = sorted[i], d = dLeft(it.exp), cl = dcls(d);
+    var cl = cl === 'c-warning' ? 'c-danger' : cl;
     var frozenDays = it.frozenAt ? Math.round((new Date() - new Date(it.frozenAt)) / 86400000) : null;
     list += '<div id="frz-'+it.id+'" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:6px">'
       + frozenIceBlock(it.cat, 30)
