@@ -791,6 +791,9 @@ function initFirebase() {
   firebase.initializeApp(FIREBASE_CONFIG);
   _auth = firebase.auth();
   _db   = firebase.firestore();
+  _auth.getRedirectResult().then(function(result) {
+    if (result && result.user) { /* onAuthStateChanged handles it */ }
+  }).catch(function(e){ console.warn('redirectResult:', e); });
   _auth.onAuthStateChanged(function(user) {
     if (user) {
       S.auth = {
@@ -934,7 +937,13 @@ function resetPhoneStep() {
 function authGoogle() {
   var provider = new firebase.auth.GoogleAuthProvider();
   _auth.signInWithPopup(provider).catch(function(e){
-    document.getElementById('auth-msg').textContent = fbErr(e.code);
+    if (e.code === 'auth/operation-not-supported-in-this-environment' ||
+        e.code === 'auth/popup-blocked' ||
+        e.code === 'auth/popup-closed-by-user') {
+      _auth.signInWithRedirect(provider);
+    } else {
+      document.getElementById('auth-msg').textContent = fbErr(e.code);
+    }
   });
 }
 
