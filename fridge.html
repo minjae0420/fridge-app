@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>신선해 — fresh hae</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
-<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous" async></script>
 <style>
 :root{
@@ -568,27 +570,60 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
 .auth-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
 .auth-avatar-def{width:34px;height:34px;border-radius:50%;background:var(--surface2);
   border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.auth-method-tabs{display:flex;background:var(--surface2);border-radius:10px;padding:3px;margin-bottom:16px;}
+.auth-method-tab{flex:1;border:none;background:none;color:var(--muted);padding:8px;font-size:.85rem;font-weight:600;border-radius:8px;cursor:pointer;transition:background .2s,color .2s;}
+.auth-method-tab.on{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+.auth-step{display:none;}
+.auth-step.on{display:block;}
+.auth-otp-inp{letter-spacing:.35em;font-size:1.25rem;text-align:center;font-weight:700;}
+#recaptcha-container{position:absolute;bottom:0;left:0;opacity:0;pointer-events:none;}
 </style>
 </head>
 <body ontouchstart="">
 
 <!-- ── Auth Screen ── -->
 <div id="auth-screen" style="display:none">
-  <div class="auth-card">
+  <div class="auth-card" style="position:relative">
     <div class="auth-logo-wrap">
       <div class="auth-logo">🧊 신선해</div>
       <div class="auth-sub">냉장고 식재료 관리</div>
     </div>
-    <div class="auth-tabs">
-      <button class="auth-tab on" id="auth-tab-login" onclick="switchAuthTab('login')">로그인</button>
-      <button class="auth-tab"    id="auth-tab-reg"   onclick="switchAuthTab('register')">회원가입</button>
+    <!-- 로그인 방법 탭 -->
+    <div class="auth-method-tabs">
+      <button class="auth-method-tab on" onclick="switchAuthMethod('email')">📧 이메일</button>
+      <button class="auth-method-tab"    onclick="switchAuthMethod('phone')">📱 전화번호</button>
     </div>
-    <div class="auth-inp-wrap">
-      <input class="inp" id="auth-id" type="text"     placeholder="아이디" autocomplete="username"         onkeydown="authEnter(event)">
-      <input class="inp" id="auth-pw" type="password" placeholder="비밀번호" autocomplete="current-password" onkeydown="authEnter(event)">
+    <!-- 이메일 폼 -->
+    <div id="auth-email-form" class="auth-step on">
+      <div class="auth-tabs" style="margin-bottom:14px">
+        <button class="auth-tab on" id="auth-tab-login" onclick="switchAuthTab('login')">로그인</button>
+        <button class="auth-tab"    id="auth-tab-reg"   onclick="switchAuthTab('register')">회원가입</button>
+      </div>
+      <div class="auth-inp-wrap">
+        <input class="inp" id="auth-email" type="email"    placeholder="이메일" autocomplete="email"            onkeydown="authEnter(event)">
+        <input class="inp" id="auth-pw"    type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="authEnter(event)">
+      </div>
+    </div>
+    <!-- 전화번호 폼 -->
+    <div id="auth-phone-form" class="auth-step">
+      <div id="phone-step1">
+        <div class="auth-inp-wrap">
+          <input class="inp" id="auth-phone" type="tel" placeholder="010-1234-5678" autocomplete="tel">
+        </div>
+      </div>
+      <div id="phone-step2" style="display:none">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;text-align:center">문자로 받은 6자리 인증번호를 입력해주세요</p>
+        <div class="auth-inp-wrap">
+          <input class="inp auth-otp-inp" id="auth-otp" type="number" placeholder="000000" autocomplete="one-time-code">
+        </div>
+      </div>
+      <div id="recaptcha-container"></div>
     </div>
     <div class="auth-msg" id="auth-msg"></div>
     <button class="auth-btn" id="auth-main-btn" onclick="authSubmit()">로그인</button>
+    <div id="phone-resend-wrap" style="display:none;text-align:center;margin-top:8px">
+      <button onclick="resetPhoneStep()" style="background:none;border:none;color:var(--blue);font-size:.8rem;cursor:pointer">인증번호 다시 받기</button>
+    </div>
     <div class="auth-divider">또는</div>
     <div class="auth-social">
       <button class="auth-social-btn" onclick="authGoogle()">
@@ -677,9 +712,16 @@ var MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10
 var DAYS   = ['일','월','화','수','목','금','토'];
 var WORKER = 'https://fridge-ai-project.ju880164.workers.dev';
 
-/* ── 소셜 로그인 설정 (발급 후 여기에 입력) ── */
-var GOOGLE_CLIENT_ID = ''; // Google Cloud Console > OAuth 2.0 클라이언트 ID
-var KAKAO_APP_KEY    = ''; // kakao developers > 내 앱 > 앱 키 > JavaScript 키
+/* ── Firebase 설정 ── */
+var FIREBASE_CONFIG = {
+  apiKey: "AIzaSyD9MN7WsPvzPtHXbDetwgrAh5bkO3MmXrs",
+  authDomain: "fridge-saver-dfe6a.firebaseapp.com",
+  projectId: "fridge-saver-dfe6a",
+  storageBucket: "fridge-saver-dfe6a.firebasestorage.app",
+  messagingSenderId: "510014723384",
+  appId: "1:510014723384:web:d965009d96223ef6421dcd"
+};
+var KAKAO_APP_KEY = ''; // Kakao Developers > 내 앱 > 앱 키 > JavaScript 키 (선택)
 
 var BANNER_TEMPLATES = [
   function(name,price,days){ return ['💸 지갑 경보', days===0?'오늘 안에 '+name+'을 안 먹으면 '+(price?price+'원이 ':'')+'소멸됩니다!':'D-'+days+', '+name+(price?' ('+price+'원)':'')+'이 사라질 위기예요!']; },
@@ -716,9 +758,9 @@ function today() { return new Date().toISOString().split('T')[0]; }
 function uid()   { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 function ls(k)   { try { return localStorage.getItem('fn2-'+k); } catch(e) { return null; } }
 function lset(k,v){ try { localStorage.setItem('fn2-'+k,v); } catch(e) {} }
-function saveI() { lset('items', JSON.stringify(S.items)); }
-function saveC() { lset('cfg',   JSON.stringify(S.cfg)); }
-function saveR() { lset('receipts', JSON.stringify(S.receipts)); }
+function saveI() { lset('items', JSON.stringify(S.items)); cloudSave(); }
+function saveC() { lset('cfg',   JSON.stringify(S.cfg));   cloudSave(); }
+function saveR() { lset('receipts', JSON.stringify(S.receipts)); cloudSave(); }
 function compressImg(dataUrl) {
   return new Promise(function(resolve) {
     var img = new Image();
@@ -742,28 +784,59 @@ function load() {
   try { var fs = parseFloat(ls('fridgeScale') || '1'); S.fridgeScale = isNaN(fs) ? 1 : Math.max(0.4, Math.min(1.3, fs)); } catch(e) { S.fridgeScale = 1; }
 }
 
-/* ══ Auth ══ */
-function authHash(s) {
-  var h = 5381;
-  for (var i = 0; i < s.length; i++) { h = ((h << 5) + h) ^ s.charCodeAt(i); h = h >>> 0; }
-  return h.toString(36);
-}
-function getAccounts() { try { return JSON.parse(ls('auth-accs') || '[]'); } catch(e) { return []; } }
-function saveAccounts(a) { lset('auth-accs', JSON.stringify(a)); }
-function loadAuthState() {
-  try {
-    var sess = JSON.parse(ls('auth-sess') || 'null');
-    if (sess && sess.exp > Date.now()) {
-      S.auth = { loggedIn:true, uid:sess.uid, name:sess.name, avatar:sess.avatar||null };
-      return;
+/* ══ Firebase Auth + Firestore ══ */
+var _auth, _db, _recaptcha, _confirmResult;
+
+function initFirebase() {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  _auth = firebase.auth();
+  _db   = firebase.firestore();
+  _auth.onAuthStateChanged(function(user) {
+    if (user) {
+      S.auth = {
+        loggedIn: true, uid: user.uid,
+        name: user.displayName || user.email || user.phoneNumber || 'User',
+        avatar: user.photoURL || null
+      };
+      loadFromCloud().then(function(){ hideAuthScreen(); render(); });
+    } else {
+      S.auth = { loggedIn:false, uid:null, name:null, avatar:null };
+      showAuthScreen(); render();
     }
-  } catch(e) {}
-  S.auth = { loggedIn:false, uid:null, name:null, avatar:null };
+  });
 }
-function saveAuthSession(uid, name, avatar) {
-  lset('auth-sess', JSON.stringify({ uid:uid, name:name, avatar:avatar||null, exp:Date.now()+30*24*60*60*1000 }));
-  S.auth = { loggedIn:true, uid:uid, name:name, avatar:avatar||null };
+
+function cloudSave() {
+  if (!_db || !S.auth.uid) return;
+  _db.collection('users').doc(S.auth.uid).set({
+    items: S.items, cfg: S.cfg, eggs: S.eggs,
+    sauces: S.sauces, frozen: S.frozen, receipts: S.receipts,
+    fridgeScale: S.fridgeScale,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge:true }).catch(function(e){ console.warn('cloudSave:', e); });
 }
+
+function loadFromCloud() {
+  if (!_db || !S.auth.uid) return Promise.resolve();
+  return _db.collection('users').doc(S.auth.uid).get().then(function(doc) {
+    if (doc.exists) {
+      var d = doc.data();
+      if (Array.isArray(d.items))    { S.items = d.items;       lset('items', JSON.stringify(d.items)); }
+      if (d.cfg)                     { S.cfg = Object.assign({notifyDays:3,notifOn:false}, d.cfg); lset('cfg', JSON.stringify(d.cfg)); }
+      if (typeof d.eggs==='number')  { S.eggs = d.eggs;         lset('eggs', String(d.eggs)); }
+      if (Array.isArray(d.sauces))   { S.sauces = d.sauces;     lset('sauces3', JSON.stringify(d.sauces)); }
+      if (Array.isArray(d.frozen))   { S.frozen = d.frozen;     lset('frozen', JSON.stringify(d.frozen)); }
+      if (Array.isArray(d.receipts)) { S.receipts = d.receipts; lset('receipts', JSON.stringify(d.receipts)); }
+      if (d.fridgeScale)             { S.fridgeScale = d.fridgeScale; lset('fridgeScale', String(d.fridgeScale)); }
+    } else {
+      cloudSave();
+    }
+  }).catch(function(e){ console.warn('loadFromCloud:', e); });
+}
+
+/* ── Auth UI ── */
+var _authMethod = 'email', _authTab = 'login';
+
 function showAuthScreen() {
   var el = document.getElementById('auth-screen');
   if (!el) return;
@@ -775,101 +848,136 @@ function hideAuthScreen() {
   el.style.opacity = '0';
   setTimeout(function(){ el.style.display = 'none'; }, 380);
 }
-var _authTab = 'login';
+
+function switchAuthMethod(method) {
+  _authMethod = method;
+  var tabs = document.querySelectorAll('.auth-method-tab');
+  tabs.forEach(function(t, i){ t.classList.toggle('on', (i===0&&method==='email')||(i===1&&method==='phone')); });
+  document.getElementById('auth-email-form').classList.toggle('on', method==='email');
+  document.getElementById('auth-phone-form').classList.toggle('on', method==='phone');
+  document.getElementById('auth-main-btn').textContent = method==='phone' ? '인증번호 받기' : (_authTab==='login' ? '로그인' : '회원가입');
+  document.getElementById('auth-msg').textContent = '';
+}
+
 function switchAuthTab(tab) {
   _authTab = tab;
-  document.getElementById('auth-tab-login').classList.toggle('on', tab === 'login');
-  document.getElementById('auth-tab-reg').classList.toggle('on',   tab === 'register');
-  document.getElementById('auth-main-btn').textContent = tab === 'login' ? '로그인' : '회원가입';
-  document.getElementById('auth-msg').textContent = '';
+  document.getElementById('auth-tab-login').classList.toggle('on', tab==='login');
+  document.getElementById('auth-tab-reg').classList.toggle('on',   tab==='register');
+  document.getElementById('auth-main-btn').textContent = tab==='login' ? '로그인' : '회원가입';
   var pwEl = document.getElementById('auth-pw');
-  pwEl.autocomplete = tab === 'login' ? 'current-password' : 'new-password';
+  if (pwEl) pwEl.autocomplete = tab==='login' ? 'current-password' : 'new-password';
+  document.getElementById('auth-msg').textContent = '';
 }
-function authEnter(e) { if (e.key === 'Enter') authSubmit(); }
+
+function authEnter(e) { if (e.key==='Enter') authSubmit(); }
+
 function authSubmit() {
-  var id = (document.getElementById('auth-id').value || '').trim();
-  var pw = document.getElementById('auth-pw').value || '';
   var msg = document.getElementById('auth-msg');
-  if (!id || !pw) { msg.textContent = '아이디와 비밀번호를 입력해주세요'; return; }
+  msg.textContent = '';
+  if (_authMethod === 'phone') {
+    var step2 = document.getElementById('phone-step2');
+    if (step2 && step2.style.display !== 'none') { verifyPhoneOTP(); } else { sendPhoneSMS(); }
+    return;
+  }
+  var email = (document.getElementById('auth-email').value||'').trim();
+  var pw    = document.getElementById('auth-pw').value||'';
+  if (!email || !pw) { msg.textContent = '이메일과 비밀번호를 입력해주세요'; return; }
   if (_authTab === 'register') {
-    if (id.length < 3) { msg.textContent = '아이디는 3자 이상이어야 해요'; return; }
-    if (pw.length < 4) { msg.textContent = '비밀번호는 4자 이상이어야 해요'; return; }
-    var accs = getAccounts();
-    if (accs.filter(function(a){ return a.id === id; }).length) { msg.textContent = '이미 사용 중인 아이디예요'; return; }
-    accs.push({ id:id, h:authHash(id+pw), name:id, avatar:null });
-    saveAccounts(accs);
-    saveAuthSession(id, id, null);
-    hideAuthScreen();
+    if (pw.length < 6) { msg.textContent = '비밀번호는 6자 이상이어야 해요'; return; }
+    _auth.createUserWithEmailAndPassword(email, pw)
+      .then(function(c){ return c.user.updateProfile({displayName: email.split('@')[0]}); })
+      .catch(function(e){ msg.textContent = fbErr(e.code); });
   } else {
-    var accs2 = getAccounts();
-    var acc = accs2.filter(function(a){ return a.id === id; })[0];
-    if (!acc) { msg.textContent = '존재하지 않는 아이디예요'; return; }
-    if (acc.h !== authHash(id+pw)) { msg.textContent = '비밀번호가 틀렸어요'; return; }
-    saveAuthSession(acc.id, acc.name || acc.id, acc.avatar || null);
-    hideAuthScreen();
+    _auth.signInWithEmailAndPassword(email, pw)
+      .catch(function(e){ msg.textContent = fbErr(e.code); });
   }
 }
+
+function sendPhoneSMS() {
+  var msg = document.getElementById('auth-msg');
+  var phone = (document.getElementById('auth-phone').value||'').replace(/[\s\-]/g,'');
+  if (!phone) { msg.textContent = '전화번호를 입력해주세요'; return; }
+  if (/^01[016789]/.test(phone)) phone = '+82' + phone.substring(1);
+  if (_recaptcha) { try { _recaptcha.clear(); } catch(e){} }
+  _recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {size:'invisible'});
+  msg.textContent = '발송 중...';
+  _auth.signInWithPhoneNumber(phone, _recaptcha)
+    .then(function(result) {
+      _confirmResult = result;
+      document.getElementById('phone-step1').style.display = 'none';
+      document.getElementById('phone-step2').style.display = 'block';
+      document.getElementById('phone-resend-wrap').style.display = 'block';
+      document.getElementById('auth-main-btn').textContent = '인증 확인';
+      msg.textContent = '';
+    })
+    .catch(function(e){ msg.textContent = fbErr(e.code); try{_recaptcha.clear();}catch(ex){} });
+}
+
+function verifyPhoneOTP() {
+  var msg = document.getElementById('auth-msg');
+  var code = (document.getElementById('auth-otp').value||'').trim();
+  if (!code||code.length<6) { msg.textContent = '6자리 인증번호를 입력해주세요'; return; }
+  if (!_confirmResult) { msg.textContent = '인증을 다시 시작해주세요'; return; }
+  _confirmResult.confirm(code).catch(function(e){ msg.textContent = fbErr(e.code); });
+}
+
+function resetPhoneStep() {
+  _confirmResult = null;
+  document.getElementById('phone-step1').style.display = 'block';
+  document.getElementById('phone-step2').style.display = 'none';
+  document.getElementById('auth-main-btn').textContent = '인증번호 받기';
+  document.getElementById('phone-resend-wrap').style.display = 'none';
+  document.getElementById('auth-msg').textContent = '';
+  document.getElementById('auth-otp').value = '';
+}
+
 function authGoogle() {
-  if (!GOOGLE_CLIENT_ID) {
-    alert('Google 로그인을 사용하려면\nGoogle Cloud Console에서 OAuth 클라이언트 ID를 발급받아\nGOOGLE_CLIENT_ID 변수에 입력해주세요.');
-    return;
-  }
-  if (typeof google === 'undefined' || !google.accounts) { alert('Google 라이브러리 로딩 중이에요. 잠시 후 다시 시도해주세요.'); return; }
-  google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: onGoogleCredential });
-  google.accounts.id.prompt();
-}
-function onGoogleCredential(resp) {
-  try {
-    var parts = resp.credential.split('.');
-    var payload = JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
-    var uid = 'g_' + payload.sub;
-    var name = payload.name || payload.email || uid;
-    var avatar = payload.picture || null;
-    var accs = getAccounts();
-    var existing = accs.filter(function(a){ return a.id === uid; })[0];
-    if (!existing) { accs.push({ id:uid, h:null, name:name, avatar:avatar, provider:'google' }); }
-    else { existing.name = name; existing.avatar = avatar; }
-    saveAccounts(accs);
-    saveAuthSession(uid, name, avatar);
-    hideAuthScreen();
-  } catch(err) {
-    document.getElementById('auth-msg').textContent = 'Google 로그인 실패: ' + err.message;
-  }
-}
-function authKakao() {
-  if (!KAKAO_APP_KEY) {
-    alert('카카오 로그인을 사용하려면\nKakao Developers에서 앱을 생성하고\nKAKAO_APP_KEY 변수에 JavaScript 키를 입력해주세요.');
-    return;
-  }
-  if (typeof Kakao === 'undefined') { alert('카카오 라이브러리 로딩 중이에요. 잠시 후 다시 시도해주세요.'); return; }
-  if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
-  Kakao.Auth.login({
-    success: function(authObj) {
-      Kakao.API.request({
-        url: '/v2/user/me',
-        success: function(res) {
-          var uid = 'k_' + res.id;
-          var name = (res.kakao_account && res.kakao_account.profile && res.kakao_account.profile.nickname) || '카카오사용자';
-          var avatar = (res.kakao_account && res.kakao_account.profile && res.kakao_account.profile.profile_image_url) || null;
-          var accs = getAccounts();
-          var existing = accs.filter(function(a){ return a.id === uid; })[0];
-          if (!existing) { accs.push({ id:uid, h:null, name:name, avatar:avatar, provider:'kakao' }); }
-          else { existing.name = name; existing.avatar = avatar; }
-          saveAccounts(accs);
-          saveAuthSession(uid, name, avatar);
-          hideAuthScreen();
-        },
-        fail: function(err) { document.getElementById('auth-msg').textContent = '카카오 정보 조회 실패'; }
-      });
-    },
-    fail: function(err) { document.getElementById('auth-msg').textContent = '카카오 로그인 취소됨'; }
+  var provider = new firebase.auth.GoogleAuthProvider();
+  _auth.signInWithPopup(provider).catch(function(e){
+    document.getElementById('auth-msg').textContent = fbErr(e.code);
   });
 }
+
+function authKakao() {
+  if (!KAKAO_APP_KEY) {
+    alert('카카오 로그인은 Kakao Developers에서\nJavaScript 키를 발급 후 코드에 입력해야 해요.\n지금은 이메일 또는 Google 로그인을 이용해주세요.');
+    return;
+  }
+  if (typeof Kakao==='undefined') { alert('카카오 로딩 중이에요. 잠시 후 다시 시도해주세요.'); return; }
+  if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
+  Kakao.Auth.login({
+    success: function() {
+      Kakao.API.request({ url:'/v2/user/me',
+        success: function(res) {
+          alert('카카오 로그인은 Firebase 커스텀 토큰 서버가 필요해서\n현재는 이메일 또는 Google 로그인을 이용해주세요.');
+        },
+        fail: function(){ document.getElementById('auth-msg').textContent = '카카오 정보 조회 실패'; }
+      });
+    },
+    fail: function(){ document.getElementById('auth-msg').textContent = '카카오 로그인 취소됨'; }
+  });
+}
+
 function doLogout() {
-  lset('auth-sess', null);
-  S.auth = { loggedIn:false, uid:null, name:null, avatar:null };
-  showAuthScreen();
-  render();
+  if (_auth) _auth.signOut();
+}
+
+function fbErr(code) {
+  var m = {
+    'auth/email-already-in-use':'이미 사용 중인 이메일이에요',
+    'auth/user-not-found':'존재하지 않는 계정이에요',
+    'auth/wrong-password':'비밀번호가 틀렸어요',
+    'auth/invalid-email':'이메일 형식이 올바르지 않아요',
+    'auth/weak-password':'비밀번호는 6자 이상이어야 해요',
+    'auth/popup-closed-by-user':'로그인 창이 닫혔어요',
+    'auth/invalid-phone-number':'전화번호 형식이 올바르지 않아요 (예: 010-1234-5678)',
+    'auth/invalid-verification-code':'인증번호가 올바르지 않아요',
+    'auth/code-expired':'인증번호가 만료됐어요. 다시 받아주세요',
+    'auth/too-many-requests':'요청이 너무 많아요. 잠시 후 다시 시도해주세요',
+    'auth/network-request-failed':'네트워크 연결을 확인해주세요',
+    'auth/popup-blocked':'팝업이 차단됐어요. 팝업 허용 후 다시 시도해주세요'
+  };
+  return m[code] || '오류 발생 ('+code+')';
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -907,6 +1015,7 @@ function catUrg(id) {
 function setFridgeScale(d) {
   S.fridgeScale = Math.round(Math.max(0.4, Math.min(1.3, S.fridgeScale + d)) * 10) / 10;
   lset('fridgeScale', String(S.fridgeScale));
+  cloudSave();
   render();
 }
 
@@ -943,7 +1052,7 @@ function openDoor() {
 }
 
 /* ══ Eggs ══ */
-function saveEggs() { lset('eggs', String(S.eggs)); }
+function saveEggs() { lset('eggs', String(S.eggs)); cloudSave(); }
 function eggTrayHtml() {
   var MAX = 10;
   var h = '<div class="etd-wrap">';
@@ -977,7 +1086,7 @@ function adjEggs(d) {
 }
 
 /* ══ Sauces ══ */
-function saveSauces() { lset('sauces3', JSON.stringify(S.sauces)); }
+function saveSauces() { lset('sauces3', JSON.stringify(S.sauces)); cloudSave(); }
 function darkenHex(hex) {
   var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
   r = Math.round(r*0.6); g = Math.round(g*0.6); b = Math.round(b*0.6);
@@ -1090,7 +1199,7 @@ var FROZEN_CATS = [
   {id:'가공식품', e:'🍱'},
   {id:'기타',     e:'📦'}
 ];
-function saveF() { lset('frozen', JSON.stringify(S.frozen)); }
+function saveF() { lset('frozen', JSON.stringify(S.frozen)); cloudSave(); }
 function frozenIceBlock(catId, size) {
   var e = '📦';
   for (var i = 0; i < FROZEN_CATS.length; i++) { if (FROZEN_CATS[i].id === catId) { e = FROZEN_CATS[i].e; break; } }
@@ -2240,9 +2349,8 @@ function loadTheme() {
 /* ══ Init ══ */
 load();
 loadTheme();
-loadAuthState();
-if (!S.auth.loggedIn) showAuthScreen();
 go('home');
+initFirebase();
 checkExp();
 autoPopup();
 document.getElementById('ld-mascot').innerHTML = mascotSvg('happy').replace('width="98" height="122"','width="110" height="138"');
