@@ -533,30 +533,27 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
   border-radius:20px;padding:4px 12px;}
 
 /* ── Auth Screen ── */
-#auth-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  padding:16px;overflow-y:auto;
-  transition:opacity .35s ease;}
-.auth-card{width:100%;max-width:360px;background:var(--surface);
-  border:1px solid var(--border);border-radius:20px;padding:32px 24px 24px;
-  box-shadow:0 24px 60px rgba(0,0,0,.45);
-  margin:auto;}
-.auth-logo-wrap{text-align:center;margin-bottom:20px;}
-.auth-logo{font-size:1.55rem;font-weight:900;
-  background:linear-gradient(135deg,var(--blue),var(--green));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;}
-.auth-sub{color:var(--muted);font-size:.8rem;margin-top:3px;}
-.auth-tabs{display:flex;background:var(--surface2);border-radius:10px;padding:3px;margin-bottom:18px;}
-.auth-tab{flex:1;border:none;background:none;color:var(--muted);
-  padding:8px;font-size:.88rem;font-weight:600;border-radius:8px;cursor:pointer;
-  transition:background .2s,color .2s;}
-.auth-tab.on{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.25);}
-.auth-inp-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
-.auth-msg{font-size:.8rem;color:var(--red);min-height:16px;margin-bottom:6px;}
-.auth-btn{width:100%;padding:13px;border:none;border-radius:10px;
-  background:linear-gradient(135deg,var(--blue),#1a7f37);
-  color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s;}
-.auth-btn:hover{opacity:.85;}
+#auth-screen{position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#0a1628 0%,#0d2137 50%,#0a2010 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px 20px;overflow-y:auto;transition:opacity .35s ease;}
+.auth-hero{text-align:center;margin-bottom:36px;}
+.auth-hero-icon{font-size:4rem;margin-bottom:12px;filter:drop-shadow(0 4px 16px rgba(56,189,248,.4));}
+.auth-hero-title{font-size:2rem;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:6px;}
+.auth-hero-sub{font-size:.9rem;color:rgba(255,255,255,.55);font-weight:400;}
+.auth-card{width:100%;max-width:400px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:28px 24px 24px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+.auth-inp-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.auth-inp-wrap .inp{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:#fff;border-radius:12px;padding:14px 16px;font-size:.95rem;}
+.auth-inp-wrap .inp::placeholder{color:rgba(255,255,255,.4);}
+.auth-inp-wrap .inp:focus{outline:none;border-color:rgba(56,189,248,.6);background:rgba(255,255,255,.12);}
+.auth-msg{font-size:.82rem;color:#f87171;min-height:16px;margin-bottom:8px;text-align:center;}
+.auth-btn{width:100%;padding:14px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#38bdf8,#34d399);
+  color:#0a1628;font-size:1rem;font-weight:800;cursor:pointer;transition:opacity .2s;letter-spacing:-.2px;}
+.auth-btn:hover{opacity:.88;}
 .auth-user-row{display:flex;align-items:center;gap:10px;padding:10px 0;}
 .auth-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
 .auth-avatar-def{width:34px;height:34px;border-radius:50%;background:var(--surface2);
@@ -566,16 +563,16 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
 <body ontouchstart="">
 
 <!-- ── Auth Screen ── -->
-<div id="auth-screen" style="display:none">
-  <div class="auth-card" style="position:relative">
-    <div class="auth-logo-wrap">
-      <div class="auth-logo">🧊 신선해</div>
-      <div class="auth-sub">냉장고 식재료 관리</div>
-    </div>
-    <!-- 이메일 폼 -->
+<div id="auth-screen">
+  <div class="auth-hero">
+    <div class="auth-hero-icon">🧊</div>
+    <div class="auth-hero-title">신선해</div>
+    <div class="auth-hero-sub">우리 집 냉장고 식재료 관리</div>
+  </div>
+  <div class="auth-card">
     <div class="auth-inp-wrap">
-      <input class="inp" id="auth-email" type="email"    placeholder="이메일" autocomplete="email"            onkeydown="authEnter(event)">
-      <input class="inp" id="auth-pw"    type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="authEnter(event)">
+      <input class="inp" id="auth-email" type="email" placeholder="이메일" autocomplete="email" onkeydown="authEnter(event)">
+      <input class="inp" id="auth-pw" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="authEnter(event)">
     </div>
     <div class="auth-msg" id="auth-msg"></div>
     <button class="auth-btn" id="auth-main-btn" onclick="authSubmit()">로그인</button>
@@ -782,12 +779,12 @@ var _authMethod = 'email', _authTab = 'login';
 function showAuthScreen() {
   var el = document.getElementById('auth-screen');
   if (!el) return;
-  el.style.display = 'flex'; el.style.opacity = '1';
+  el.style.display = 'flex'; el.style.opacity = '1'; el.style.pointerEvents = 'auto';
 }
 function hideAuthScreen() {
   var el = document.getElementById('auth-screen');
   if (!el) return;
-  el.style.opacity = '0';
+  el.style.opacity = '0'; el.style.pointerEvents = 'none';
   setTimeout(function(){ el.style.display = 'none'; }, 380);
 }
 
