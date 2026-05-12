@@ -294,7 +294,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .dday{padding:5px 10px;border-radius:8px;font-size:.8rem;font-weight:700;text-align:center;flex-shrink:0;min-width:55px;}
 .dday.c-expired{background:rgba(248,81,73,.14);color:var(--red);}
 .dday.c-danger{background:rgba(240,136,62,.14);color:var(--orange);}
-.dday.c-warning{background:rgba(227,179,65,.14);color:var(--yellow);}
+.dday.c-warning{background:rgba(227,179,65,.14);color:var(--yellow);border:1.5px solid rgba(255,224,51,.5);}
 .dday.c-safe{background:rgba(63,185,80,.14);color:var(--green);}
 
 /* ── Calendar ── */
@@ -846,13 +846,17 @@ function openFrozenModal() {
   var list = '';
   for (var i = 0; i < sorted.length; i++) {
     var it = sorted[i], d = dLeft(it.exp), cl = dcls(d);
+    var frozenDays = it.frozenAt ? Math.round((new Date() - new Date(it.frozenAt)) / 86400000) : null;
     list += '<div id="frz-'+it.id+'" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:6px">'
       + frozenIceBlock(it.cat, 30)
       + '<div style="flex:1;min-width:0">'
       + '<div style="font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(it.name)+'</div>'
       + '<div style="font-size:.72rem;color:var(--muted);margin-top:1px">'+esc(it.cat)+(it.qty?' · '+esc(it.qty)+esc(it.unit||''):'')+'</div>'
       + '</div>'
+      + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">'
       + '<div class="dday '+cl+'" style="font-size:.7rem;min-width:46px;padding:4px 7px">'+dlbl(d)+'</div>'
+      + (frozenDays !== null ? '<div style="font-size:.68rem;color:#87ceeb;background:rgba(135,206,235,.12);border:1px solid rgba(135,206,235,.3);border-radius:6px;padding:2px 7px;white-space:nowrap">❄️ D+'+(frozenDays)+'</div>' : '')
+      + '</div>'
       + '<button onclick="deleteFrozen(\''+it.id+'\')" style="border:none;background:var(--red);color:#fff;border-radius:7px;padding:3px 8px;font-size:.75rem;cursor:pointer;flex-shrink:0">삭제</button>'
       + '</div>';
   }
@@ -895,6 +899,8 @@ function openAddFrozen() {
     + '<input class="inp" id="fi-name" type="text" placeholder="예: 삼겹살, 시금치..."></div>'
     + '<div class="sect"><label class="lbl">카테고리</label>'
     + '<div class="cat-grid frz-cat-grid" style="grid-template-columns:repeat(3,1fr)">'+catBtns+'</div></div>'
+    + '<div class="sect"><label class="lbl">얼린 날짜</label>'
+    + '<input class="inp" id="fi-frozen" type="date" value="'+today()+'"></div>'
     + '<div class="sect"><label class="lbl">유통기한</label>'
     + '<input class="inp" id="fi-exp" type="date"></div>'
     + '<div class="sect"><label class="lbl">구매일</label>'
@@ -907,14 +913,15 @@ function openAddFrozen() {
   showModal(h);
 }
 function saveFrozenItem() {
-  var name = (document.getElementById('fi-name').value||'').trim();
-  var exp  = document.getElementById('fi-exp').value;
-  var buy  = document.getElementById('fi-buy').value;
-  var qty  = document.getElementById('fi-qty').value || '1';
-  var unit = document.getElementById('fi-unit').value || '개';
+  var name     = (document.getElementById('fi-name').value||'').trim();
+  var frozenAt = document.getElementById('fi-frozen').value;
+  var exp      = document.getElementById('fi-exp').value;
+  var buy      = document.getElementById('fi-buy').value;
+  var qty      = document.getElementById('fi-qty').value || '1';
+  var unit     = document.getElementById('fi-unit').value || '개';
   if (!name) { document.getElementById('fi-name').focus(); return; }
   if (!exp)  { document.getElementById('fi-exp').focus(); return; }
-  S.frozen.push({id:uid(), name:name, cat:S._fcat||'기타', exp:exp, buy:buy, qty:qty, unit:unit});
+  S.frozen.push({id:uid(), name:name, cat:S._fcat||'기타', exp:exp, buy:buy, frozenAt:frozenAt, qty:qty, unit:unit});
   saveF(); render(); closeModal(); openFrozenModal();
 }
 
