@@ -762,6 +762,14 @@ function cloudSave() {
   }, { merge:true }).catch(function(e){ console.warn('cloudSave:', e); });
 }
 
+function resetLocalData() {
+  S.items = []; S.eggs = 6; S.sauces = []; S.frozen = []; S.receipts = [];
+  S.cfg = { notifyDays:3, notifOn:false }; S.fridgeScale = 1;
+  lset('items','[]'); lset('eggs','6'); lset('sauces3','[]');
+  lset('frozen','[]'); lset('receipts','[]');
+  lset('cfg', JSON.stringify(S.cfg)); lset('fridgeScale','1');
+}
+
 function loadFromCloud() {
   if (!_db || !S.auth.uid) return Promise.resolve();
   return _db.collection('users').doc(S.auth.uid).get().then(function(doc) {
@@ -775,6 +783,7 @@ function loadFromCloud() {
       if (Array.isArray(d.receipts)) { S.receipts = d.receipts; lset('receipts', JSON.stringify(d.receipts)); }
       if (d.fridgeScale)             { S.fridgeScale = d.fridgeScale; lset('fridgeScale', String(d.fridgeScale)); }
     } else {
+      resetLocalData();
       cloudSave();
     }
   }).catch(function(e){ console.warn('loadFromCloud:', e); });
@@ -909,7 +918,7 @@ function authKakao() {
 }
 
 function doLogout() {
-  if (_auth) _auth.signOut();
+  if (_auth) { resetLocalData(); _auth.signOut(); }
 }
 
 function fbErr(code) {
