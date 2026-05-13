@@ -848,19 +848,22 @@ function authSubmit() {
     btn.textContent = _authTab === 'register' ? '회원가입' : '로그인';
     if (err) msg.textContent = fbErr(err.code);
   };
-  var timer = setTimeout(function(){ done({code:'auth/network-request-failed'}); }, 10000);
+  var timer = setTimeout(function(){ done({code:'auth/network-request-failed'}); }, 15000);
   var _done = function(err) { clearTimeout(timer); done(err); };
-  if (_authTab === 'register') {
-    if (pw.length < 6) { btn.disabled=false; btn.textContent='회원가입'; msg.textContent='비밀번호는 6자 이상이어야 해요'; return; }
-    _auth.createUserWithEmailAndPassword(email, pw)
-      .then(function(c){ return c.user.updateProfile({displayName: email.split('@')[0]}); })
-      .then(function(){ _done(null); })
-      .catch(_done);
-  } else {
-    _auth.signInWithEmailAndPassword(email, pw)
-      .then(function(){ _done(null); })
-      .catch(_done);
-  }
+  var persist = firebase.auth.Auth.Persistence.SESSION;
+  _auth.setPersistence(persist).catch(function(){ }).finally(function() {
+    if (_authTab === 'register') {
+      if (pw.length < 6) { btn.disabled=false; btn.textContent='회원가입'; msg.textContent='비밀번호는 6자 이상이어야 해요'; return; }
+      _auth.createUserWithEmailAndPassword(email, pw)
+        .then(function(c){ return c.user.updateProfile({displayName: email.split('@')[0]}); })
+        .then(function(){ _done(null); })
+        .catch(_done);
+    } else {
+      _auth.signInWithEmailAndPassword(email, pw)
+        .then(function(){ _done(null); })
+        .catch(_done);
+    }
+  });
 }
 
 function sendPhoneSMS() {
