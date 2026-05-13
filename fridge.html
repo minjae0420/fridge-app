@@ -1052,7 +1052,7 @@ function sauceItemHtml(s) {
   var expHtml = '';
   if (s.exp) {
     var d = dLeft(s.exp);
-    expHtml = '<span class="badge '+dcls(d)+'" style="font-size:.72rem;padding:2px 7px;border-radius:6px;font-weight:700">'+dlbl(d)+'</span>';
+    expHtml = '<div class="dday '+dcls(d)+'" style="font-size:.7rem;min-width:46px;padding:4px 7px">'+dlbl(d)+'</div>';
   }
   return '<div id="sc-item-'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:10px">'
     + '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0">'
