@@ -843,20 +843,23 @@ function authSubmit() {
   if (!email || !pw) { msg.textContent = '이메일과 비밀번호를 입력해주세요'; return; }
   btn.disabled = true; btn.textContent = '처리 중...';
   var done = function(err) {
+    if (done._called) return; done._called = true;
     btn.disabled = false;
     btn.textContent = _authTab === 'register' ? '회원가입' : '로그인';
     if (err) msg.textContent = fbErr(err.code);
   };
+  var timer = setTimeout(function(){ done({code:'auth/network-request-failed'}); }, 10000);
+  var _done = function(err) { clearTimeout(timer); done(err); };
   if (_authTab === 'register') {
     if (pw.length < 6) { btn.disabled=false; btn.textContent='회원가입'; msg.textContent='비밀번호는 6자 이상이어야 해요'; return; }
     _auth.createUserWithEmailAndPassword(email, pw)
       .then(function(c){ return c.user.updateProfile({displayName: email.split('@')[0]}); })
-      .then(function(){ done(null); })
-      .catch(done);
+      .then(function(){ _done(null); })
+      .catch(_done);
   } else {
     _auth.signInWithEmailAndPassword(email, pw)
-      .then(function(){ done(null); })
-      .catch(done);
+      .then(function(){ _done(null); })
+      .catch(_done);
   }
 }
 
