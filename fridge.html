@@ -1052,7 +1052,7 @@ function sauceItemHtml(s) {
   var expHtml = '';
   if (s.exp) {
     var d = dLeft(s.exp);
-    expHtml = '<div class="dday '+dcls(d)+'" style="font-size:.7rem;min-width:46px;padding:4px 7px">'+dlbl(d)+'</div>';
+    if (!isNaN(d)) expHtml = '<div class="dday '+dcls(d)+'" style="font-size:.7rem;min-width:46px;padding:4px 7px">'+dlbl(d)+'</div>';
   }
   return '<div id="sc-item-'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:10px">'
     + '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0">'
@@ -1087,6 +1087,8 @@ function openSauceModal() {
     + '</div>'
     + '<button class="btn-s" onclick="closeModal();render()">닫기</button>';
   showModal(h);
+  var expInp = document.getElementById('sauce-exp-inp');
+  if (expInp) expInp.value = today;
 }
 function addSauce() {
   var nameEl = document.getElementById('sauce-name-inp');
@@ -1096,7 +1098,7 @@ function addSauce() {
   var name = nameEl.value.trim();
   if (!name) { nameEl.focus(); return; }
   var color = colorEl.value || '#cc2200';
-  var exp = expEl ? expEl.value : '';
+  var exp = (expEl && expEl.value) ? expEl.value : '';
   S.sauces.push({id: uid(), name: name, color: color, exp: exp});
   saveSauces();
   updateSauceBin();
