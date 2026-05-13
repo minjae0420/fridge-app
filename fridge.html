@@ -1047,29 +1047,43 @@ function sauceBinHtml() {
     + '<div class="sauce-bottles">'+(bottles||'<span style="font-size:.6rem;color:rgba(100,150,190,.5)">비어있음</span>')+'</div>'
     + '</div>';
 }
+function sauceItemHtml(s) {
+  var cap = darkenHex(s.color);
+  var expHtml = '';
+  if (s.exp) {
+    var d = dLeft(s.exp);
+    expHtml = '<span class="badge '+dcls(d)+'" style="font-size:.72rem;padding:2px 7px;border-radius:6px;font-weight:700">'+dlbl(d)+'</span>';
+  }
+  return '<div id="sc-item-'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:10px">'
+    + '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0">'
+    + '<div style="width:10px;height:6px;border-radius:2px 2px 0 0;background:'+cap+'"></div>'
+    + '<div style="width:14px;height:22px;border-radius:2px 2px 4px 4px;background:'+s.color+';box-shadow:inset 2px 0 0 rgba(255,255,255,.18)"></div>'
+    + '</div>'
+    + '<span style="flex:1;font-size:.88rem">'+esc(s.name)+'</span>'
+    + expHtml
+    + '<button onclick="deleteSauce(\''+s.id+'\')" style="border:none;background:var(--red);color:#fff;border-radius:7px;padding:3px 9px;font-size:.78rem;cursor:pointer">삭제</button>'
+    + '</div>';
+}
+
 function openSauceModal() {
   var list = '';
-  for (var i = 0; i < S.sauces.length; i++) {
-    var s = S.sauces[i];
-    var cap = darkenHex(s.color);
-    list += '<div id="sc-item-'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:10px">'
-      + '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0">'
-      + '<div style="width:10px;height:6px;border-radius:2px 2px 0 0;background:'+cap+'"></div>'
-      + '<div style="width:14px;height:22px;border-radius:2px 2px 4px 4px;background:'+s.color+';box-shadow:inset 2px 0 0 rgba(255,255,255,.18)"></div>'
-      + '</div>'
-      + '<span style="flex:1;font-size:.88rem">'+esc(s.name)+'</span>'
-      + '<button onclick="deleteSauce(\''+s.id+'\')" style="border:none;background:var(--red);color:#fff;border-radius:7px;padding:3px 9px;font-size:.78rem;cursor:pointer">삭제</button>'
-      + '</div>';
-  }
+  for (var i = 0; i < S.sauces.length; i++) { list += sauceItemHtml(S.sauces[i]); }
+  var today = new Date().toISOString().split('T')[0];
   var h = '<div class="mhandle"></div>'
     + '<div style="font-size:1rem;font-weight:700;margin-bottom:14px">🫙 소스 관리</div>'
     + '<div id="sauce-list" style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px;max-height:260px;overflow-y:auto">'
     + (list || '<div style="text-align:center;color:var(--muted);font-size:.85rem;padding:12px">등록된 소스가 없습니다</div>')
     + '</div>'
-    + '<div style="display:flex;gap:8px;align-items:center;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:14px">'
+    + '<div style="display:flex;flex-direction:column;gap:8px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:14px">'
+    + '<div style="display:flex;gap:8px;align-items:center">'
     + '<input id="sauce-name-inp" type="text" placeholder="소스 이름" maxlength="12" style="flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:.9rem">'
     + '<input id="sauce-color-inp" type="color" value="#cc2200" style="width:36px;height:32px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:transparent">'
+    + '</div>'
+    + '<div style="display:flex;gap:8px;align-items:center">'
+    + '<span style="font-size:.8rem;color:var(--muted);white-space:nowrap">유통기한</span>'
+    + '<input id="sauce-exp-inp" type="date" value="'+today+'" style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;padding:5px 8px">'
     + '<button onclick="addSauce()" style="border:none;background:var(--blue);color:#fff;border-radius:8px;padding:6px 14px;font-size:.85rem;cursor:pointer;font-weight:600">+ 추가</button>'
+    + '</div>'
     + '</div>'
     + '<button class="btn-s" onclick="closeModal();render()">닫기</button>';
   showModal(h);
@@ -1077,27 +1091,20 @@ function openSauceModal() {
 function addSauce() {
   var nameEl = document.getElementById('sauce-name-inp');
   var colorEl = document.getElementById('sauce-color-inp');
+  var expEl = document.getElementById('sauce-exp-inp');
   if (!nameEl || !colorEl) return;
   var name = nameEl.value.trim();
   if (!name) { nameEl.focus(); return; }
   var color = colorEl.value || '#cc2200';
-  S.sauces.push({id: uid(), name: name, color: color});
+  var exp = expEl ? expEl.value : '';
+  S.sauces.push({id: uid(), name: name, color: color, exp: exp});
   saveSauces();
   updateSauceBin();
   var s = S.sauces[S.sauces.length - 1];
-  var cap = darkenHex(s.color);
-  var item = '<div id="sc-item-'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:10px">'
-    + '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0">'
-    + '<div style="width:10px;height:6px;border-radius:2px 2px 0 0;background:'+cap+'"></div>'
-    + '<div style="width:14px;height:22px;border-radius:2px 2px 4px 4px;background:'+s.color+';box-shadow:inset 2px 0 0 rgba(255,255,255,.18)"></div>'
-    + '</div>'
-    + '<span style="flex:1;font-size:.88rem">'+esc(s.name)+'</span>'
-    + '<button onclick="deleteSauce(\''+s.id+'\')" style="border:none;background:var(--red);color:#fff;border-radius:7px;padding:3px 9px;font-size:.78rem;cursor:pointer">삭제</button>'
-    + '</div>';
   var listEl = document.getElementById('sauce-list');
   if (listEl) {
     if (listEl.innerHTML.indexOf('등록된') >= 0) listEl.innerHTML = '';
-    listEl.insertAdjacentHTML('beforeend', item);
+    listEl.insertAdjacentHTML('beforeend', sauceItemHtml(s));
   }
   nameEl.value = '';
   nameEl.focus();
