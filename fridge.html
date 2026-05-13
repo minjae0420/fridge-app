@@ -554,6 +554,9 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
   background:linear-gradient(135deg,#38bdf8,#34d399);
   color:#0a1628;font-size:1rem;font-weight:800;cursor:pointer;transition:opacity .2s;letter-spacing:-.2px;}
 .auth-btn:hover{opacity:.88;}
+.auth-toggle-wrap{display:flex;background:rgba(255,255,255,.08);border-radius:12px;padding:3px;margin-bottom:16px;}
+.auth-toggle{flex:1;border:none;background:none;color:rgba(255,255,255,.45);padding:10px;font-size:.9rem;font-weight:700;border-radius:10px;cursor:pointer;transition:background .2s,color .2s;}
+.auth-toggle.on{background:rgba(255,255,255,.15);color:#fff;}
 .auth-user-row{display:flex;align-items:center;gap:10px;padding:10px 0;}
 .auth-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
 .auth-avatar-def{width:34px;height:34px;border-radius:50%;background:var(--surface2);
@@ -570,6 +573,10 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
     <div class="auth-hero-sub">우리 집 냉장고 식재료 관리</div>
   </div>
   <div class="auth-card">
+    <div class="auth-toggle-wrap">
+      <button class="auth-toggle on" id="auth-tab-login" onclick="switchAuthTab('login')">로그인</button>
+      <button class="auth-toggle" id="auth-tab-reg" onclick="switchAuthTab('register')">회원가입</button>
+    </div>
     <div class="auth-inp-wrap">
       <input class="inp" id="auth-email" type="email" placeholder="이메일" autocomplete="email" onkeydown="authEnter(event)">
       <input class="inp" id="auth-pw" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="authEnter(event)">
@@ -816,8 +823,15 @@ function authSubmit() {
   var email = (document.getElementById('auth-email').value||'').trim();
   var pw    = document.getElementById('auth-pw').value||'';
   if (!email || !pw) { msg.textContent = '이메일과 비밀번호를 입력해주세요'; return; }
-  _auth.signInWithEmailAndPassword(email, pw)
-    .catch(function(e){ msg.textContent = fbErr(e.code); });
+  if (_authTab === 'register') {
+    if (pw.length < 6) { msg.textContent = '비밀번호는 6자 이상이어야 해요'; return; }
+    _auth.createUserWithEmailAndPassword(email, pw)
+      .then(function(c){ return c.user.updateProfile({displayName: email.split('@')[0]}); })
+      .catch(function(e){ msg.textContent = fbErr(e.code); });
+  } else {
+    _auth.signInWithEmailAndPassword(email, pw)
+      .catch(function(e){ msg.textContent = fbErr(e.code); });
+  }
 }
 
 function sendPhoneSMS() {
