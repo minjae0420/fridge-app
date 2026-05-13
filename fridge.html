@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>신선해 — fresh hae</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -588,7 +588,7 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
         <input class="inp" id="auth-pw" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="authEnter(event)">
       </div>
       <div class="auth-msg" id="auth-msg"></div>
-      <button class="auth-btn" id="auth-main-btn" onclick="authSubmit()">로그인</button>
+      <button class="auth-btn" id="auth-main-btn" onclick="authSubmit()" ontouchstart="">로그인</button>
     </div>
   </div>
 </div>
@@ -835,18 +835,28 @@ function authEnter(e) { if (e.key==='Enter') authSubmit(); }
 
 function authSubmit() {
   var msg = document.getElementById('auth-msg');
+  var btn = document.getElementById('auth-main-btn');
   msg.textContent = '';
+  if (!_auth) { msg.textContent = '잠시 후 다시 시도해주세요'; return; }
   var email = (document.getElementById('auth-email').value||'').trim();
   var pw    = document.getElementById('auth-pw').value||'';
   if (!email || !pw) { msg.textContent = '이메일과 비밀번호를 입력해주세요'; return; }
+  btn.disabled = true; btn.textContent = '처리 중...';
+  var done = function(err) {
+    btn.disabled = false;
+    btn.textContent = _authTab === 'register' ? '회원가입' : '로그인';
+    if (err) msg.textContent = fbErr(err.code);
+  };
   if (_authTab === 'register') {
-    if (pw.length < 6) { msg.textContent = '비밀번호는 6자 이상이어야 해요'; return; }
+    if (pw.length < 6) { btn.disabled=false; btn.textContent='회원가입'; msg.textContent='비밀번호는 6자 이상이어야 해요'; return; }
     _auth.createUserWithEmailAndPassword(email, pw)
       .then(function(c){ return c.user.updateProfile({displayName: email.split('@')[0]}); })
-      .catch(function(e){ msg.textContent = fbErr(e.code); });
+      .then(function(){ done(null); })
+      .catch(done);
   } else {
     _auth.signInWithEmailAndPassword(email, pw)
-      .catch(function(e){ msg.textContent = fbErr(e.code); });
+      .then(function(){ done(null); })
+      .catch(done);
   }
 }
 
