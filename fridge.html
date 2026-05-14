@@ -1487,10 +1487,9 @@ function vFridge() {
     + '<span style="font-size:.72rem;color:var(--muted);min-width:38px;text-align:center">'+Math.round(sc*100)+'%</span>'
     + '<button onclick="setFridgeScale(0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>'
     + '</div>'
-    + (S.door ? '' : '<div class="fridge-hint">탭해서 문 열기 👆</div>')
-    + '<div class="fridge-wrap" style="'+wrapStyle+'">'
-    + '<div class="fridge-body" style="position:relative">'
-    + (S.door ? '<div onclick="toggleDoor()" style="position:absolute;inset:0;z-index:50;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;"></div>' : '')
+    + (S.door ? '<div onclick="toggleDoor()" style="position:fixed;inset:0;z-index:90;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;"></div>' : '<div class="fridge-hint">탭해서 문 열기 👆</div>')
+    + '<div class="fridge-wrap" style="'+wrapStyle+';position:relative;z-index:91">'
+    + '<div class="fridge-body">'
     + '<div class="fridge-topbar">❄️&nbsp;&nbsp;<span>냉동 · 냉장실</span></div>'
     + shelves
     + binRow
