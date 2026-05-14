@@ -807,6 +807,8 @@ function toggleDoor() {
     dL.getBoundingClientRect();
     dL.classList.remove('open');
     dR.classList.remove('open');
+    var ov = document.getElementById('fridge-close-ov');
+    if (ov) ov.parentNode.removeChild(ov);
     var hint = document.querySelector('.fridge-hint');
     if (!hint) {
       var wrap = document.querySelector('.fridge-wrap');
@@ -821,6 +823,14 @@ function toggleDoor() {
     S.door = true;
     dL.classList.add('open');
     dR.classList.add('open');
+    var body = document.querySelector('.fridge-body');
+    if (body && !document.getElementById('fridge-close-ov')) {
+      var ov = document.createElement('div');
+      ov.id = 'fridge-close-ov';
+      ov.setAttribute('onclick', 'toggleDoor()');
+      ov.style.cssText = 'position:absolute;inset:0;z-index:10;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;';
+      body.appendChild(ov);
+    }
     var hint2 = document.querySelector('.fridge-hint');
     if (hint2) hint2.remove();
   }
@@ -1494,7 +1504,7 @@ function vFridge() {
     + '<div class="fridge-topbar">❄️&nbsp;&nbsp;<span>냉동 · 냉장실</span></div>'
     + shelves
     + binRow
-    + (S.door ? '<div onclick="toggleDoor()" style="position:absolute;inset:0;z-index:10;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;"></div>' : '')
+    + (S.door ? '<div id="fridge-close-ov" onclick="toggleDoor()" style="position:absolute;inset:0;z-index:10;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;"></div>' : '')
     + '<div class="fridge-doors">'
     + '<div class="'+dlCls+'"'+doorTrans+' onclick="toggleDoor()">'
     + '<div class="fdl-handle"></div>'
