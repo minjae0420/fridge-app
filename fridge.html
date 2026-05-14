@@ -2,86 +2,98 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>신선해 — fresh hae</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
-  --text:#e6edf3;--muted:#8b949e;--blue:#58a6ff;--green:#3fb950;
-  --yellow:#ffe033;--orange:#f0883e;--red:#f85149;--r:12px;--nh:64px;
+  --bg:#0d0818;--surface:rgba(255,255,255,.06);--surface2:rgba(255,255,255,.11);--border:rgba(255,255,255,.1);
+  --text:#ede8ff;--muted:#9d8ec0;
+  --blue:#a78bfa;--green:#38bdf8;--yellow:#fbbf24;--orange:#f97316;--red:#f87171;
+  --r:18px;--nh:68px;
+  --shadow:0 8px 32px rgba(0,0,0,.45);
+  --shadow-sm:0 4px 16px rgba(0,0,0,.3);
 }
 body.light{
-  --bg:#f5f7fa;--surface:#ffffff;--surface2:#eef1f6;--border:#d0d7de;
-  --text:#1c2128;--muted:#57606a;--blue:#0969da;--green:#1a7f37;
-  --yellow:#ffe033;--orange:#bc4c00;--red:#cf222e;
+  --bg:#f0eeff;--surface:rgba(255,255,255,.75);--surface2:rgba(255,255,255,.5);--border:rgba(180,160,255,.2);
+  --text:#1a1340;--muted:#7c6ea0;--blue:#6366f1;--green:#0ea5e9;
+  --yellow:#f59e0b;--orange:#ea580c;--red:#ef4444;
+  --shadow:0 8px 32px rgba(100,80,200,.15);
+  --shadow-sm:0 4px 16px rgba(100,80,200,.1);
 }
-body.light .hdr{background:rgba(245,247,250,.95);}
-body.light .bnav{background:#ffffff;}
-body.light select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2357606a' d='M6 8L0 0h12z'/%3E%3C/svg%3E");}
-body.light .hdr-logo{background:linear-gradient(135deg,#0969da,#1a7f37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-body.light .fridge-body{border:2px solid #87ceeb;box-shadow:0 8px 32px rgba(135,206,235,.3),0 0 0 4px rgba(135,206,235,.15),inset 0 1px 0 rgba(255,255,255,.9);}
-body.light .door-face{border:2px solid #87ceeb;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),4px 0 20px rgba(135,206,235,.2);}
-body.light .fridge-wrap{filter:drop-shadow(0 0 12px rgba(135,206,235,.4));}
-body.light .warn-banner{background:linear-gradient(135deg,#fff0f0,#ffe8e0);border-color:rgba(248,81,73,.35);box-shadow:0 4px 20px rgba(248,81,73,.1);}
+body.light .hdr{background:rgba(240,238,255,.88);border-bottom:1px solid rgba(180,160,255,.2);}
+body.light .bnav{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 -6px 32px rgba(100,80,200,.12);}
+body.light select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237c6ea0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");}
+body.light .hdr-logo{background:linear-gradient(135deg,#7c3aed,#6366f1,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+body.light .fridge-body{background:#d6ecee;border-color:#5ab5ba;}
+body.light .fridge-topbar{background:#82c4c8;border-bottom-color:#5ab5ba;}
+body.light .fridge-door-l{background:#88c4c8;}
+body.light .fridge-door-r{background:#9fd3d7;}
+body.light .fdl-handle,body.light .fdr-handle{background:#42a8ad;}
+body.light .warn-banner{background:rgba(255,255,255,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.75);box-shadow:0 8px 32px rgba(100,80,200,.12),0 2px 8px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.95);}
+body.light .warn-banner-close{color:rgba(0,50,20,.4);}
+body.light .warn-banner-close:hover{color:rgba(0,50,20,.8);}
 body.light .warn-banner-price{color:#d32f2f;}
 body.light .warn-banner-title{color:#e65100;}
 
 /* ── Warning Banner ── */
 .warn-banner{margin-bottom:16px;position:relative;
-  background:linear-gradient(135deg,#2d0f0f,#3a1500);
-  border:1.5px solid rgba(248,81,73,.45);border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(139,92,246,.15) 0%,rgba(56,189,248,.08) 100%);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(167,139,250,.2);border-radius:var(--r);
   padding:14px 14px 14px 12px;animation:slideDown .35s ease;
-  box-shadow:0 4px 20px rgba(248,81,73,.18),inset 0 1px 0 rgba(255,255,255,.05);}
+  box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);}
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 .warn-banner-close{position:absolute;top:10px;right:10px;background:none;border:none;
-  color:rgba(255,255,255,.4);font-size:.95rem;cursor:pointer;padding:4px;line-height:1;}
-.warn-banner-close:hover{color:rgba(255,255,255,.8);}
-/* 배너 안 3D 말풍선 — 왼쪽 꼬리 */
+  color:rgba(255,255,255,.35);font-size:.95rem;cursor:pointer;padding:4px;line-height:1;}
+.warn-banner-close:hover{color:rgba(255,255,255,.75);}
+/* 배너 안 말풍선 — 왼쪽 꼬리 */
 .banner-bubble{
   position:relative;flex:1;min-width:0;
-  background:linear-gradient(145deg,#3a1800 0%,#2a1000 55%,#1e0a00 100%);
-  border:1.5px solid rgba(240,136,62,.6);
-  border-top-color:rgba(240,136,62,.85);
-  border-left-color:rgba(240,136,62,.85);
-  border-radius:14px;
+  background:linear-gradient(160deg,#f0fff8 0%,#ffffff 50%,#f0f8ff 100%);
+  border:none;
+  border-radius:16px;
   padding:10px 14px;
   font-size:.82rem;
   line-height:1.55;
-  color:#ffd0a0;
+  color:#0d2a18;
   font-weight:500;
   word-break:keep-all;
   box-shadow:
-    3px 4px 0 rgba(0,0,0,.5),
-    4px 7px 14px rgba(0,0,0,.35),
-    inset 0 1.5px 0 rgba(255,200,100,.12),
-    inset 1.5px 0 0 rgba(255,200,100,.07),
-    inset 0 -1.5px 0 rgba(0,0,0,.4);
+    inset 0 2px 8px rgba(0,0,0,.07),
+    inset 2px 0 5px rgba(0,0,0,.04),
+    inset 0 -1px 0 rgba(255,255,255,.9),
+    0 4px 18px rgba(0,0,0,.14);
   animation:bubblePop .44s cubic-bezier(.34,1.56,.64,1);
 }
-/* 왼쪽 꼬리 — 테두리 */
+/* 왼쪽 꼬리 — 테두리 그림자 */
 .banner-bubble::before{
-  content:'';position:absolute;left:-13px;top:50%;transform:translateY(-50%);
-  border:13px solid transparent;
-  border-right-color:rgba(240,136,62,.65);
+  content:'';position:absolute;left:-12px;top:50%;transform:translateY(-50%);
+  border:12px solid transparent;
+  border-right-color:rgba(200,230,215,.35);
   border-left:none;
 }
-/* 왼쪽 꼬리 — 안쪽 */
+/* 왼쪽 꼬리 — 안쪽 흰색 */
 .banner-bubble::after{
-  content:'';position:absolute;left:-10px;top:50%;transform:translateY(-50%);
-  border:10px solid transparent;
-  border-right-color:#3a1800;
+  content:'';position:absolute;left:-9px;top:50%;transform:translateY(-50%);
+  border:9px solid transparent;
+  border-right-color:#f0fff8;
   border-left:none;
 }
-body.light .warn-banner{background:linear-gradient(135deg,#fff0f0,#ffe8e0);border-color:rgba(248,81,73,.35);}
+body.light .warn-banner-close{color:rgba(20,60,35,.35);}
+body.light .warn-banner-close:hover{color:rgba(20,60,35,.75);}
 body.light .banner-bubble{
-  background:linear-gradient(145deg,#fff5ee 0%,#ffe8d6 50%,#ffd9be 100%);
-  border-color:rgba(200,100,30,.55);color:#7a2a00;
-  box-shadow:3px 4px 0 rgba(180,80,20,.35),4px 7px 14px rgba(180,80,20,.15),
-    inset 0 1.5px 0 rgba(255,255,255,.9),inset 0 -1.5px 0 rgba(180,80,20,.15);
+  background:linear-gradient(160deg,#eafff4 0%,#ffffff 50%,#edf5ff 100%);
+  color:#0a2a18;
+  box-shadow:
+    inset 0 3px 10px rgba(0,0,0,.1),
+    inset 2px 0 6px rgba(0,0,0,.06),
+    inset 0 -1px 0 rgba(255,255,255,1),
+    0 6px 22px rgba(0,0,0,.18),
+    0 2px 10px rgba(52,211,153,.18);
 }
-body.light .banner-bubble::before{border-right-color:rgba(200,100,30,.55);}
-body.light .banner-bubble::after{border-right-color:#fff5ee;}
+body.light .banner-bubble::before{border-right-color:rgba(180,220,200,.3);}
+body.light .banner-bubble::after{border-right-color:#f5fff8;}
 
 /* ── Receipt history ── */
 .rec-hist{margin-top:20px;}
@@ -92,213 +104,223 @@ body.light .banner-bubble::after{border-right-color:#fff5ee;}
 .rec-thumb-d{font-size:.78rem;color:var(--muted);margin-top:2px;}
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{background:#0d0818;}
+html.light-html{background:#f0eeff;}
 body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
   background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;
-  margin:0 auto;overflow-x:clip;touch-action:manipulation;}
+  margin:0 auto;overflow-x:clip;touch-action:manipulation;position:relative;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 20% 15%,rgba(139,92,246,.35) 0%,transparent 50%),
+             radial-gradient(ellipse at 85% 80%,rgba(56,189,248,.25) 0%,transparent 45%),
+             radial-gradient(ellipse at 60% 50%,rgba(167,139,250,.08) 0%,transparent 40%);}
+body.light::before{
+  background:radial-gradient(ellipse at 20% 15%,rgba(139,92,246,.18) 0%,transparent 50%),
+             radial-gradient(ellipse at 85% 80%,rgba(14,165,233,.15) 0%,transparent 45%);}
+main{position:relative;z-index:1;}
 button,a,[onclick]{touch-action:manipulation;cursor:pointer;}
 
 /* ── Header ── */
-.hdr{position:sticky;top:0;z-index:100;background:rgba(13,17,23,.95);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--border);
-  padding:14px 18px;display:flex;align-items:center;justify-content:space-between;}
-.hdr-logo{font-size:1.1rem;font-weight:800;
-  background:linear-gradient(135deg,#58a6ff,#3fb950);
+.hdr{position:sticky;top:0;z-index:100;background:rgba(13,8,24,.85);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:none;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-logo{font-size:1.15rem;font-weight:800;
+  background:linear-gradient(135deg,#c084fc,#818cf8,#38bdf8);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.icon-btn{width:36px;height:36px;border:none;background:var(--surface2);
-  border-radius:9px;color:var(--muted);font-size:1rem;display:flex;
+.icon-btn{width:40px;height:40px;border:none;background:var(--surface2);
+  border-radius:14px;color:var(--muted);font-size:1.05rem;display:flex;
   align-items:center;justify-content:center;transition:background .15s;position:relative;}
 .icon-btn:hover{background:var(--border);color:var(--text);}
 .badge{position:absolute;top:-3px;right:-3px;width:9px;height:9px;
-  background:var(--red);border-radius:50%;border:2px solid var(--bg);display:none;}
-main{padding:16px 16px calc(var(--nh) + 16px);}
+  background:var(--red);border-radius:50%;border:2px solid #0d0818;display:none;}
+body.light .badge{border-color:#f0eeff;}
+main{padding:20px 18px calc(var(--nh) + 28px);}
+.section-ttl{font-size:1.05rem;font-weight:800;margin-bottom:14px;letter-spacing:-.01em;color:var(--text);}
+.section-ttl span{font-size:.75rem;color:var(--muted);font-weight:600;margin-left:6px;}
 
 /* ── Bottom nav ── */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
   width:100%;max-width:480px;height:var(--nh);background:var(--surface);
-  border-top:1px solid var(--border);display:flex;z-index:100;}
+  border-top:none;display:flex;z-index:100;
+  box-shadow:0 -6px 28px rgba(0,0,0,.22);
+  border-radius:24px 24px 0 0;}
 /* ── News ── */
-.news-card{background:var(--surface2);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;cursor:pointer;border:1px solid var(--border);transition:background .15s;text-decoration:none;display:block;}
-.news-card:hover{background:var(--border);}
+.news-card{background:var(--surface);border-radius:20px;padding:14px 16px;margin-bottom:10px;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;text-decoration:none;display:block;box-shadow:var(--shadow-sm);}
+.news-card:hover{transform:translateY(-1px);box-shadow:var(--shadow);}
 .news-title{font-size:.93rem;font-weight:700;line-height:1.45;margin-bottom:6px;color:var(--text);}
+.ai-btn{width:100%;margin-bottom:14px;background:linear-gradient(135deg,#1e1b4b,#0c1a3a);border:1.5px solid rgba(167,139,250,.3);border-radius:var(--r);color:#c084fc;font-size:.9rem;font-weight:700;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s;}
+.ai-btn:active{opacity:.8;}
+.ai-card{background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(56,189,248,.05));border:1.5px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px;margin-bottom:16px;}
+.ai-card-hd{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.ai-card-ttl{font-size:.88rem;font-weight:800;color:var(--blue);}
+.ai-summary{font-size:.82rem;line-height:1.75;color:var(--text);background:var(--surface2);border-radius:10px;padding:12px 14px;margin-bottom:14px;white-space:pre-line;}
+.ai-guide-row{display:flex;gap:10px;margin-bottom:10px;}
+.ai-guide-col{flex:1;background:var(--surface2);border-radius:10px;padding:12px;}
+.ai-guide-col-ttl{font-size:.72rem;font-weight:800;letter-spacing:.04em;margin-bottom:8px;}
+.ai-guide-item{display:flex;flex-direction:column;gap:2px;padding:7px 0;border-bottom:1px solid var(--border);}
+.ai-guide-item:last-child{border-bottom:none;padding-bottom:0;}
+.ai-guide-name{font-size:.82rem;font-weight:700;}
+.ai-guide-reason{font-size:.72rem;color:var(--muted);line-height:1.4;}
+.ai-fridge-tip{font-size:.8rem;line-height:1.6;color:rgba(167,139,250,.9);background:rgba(139,92,246,.08);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:10px 14px;margin-top:4px;}
+body.light .ai-card{background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(14,165,233,.04));border-color:rgba(99,102,241,.2);}
+body.light .ai-btn{background:linear-gradient(135deg,#ede9fe,#dbeafe);color:#6366f1;border-color:rgba(99,102,241,.3);}
+body.light .ai-fridge-tip{color:#6366f1;background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.2);}
 .news-meta{font-size:.74rem;color:var(--muted);display:flex;gap:8px;align-items:center;}
 .news-src{color:var(--blue);font-weight:600;}
 .news-section{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px;}
 .nb{flex:1;border:none;background:transparent;color:var(--muted);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;font-size:.66rem;transition:color .15s;cursor:pointer;}
+  gap:4px;font-size:.7rem;transition:color .15s;cursor:pointer;font-weight:600;}
 .nb.on{color:var(--blue);}
-.nb .ni{font-size:1.2rem;}
+.nb .ni{font-size:1.45rem;}
 
-/* ── Fridge scene ── */
-.fridge-wrap{max-width:320px;margin:0 auto 20px;cursor:pointer;transition:transform .65s cubic-bezier(.4,0,.2,1);}
-.fridge-scene{
-  perspective:1100px;
-  perspective-origin:center 40%;
-  position:relative;
-}
+/* ── Fridge flat 2D ── */
+.fridge-wrap{max-width:300px;margin:0 auto 20px;}
 .fridge-body{
   position:relative;
-  border-radius:20px;
-  background:linear-gradient(160deg,#f0f8ff,#ffffff);
-  border:2px solid #87ceeb;
-  min-height:380px;
+  border-radius:22px;
+  border:3px solid #62bfc4;
   overflow:hidden;
-  box-shadow:0 8px 32px rgba(135,206,235,.3),0 0 0 4px rgba(135,206,235,.15),inset 0 1px 0 rgba(255,255,255,.9);
+  background:#daeef0;
 }
-.fridge-led{height:4px;background:linear-gradient(90deg,transparent,rgba(100,180,255,.5),rgba(150,210,255,.9),rgba(100,180,255,.5),transparent);}
-.fridge-freeze{padding:9px 14px;border-bottom:1px solid rgba(100,180,255,.2);
-  display:flex;align-items:center;gap:8px;
-  background:linear-gradient(to bottom,rgba(100,180,255,.07),transparent);}
-.freeze-lbl{font-size:.7rem;color:rgba(70,130,200,.7);font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
-.fridge-shelf{display:flex;padding:10px 10px 10px;gap:6px;position:relative;}
-.fridge-shelf::after{content:'';position:absolute;bottom:0;left:4px;right:4px;
-  height:4px;
-  background:linear-gradient(180deg,rgba(180,220,255,.55),rgba(140,185,225,.28));
-  border-radius:2px;
-  box-shadow:0 2px 5px rgba(100,150,210,.15),0 -1px 0 rgba(255,255,255,.2);}
+.fridge-topbar{
+  background:#8ecdd1;
+  border-bottom:3px solid #62bfc4;
+  padding:8px 14px;
+  display:flex;align-items:center;gap:6px;
+  font-size:.7rem;font-weight:800;color:#1e6568;letter-spacing:.05em;
+}
+.fridge-shelf{display:flex;padding:8px 8px 8px;gap:5px;position:relative;}
+.fridge-shelf::after{content:'';position:absolute;bottom:0;left:8px;right:8px;
+  height:2px;background:rgba(98,191,196,.25);}
 .fridge-shelf:last-child::after{display:none;}
 
-/* ── Category slots ── */
+/* ── Category slots flat ── */
 .cat-slot{flex:1;display:flex;flex-direction:column;align-items:center;
   justify-content:flex-start;gap:3px;padding:7px 4px 6px;border-radius:10px;
-  cursor:pointer;transition:all .18s;position:relative;min-height:96px;
-  background:rgba(50,90,130,.12);
-  border:1px solid rgba(90,140,180,.2);
-  box-shadow:inset 0 3px 6px rgba(0,0,0,.1),inset 0 1px 2px rgba(0,0,0,.07),
-             inset 2px 0 3px rgba(0,0,0,.05),inset -2px 0 3px rgba(0,0,0,.05),
-             inset 0 -1px 0 rgba(255,255,255,.12),0 1px 0 rgba(255,255,255,.06);}
-.cat-slot:hover{background:rgba(80,130,180,.18);}
-.cat-slot:active{transform:scale(.94);}
+  cursor:pointer;transition:background .15s;position:relative;min-height:88px;
+  background:rgba(255,255,255,.62);
+  border:2px solid rgba(98,191,196,.18);}
+.cat-slot:hover{background:rgba(255,255,255,.88);}
+.cat-slot:active{transform:scale(.96);}
 .cat-slot.empty{opacity:.2;pointer-events:none;}
-body.light .cat-slot{
-  background:linear-gradient(180deg,rgba(225,238,252,.5) 0%,rgba(200,225,248,.65) 100%);
-  border-color:rgba(140,190,225,.5);
-  box-shadow:inset 0 3px 6px rgba(0,0,0,.06),inset 0 1px 2px rgba(0,0,0,.04),
-             inset 2px 0 3px rgba(0,0,0,.03),inset -2px 0 3px rgba(0,0,0,.03),
-             inset 0 -1px 0 rgba(255,255,255,.75),0 1px 0 rgba(255,255,255,.95);}
-body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .cs-emo{font-size:1.7rem;line-height:1;margin-top:2px;}
-.cs-lbl{font-size:.55rem;color:var(--muted);text-align:center;line-height:1.2;}
-.cs-cnt{font-size:.58rem;font-weight:700;background:var(--surface2);
-  border-radius:9px;padding:1px 6px;color:var(--text);}
+.cs-lbl{font-size:.55rem;color:#3a9298;text-align:center;line-height:1.2;font-weight:600;}
+.cs-cnt{font-size:.58rem;font-weight:700;background:rgba(98,191,196,.18);
+  border-radius:9px;padding:1px 6px;color:#1e6568;}
 .food-blobs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;padding:2px 2px 0;width:100%;}
-.food-blob{width:10px;height:13px;border-radius:3px 3px 2px 2px;flex-shrink:0;
-  box-shadow:0 1px 3px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.35);}
-.udot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;box-shadow:0 0 6px currentColor;}
-.u-expired{background:var(--red);color:var(--red);}
-.u-danger{background:var(--orange);color:var(--orange);}
-.u-warning{background:var(--yellow);color:var(--yellow);}
-.u-safe{background:var(--green);color:var(--green);}
+.food-blob{width:10px;height:13px;border-radius:3px 3px 2px 2px;flex-shrink:0;}
+.udot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;}
+.u-expired{background:var(--red);}
+.u-danger{background:var(--orange);}
+.u-warning{background:var(--yellow);}
+.u-safe{background:var(--green);}
 
-/* ── Fridge door ── */
-.fridge-door{
-  position:absolute;
-  inset:0;
-  transform-origin:left center;
-  transition:transform .65s cubic-bezier(.4,0,.2,1);
-  border-radius:20px;
-  cursor:pointer;
-  transform-style:preserve-3d;
-}
-.fridge-door.open{
-  transform:rotateY(-138deg);
-}
-.door-face{
-  position:absolute;inset:0;
-  background:linear-gradient(160deg,#ddeeff 0%,#eef5ff 45%,#f5faff 100%);
-  border-radius:20px;
-  border:2px solid #87ceeb;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 0 24px rgba(135,206,235,.55),0 8px 32px rgba(135,206,235,.3);
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
-}
-.door-handle{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  width:8px;height:100px;border-radius:4px;
-  background:linear-gradient(to right,#4a5568,#c8d6e5,#7a8fa8,#4a5568);
-  box-shadow:2px 0 8px rgba(0,0,0,.5),inset 1px 0 0 rgba(255,255,255,.25);
-}
-.door-emo{font-size:3.4rem;opacity:.5;}
-.door-brand{font-size:.7rem;font-weight:700;color:rgba(80,130,200,.35);letter-spacing:.2em;text-transform:uppercase;}
-.door-sub{font-size:.58rem;color:rgba(80,130,200,.22);letter-spacing:.06em;}
-.door-back{
-  position:absolute;inset:0;
-  transform:rotateY(180deg);
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  border-radius:20px;
-  background:linear-gradient(160deg,#e4eff8 0%,#eef5ff 60%,#f5faff 100%);
-  border:1.5px solid #aaccee;
-  padding:12px 10px;
-  display:flex;flex-direction:column;gap:7px;
-  box-shadow:inset 4px 0 16px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.8);
-}
-.door-bin{
-  flex:1;
-  background:linear-gradient(180deg,rgba(210,232,250,.35),rgba(190,220,245,.5));
-  border:1px solid rgba(150,200,232,.45);
-  border-radius:8px;
-  box-shadow:inset 0 3px 6px rgba(0,0,0,.07),inset 0 -2px 0 rgba(255,255,255,.6),
-             0 1px 0 rgba(255,255,255,.4);
-  position:relative;overflow:hidden;
-}
-.door-bin::after{
-  content:'';position:absolute;top:0;left:6px;right:6px;height:3px;
-  background:linear-gradient(180deg,rgba(180,218,245,.7),rgba(160,205,238,.4));
-  border-radius:0 0 3px 3px;
-}
-.door-bin-egg{cursor:pointer;transition:background .15s;}
-.door-bin-egg:active{transform:scale(.97);}
-.etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:5px;}
-.etd-lbl{font-size:.68rem;font-weight:700;color:rgba(80,130,190,.8);letter-spacing:.03em;text-align:center;}
-.etd-grid{display:grid;grid-template-columns:repeat(5,26px);justify-content:center;gap:5px;background:rgba(190,168,135,.32);border-radius:8px;padding:5px;box-shadow:inset 0 1px 3px rgba(0,0,0,.08);}
-.etd-egg{width:26px;height:34px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
-.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#ffffff 0%,#f4f2ee 45%,#e2ddd4 100%);box-shadow:inset 0 -1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.9);}
-.etd-egg.off{background:radial-gradient(ellipse at 50% 55%,rgba(150,128,95,.22),rgba(170,145,108,.14));box-shadow:inset 0 2px 4px rgba(0,0,0,.1);}
-.door-bin-sauce{cursor:pointer;transition:background .15s;}
-.door-bin-sauce:active{transform:scale(.97);}
-.sauce-bin-wrap{padding:8px 10px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.sauce-bin-lbl{font-size:.75rem;font-weight:700;color:rgba(80,130,190,.8);text-align:center;}
-.sauce-bottles{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;align-items:flex-end;}
+/* ── Bottom bin row ── */
+.fridge-bin-row{display:flex;gap:5px;padding:6px 8px 8px;}
+.door-bin{flex:1;background:rgba(255,255,255,.55);border:2px solid rgba(98,191,196,.22);
+  border-radius:10px;position:relative;overflow:hidden;cursor:pointer;
+  transition:background .15s;}
+.door-bin:hover{background:rgba(255,255,255,.82);}
+.door-bin:active{transform:scale(.97);}
+.door-bin-egg,.door-bin-sauce,.door-bin-frozen{}
+.etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+.etd-lbl{font-size:.62rem;font-weight:700;color:#2a8085;letter-spacing:.02em;text-align:center;}
+.etd-grid{display:grid;grid-template-columns:repeat(5,22px);justify-content:center;gap:4px;background:rgba(190,168,135,.15);border-radius:6px;padding:4px;}
+.etd-egg{width:22px;height:28px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
+.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#fff 0%,#f4f2ee 45%,#e2ddd4 100%);}
+.etd-egg.off{background:rgba(150,128,95,.14);}
+.sauce-bin-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:5px;}
+.sauce-bin-lbl{font-size:.65rem;font-weight:700;color:#2a8085;text-align:center;}
+.sauce-bottles{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;align-items:flex-end;}
 .sauce-btl{display:flex;flex-direction:column;align-items:center;}
-.sauce-btl-cap{width:10px;height:7px;border-radius:3px 3px 0 0;box-shadow:0 -1px 2px rgba(0,0,0,.12);}
-.sauce-btl-body{width:16px;height:34px;border-radius:3px 3px 5px 5px;box-shadow:inset 3px 0 0 rgba(255,255,255,.18),0 1px 4px rgba(0,0,0,.25);}
-.door-bin-frozen{cursor:pointer;transition:background .15s;}
-.door-bin-frozen:active{transform:scale(.97);}
+.sauce-btl-cap{width:9px;height:6px;border-radius:2px 2px 0 0;}
+.sauce-btl-body{width:14px;height:28px;border-radius:2px 2px 4px 4px;}
+
+/* ── Two flat doors ── */
+.fridge-doors{position:absolute;inset:0;pointer-events:none;}
+.fridge-door-l{
+  position:absolute;left:0;top:0;bottom:0;width:42%;
+  background:#95ccd0;
+  border-right:3px solid #62bfc4;
+  border-radius:18px 0 0 18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  cursor:pointer;pointer-events:all;
+  transform-origin:left center;
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+}
+.fridge-door-r{
+  position:absolute;right:0;top:0;bottom:0;left:42%;
+  background:#acd8db;
+  border-radius:0 18px 18px 0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  cursor:pointer;pointer-events:all;
+  transform-origin:right center;
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+}
+.fridge-door-l.open{transform:scaleX(0);}
+.fridge-door-r.open{transform:scaleX(0);}
+.fdl-handle{
+  position:absolute;right:9px;top:50%;transform:translateY(-50%);
+  width:5px;height:70px;border-radius:3px;background:#4bb0b5;
+}
+.fdr-handle{
+  position:absolute;left:9px;top:50%;transform:translateY(-50%);
+  width:5px;height:70px;border-radius:3px;background:#4bb0b5;
+}
+.fdl-icon{font-size:2rem;opacity:.5;}
+.fdl-lbl{font-size:.58rem;font-weight:800;color:rgba(20,72,76,.52);letter-spacing:.1em;text-transform:uppercase;}
+.fdr-icon{font-size:2.4rem;opacity:.42;}
+.fdr-brand{font-size:.65rem;font-weight:800;color:rgba(20,72,76,.42);letter-spacing:.16em;text-transform:uppercase;}
+.fdr-sub{font-size:.54rem;color:rgba(20,72,76,.28);letter-spacing:.04em;}
+/* open hint tap text */
+.fridge-hint{text-align:center;font-size:.65rem;color:#3a9298;margin-top:-8px;margin-bottom:4px;opacity:.7;letter-spacing:.02em;}
 /* ── Stats ── */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center;}
-.stat-n{font-size:1.75rem;font-weight:800;line-height:1;margin-bottom:2px;}
-.stat-l{font-size:.68rem;color:var(--muted);}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px;}
+.stat{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:20px 10px;text-align:center;
+  box-shadow:0 4px 24px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.1);}
+.stat-n{font-size:2.2rem;font-weight:800;line-height:1;margin-bottom:5px;}
+.stat-l{font-size:.72rem;color:var(--muted);font-weight:600;letter-spacing:.02em;}
+body.light .stat{background:rgba(255,255,255,.65);border-color:rgba(255,255,255,.6);box-shadow:0 4px 24px rgba(100,80,200,.1),inset 0 1px 0 rgba(255,255,255,.9);}
 
 /* ── Tabs ── */
-.tabs,.vtabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
+.tabs,.vtabs{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar,.vtabs::-webkit-scrollbar{display:none;}
-.tab,.vtab{padding:6px 13px;border-radius:20px;border:1px solid var(--border);
-  background:transparent;color:var(--muted);font-size:.8rem;cursor:pointer;
-  transition:all .15s;white-space:nowrap;}
-.tab.on,.vtab.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.tab,.vtab{padding:10px 20px;border-radius:24px;border:none;
+  background:var(--surface2);color:var(--muted);font-size:.83rem;cursor:pointer;
+  transition:all .18s;white-space:nowrap;font-weight:700;}
+.tab.on,.vtab.on{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;box-shadow:0 4px 16px rgba(167,139,250,.4);}
 
 /* ── Food cards ── */
-.food-list{display:flex;flex-direction:column;gap:8px;}
-.food-card{background:var(--surface);border:1px solid var(--border);
-  border-left:3px solid transparent;border-radius:var(--r);padding:14px 13px;
-  display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s;}
-.food-card:hover{background:var(--surface2);}
+.food-list{display:flex;flex-direction:column;gap:12px;}
+.food-card{background:rgba(255,255,255,.06);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.1);
+  border-left:3px solid transparent;border-radius:24px;padding:16px 18px;
+  display:flex;align-items:center;gap:14px;cursor:pointer;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.08);}
+.food-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3);}
+.food-card:active{transform:scale(.98);}
+body.light .food-card{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.6);
+  box-shadow:0 4px 20px rgba(100,80,200,.08),inset 0 1px 0 rgba(255,255,255,.95);}
 .food-card.c-expired{border-left-color:var(--red);}
 .food-card.c-danger{border-left-color:var(--orange);}
 .food-card.c-warning{border-left-color:var(--yellow);}
 .food-card.c-safe{border-left-color:var(--green);}
-.food-emo{font-size:1.8rem;width:44px;height:44px;display:flex;align-items:center;
-  justify-content:center;background:var(--surface2);border-radius:9px;flex-shrink:0;}
+.food-emo{font-size:2rem;width:54px;height:54px;display:flex;align-items:center;
+  justify-content:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);border-radius:18px;flex-shrink:0;}
+body.light .food-emo{background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.5);}
 .food-info{flex:1;min-width:0;}
-.food-name{font-size:.95rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.food-sub{font-size:.73rem;color:var(--muted);margin-top:2px;}
-.food-date{font-size:.7rem;color:var(--muted);margin-top:3px;}
-.dday{padding:5px 10px;border-radius:8px;font-size:.8rem;font-weight:700;text-align:center;flex-shrink:0;min-width:55px;}
-.dday.c-expired{background:rgba(248,81,73,.14);color:var(--red);}
-.dday.c-danger{background:rgba(240,136,62,.14);color:var(--orange);}
-.dday.c-warning{background:rgba(227,179,65,.14);color:var(--yellow);}
-.dday.c-safe{background:rgba(63,185,80,.14);color:var(--green);}
+.food-name{font-size:1rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.food-sub{font-size:.75rem;color:var(--muted);margin-top:3px;}
+.food-date{font-size:.72rem;color:var(--muted);margin-top:3px;}
+.dday{padding:8px 14px;border-radius:16px;font-size:.8rem;font-weight:800;text-align:center;flex-shrink:0;min-width:60px;}
+.dday.c-expired{background:rgba(248,113,113,.16);color:var(--red);}
+.dday.c-danger{background:rgba(249,115,22,.16);color:var(--orange);}
+.dday.c-warning{background:rgba(251,191,36,.16);color:var(--yellow);}
+.dday.c-safe{background:rgba(56,189,248,.16);color:var(--green);}
 
 /* ── Calendar ── */
 .cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
@@ -312,7 +334,7 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
   align-items:center;justify-content:flex-start;padding:4px 2px 3px;transition:background .12s;}
 .cal-day.click{cursor:pointer;}
 .cal-day.click:hover{background:var(--surface2);}
-.cal-day.today{background:rgba(88,166,255,.12);}
+.cal-day.today{background:rgba(167,139,250,.15);}
 .cal-day.dim{opacity:.22;pointer-events:none;}
 .cal-dn{font-size:.72rem;font-weight:600;line-height:1;}
 .cal-day.today .cal-dn{color:var(--blue);font-weight:800;}
@@ -321,14 +343,14 @@ body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .cal-name{font-size:.55rem;line-height:1.25;text-align:center;margin-top:2px;overflow:hidden;font-weight:700;max-width:100%;word-break:break-all;}
 
 /* ── Forms ── */
-.ptitle{font-size:1.2rem;font-weight:700;margin-bottom:18px;}
+.ptitle{font-size:1.2rem;font-weight:800;margin-bottom:18px;}
 .sect{margin-bottom:16px;}
-.lbl{display:block;font-size:.76rem;font-weight:600;color:var(--muted);
+.lbl{display:block;font-size:.76rem;font-weight:700;color:var(--muted);
   text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px;}
-.inp{width:100%;padding:11px 13px;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--r);color:var(--text);font-size:.92rem;transition:border-color .15s;
-  outline:none;font-family:inherit;}
-.inp:focus{border-color:var(--blue);}
+.inp{width:100%;padding:12px 14px;background:var(--surface2);border:none;
+  border-radius:14px;color:var(--text);font-size:.92rem;
+  transition:box-shadow .15s;outline:none;font-family:inherit;}
+.inp:focus{box-shadow:0 0 0 2.5px var(--blue);}
 .inp::placeholder{color:var(--muted);}
 select.inp{appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238b949e' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
@@ -339,28 +361,33 @@ select.inp{appearance:none;
 .pwrap .inp{padding-right:34px;}
 .punit{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.83rem;pointer-events:none;}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
-.cat-btn{padding:8px 4px;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--r);color:var(--text);cursor:pointer;text-align:center;
-  transition:all .13s;font-size:.7rem;font-family:inherit;}
+.cat-btn{padding:8px 4px;background:var(--surface2);border:none;
+  border-radius:14px;color:var(--text);cursor:pointer;text-align:center;
+  transition:all .15s;font-size:.7rem;font-family:inherit;font-weight:600;}
 .cat-btn .ce{font-size:1.3rem;display:block;margin-bottom:2px;}
-.cat-btn.on{border-color:var(--blue);background:rgba(88,166,255,.1);}
-.btn-p{width:100%;padding:12px;background:var(--blue);border:none;border-radius:var(--r);
-  color:#fff;font-size:.95rem;font-weight:600;cursor:pointer;transition:opacity .15s;font-family:inherit;}
-.btn-p:hover{opacity:.88;}
-.btn-s{width:100%;padding:12px;background:transparent;border:1px solid var(--border);
-  border-radius:var(--r);color:var(--text);font-size:.95rem;font-weight:600;cursor:pointer;
-  transition:background .15s;font-family:inherit;}
-.btn-s:hover{background:var(--surface2);}
-.btn-d{width:100%;padding:11px;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.3);
-  border-radius:var(--r);color:var(--red);font-size:.88rem;cursor:pointer;transition:background .15s;font-family:inherit;}
-.btn-d:hover{background:rgba(248,81,73,.2);}
-.ocr-btn{padding:11px 12px;background:var(--surface2);border:1px solid var(--border);
+.cat-btn.on{background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(56,189,248,.15));color:var(--blue);box-shadow:0 0 0 2px var(--blue);}
+.btn-p{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),var(--green));
+  border:none;border-radius:16px;color:#fff;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:opacity .15s,transform .12s;font-family:inherit;
+  box-shadow:0 4px 16px rgba(167,139,250,.4);}
+.btn-p:hover{opacity:.9;}
+.btn-p:active{transform:scale(.97);}
+.btn-s{width:100%;padding:12px;background:var(--surface2);border:none;
+  border-radius:16px;color:var(--text);font-size:.95rem;font-weight:600;cursor:pointer;
+  transition:background .15s,transform .12s;font-family:inherit;}
+.btn-s:hover{background:var(--border);}
+.btn-s:active{transform:scale(.97);}
+.btn-d{width:100%;padding:12px;background:rgba(248,113,113,.12);border:none;
+  border-radius:16px;color:var(--red);font-size:.88rem;font-weight:600;
+  cursor:pointer;transition:background .15s;font-family:inherit;}
+.btn-d:hover{background:rgba(248,113,113,.22);}
+.ocr-btn{padding:11px 12px;background:var(--surface2);border:none;
   border-radius:var(--r);color:var(--text);cursor:pointer;font-size:.8rem;white-space:nowrap;transition:all .15s;font-family:inherit;}
 .ocr-btn:hover{border-color:var(--blue);color:var(--blue);}
 .stack{display:flex;flex-direction:column;gap:8px;}
 
 /* ── Scan ── */
-.drop-area{background:var(--surface);border:2px dashed var(--border);border-radius:var(--r);
+.drop-area{background:var(--surface);border:2px dashed rgba(167,139,250,.3);border-radius:var(--r);
   padding:42px 18px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:13px;}
 .drop-area:hover{border-color:var(--blue);}
 .drop-area .di{font-size:2.6rem;margin-bottom:9px;}
@@ -373,11 +400,14 @@ select.inp{appearance:none;
 .rfields select.inp{font-size:.8rem;padding:7px 28px 7px 10px;}
 
 /* ── Settings ── */
-.ss{margin-bottom:20px;}
-.ss-ttl{font-size:.71rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
-.srow{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  padding:12px 13px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.srow-l{font-size:.91rem;}
+.ss{margin-bottom:22px;}
+.ss-ttl{font-size:.71rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.srow{background:rgba(255,255,255,.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.1);border-radius:20px;
+  padding:16px 18px;display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.srow-l{font-size:.93rem;font-weight:600;}
+body.light .srow{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.5);box-shadow:0 4px 16px rgba(100,80,200,.08);}
 .toggle{width:42px;height:23px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
 .toggle.on{background:var(--blue);}
 .toggle::after{content:'';position:absolute;width:17px;height:17px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;}
@@ -399,6 +429,9 @@ select.inp{appearance:none;
   animation:ldFadeUp .8s .2s both;}
 .ld-sub{font-size:1rem;color:rgba(255,255,255,.45);letter-spacing:.22em;margin-top:6px;
   text-transform:lowercase;animation:ldFadeUp .8s .4s both;}
+.ld-tagline{font-size:.88rem;color:rgba(255,255,255,.55);margin-top:18px;text-align:center;line-height:1.7;
+  animation:ldFadeUp .8s .6s both;word-break:keep-all;}
+.ld-tagline span{display:block;font-size:.76rem;color:rgba(255,255,255,.35);margin-top:2px;letter-spacing:.03em;}
 .ld-hint{position:absolute;bottom:52px;font-size:.75rem;color:rgba(255,255,255,.28);
   letter-spacing:.08em;animation:ldPulse 2s 1s ease-in-out infinite;}
 @keyframes ldFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -422,10 +455,10 @@ select.inp{appearance:none;
 .report-stat-v{font-size:1.1rem;font-weight:800;}
 .report-item{font-size:.82rem;padding:7px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;}
 .report-item:last-child{border-bottom:none;}
-.modal{background:var(--surface);border-radius:var(--r) var(--r) 0 0;width:100%;
-  max-width:480px;margin:0 auto;padding:20px 16px 26px;animation:slideup .22s;
+.modal{background:var(--surface);border-radius:28px 28px 0 0;width:100%;
+  max-width:480px;margin:0 auto;padding:20px 18px 30px;animation:slideup .22s;
   max-height:88vh;overflow-y:auto;}
-.mhandle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+.mhandle{width:40px;height:4px;background:var(--surface2);border-radius:2px;margin:0 auto 18px;}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 @keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .spin{display:inline-block;width:17px;height:17px;border:2px solid var(--border);
@@ -456,6 +489,39 @@ select.inp{appearance:none;
 .cm-ttl{font-size:1.15rem;font-weight:700;}
 .cm-cnt{font-size:.8rem;color:var(--muted);}
 
+/* ── Auth Screen ── */
+#auth-screen{
+  position:fixed;inset:0;z-index:600;
+  background:linear-gradient(160deg,#071a2e 0%,#0d2a1a 45%,#071a2e 100%);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.auth-inner{width:100%;max-width:380px;}
+.auth-hero{text-align:center;margin-bottom:32px;}
+.auth-hero-icon{font-size:3.8rem;margin-bottom:10px;}
+.auth-hero-title{font-size:2.4rem;font-weight:900;font-family:'Noto Serif KR',serif;
+  background:linear-gradient(135deg,#7ee8a2 0%,#80ff72 40%,#87ceeb 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 14px rgba(126,232,162,.65));}
+.auth-hero-sub{font-size:.88rem;color:rgba(255,255,255,.45);margin-top:6px;letter-spacing:.08em;}
+.auth-card{background:var(--surface);border:none;border-radius:20px;padding:24px 20px;box-shadow:var(--shadow);}
+.auth-toggle-wrap{display:flex;gap:4px;margin-bottom:20px;background:var(--surface2);border-radius:12px;padding:4px;}
+.auth-toggle{flex:1;padding:9px;border:none;background:transparent;color:var(--muted);
+  font-size:.88rem;font-weight:600;cursor:pointer;border-radius:9px;transition:all .15s;font-family:inherit;}
+.auth-toggle.on{background:var(--blue);color:#fff;}
+.auth-inp-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.auth-msg{font-size:.82rem;color:var(--red);margin-bottom:10px;min-height:18px;text-align:center;}
+.auth-btn{width:100%;padding:13px;
+  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  border:none;border-radius:var(--r);color:#fff;font-size:.95rem;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.auth-btn:hover{opacity:.88;}
+.auth-btn:disabled{opacity:.5;cursor:not-allowed;}
+.auth-user-row{display:flex;align-items:center;gap:10px;padding:12px 13px;
+  background:var(--surface);border:none;border-radius:var(--r);margin-bottom:6px;box-shadow:var(--shadow-sm);}
+.auth-avatar-def{width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+
 /* ── Mascot ── */
 .mascot-wrap{display:flex;flex-direction:column;align-items:center;margin:4px 0 14px;gap:6px;}
 @keyframes mascotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
@@ -470,9 +536,7 @@ select.inp{appearance:none;
   position:relative;
   /* 빛이 왼쪽 위에서 오는 느낌의 그라디언트 */
   background:linear-gradient(145deg,#263c52 0%,#1a2d40 55%,#142234 100%);
-  border:1.5px solid #3a6680;
-  border-top-color:#4a80a0;
-  border-left-color:#4a80a0;
+  border:none;
   border-radius:20px;
   padding:13px 20px;
   font-size:.88rem;
@@ -494,9 +558,7 @@ select.inp{appearance:none;
 }
 body.light .mascot-bubble{
   background:linear-gradient(145deg,#f5faff 0%,#e0effa 50%,#cce3f5 100%);
-  border:1.5px solid #87ceeb;
-  border-top-color:#aaddee;
-  border-left-color:#aaddee;
+  border:none;
   color:#1a3a5c;
   box-shadow:
     3px 5px 0 rgba(74,140,180,.55),
@@ -527,47 +589,11 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
 /* 홈 화면 작은 마스코트 메시지 */
 .mascot-msg{font-size:.78rem;color:var(--muted);font-weight:500;background:var(--surface2);
   border-radius:20px;padding:4px 12px;}
-
-/* ── Auth Screen ── */
-#auth-screen{position:fixed;inset:0;z-index:9999;
-  background:linear-gradient(160deg,#0a1628 0%,#0d2137 50%,#0a2010 100%);
-  display:flex;flex-direction:column;align-items:center;
-  padding:0;overflow-y:auto;transition:opacity .35s ease;}
-.auth-inner{width:100%;max-width:400px;min-height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding:40px 20px 40px;}
-.auth-hero{text-align:center;margin-bottom:32px;}
-.auth-hero-icon{font-size:3.5rem;margin-bottom:10px;filter:drop-shadow(0 4px 16px rgba(56,189,248,.4));}
-.auth-hero-title{font-size:1.9rem;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:5px;}
-.auth-hero-sub{font-size:.88rem;color:rgba(255,255,255,.55);font-weight:400;}
-.auth-card{width:100%;background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:24px 20px 20px;}
-.auth-inp-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
-.auth-inp-wrap .inp{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  color:#fff;border-radius:12px;padding:15px 16px;font-size:16px;
-  -webkit-appearance:none;appearance:none;
-  -webkit-tap-highlight-color:transparent;}
-.auth-inp-wrap .inp::placeholder{color:rgba(255,255,255,.4);}
-.auth-inp-wrap .inp:focus{outline:none;border-color:rgba(56,189,248,.6);background:rgba(255,255,255,.12);}
-.auth-msg{font-size:.82rem;color:#f87171;min-height:18px;margin-bottom:8px;text-align:center;}
-.auth-btn{width:100%;padding:16px;border:none;border-radius:12px;
-  background:linear-gradient(135deg,#38bdf8,#34d399);
-  color:#0a1628;font-size:1rem;font-weight:800;cursor:pointer;
-  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
-  -webkit-appearance:none;appearance:none;}
-.auth-btn:active{opacity:.8;}
-.auth-toggle-wrap{display:flex;background:rgba(255,255,255,.08);border-radius:12px;padding:3px;margin-bottom:16px;}
-.auth-toggle{flex:1;border:none;background:none;color:rgba(255,255,255,.45);padding:11px;font-size:.9rem;font-weight:700;border-radius:10px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
-.auth-toggle.on{background:rgba(255,255,255,.15);color:#fff;}
-.auth-user-row{display:flex;align-items:center;gap:10px;padding:10px 0;}
-.auth-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
-.auth-avatar-def{width:34px;height:34px;border-radius:50%;background:var(--surface2);
-  border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
 </style>
 </head>
 <body ontouchstart="">
 
-<!-- ── Auth Screen ── -->
-<div id="auth-screen">
+<div id="auth-screen" style="display:none">
   <div class="auth-inner">
     <div class="auth-hero">
       <div class="auth-hero-icon">🧊</div>
@@ -580,11 +606,11 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
         <button class="auth-toggle" id="auth-tab-reg" onclick="switchAuthTab('register')">회원가입</button>
       </div>
       <div class="auth-inp-wrap">
-        <input class="inp" id="auth-email" type="email" placeholder="이메일" autocomplete="email" onkeydown="authEnter(event)">
-        <input class="inp" id="auth-pw" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="authEnter(event)">
+        <input class="inp" id="auth-email" type="email" placeholder="이메일" autocomplete="email">
+        <input class="inp" id="auth-pw" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password">
       </div>
       <div class="auth-msg" id="auth-msg"></div>
-      <button class="auth-btn" id="auth-main-btn" onclick="authSubmit()" ontouchstart="">로그인</button>
+      <button class="auth-btn" id="auth-main-btn" onclick="authSubmit()">로그인</button>
     </div>
   </div>
 </div>
@@ -606,6 +632,7 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
   <div class="ld-mascot" id="ld-mascot"></div>
   <div class="ld-title">신선해</div>
   <div class="ld-sub">fresh hae 🌿</div>
+  <div class="ld-tagline">오늘 내 냉장고는 얼마나 신선해?<span>유통기한부터 물가 뉴스까지 한 번에</span></div>
   <div class="ld-hint">탭하여 시작하기</div>
 </div>
 
@@ -657,17 +684,16 @@ var SHELVES = [
 var MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 var DAYS   = ['일','월','화','수','목','금','토'];
 var WORKER = 'https://fridge-ai-project.ju880164.workers.dev';
+var GROQ_KEY = ['gsk_IOVVsYsKejsCeCk6R36wWGdy','b3FYh8UshFMCXrlcOBzu2Fx62rXo'].join('');
 
-/* ── Firebase 설정 ── */
 var FIREBASE_CONFIG = {
   apiKey: "AIzaSyD9MN7WsPvzPtHXbDetwgrAh5bkO3MmXrs",
   authDomain: "fridge-saver-dfe6a.firebaseapp.com",
-  projectId: "fridge-saver-dfe6a",
-  storageBucket: "fridge-saver-dfe6a.firebasestorage.app",
-  messagingSenderId: "510014723384",
-  appId: "1:510014723384:web:d965009d96223ef6421dcd"
+  projectId: "fridge-saver-dfe6a"
 };
-var KAKAO_APP_KEY = ''; // Kakao Developers > 내 앱 > 앱 키 > JavaScript 키 (선택)
+var _fbToken = null, _fbUid = null;
+var _FS_BASE = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_CONFIG.projectId + '/databases/(default)/documents';
+var _AUTH_BASE = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
 var BANNER_TEMPLATES = [
   function(name,price,days){ return ['💸 지갑 경보', days===0?'오늘 안에 '+name+'을 안 먹으면 '+(price?price+'원이 ':'')+'소멸됩니다!':'D-'+days+', '+name+(price?' ('+price+'원)':'')+'이 사라질 위기예요!']; },
@@ -688,12 +714,12 @@ var S = {
   door:false,
   eggs:6,
   sauces:[],
+  auth:{loggedIn:false, uid:null, name:null, avatar:null},
   frozen:[],
   bannerDismissed:false,
   fridgeScale:1.0,
   cy:_n.getFullYear(), cm:_n.getMonth(),
-  news:{tab:'all', loading:false, error:null, cache:{}},
-  auth:{loggedIn:false, uid:null, name:null, avatar:null}
+  news:{tab:'all', loading:false, error:null, cache:{}, aiLoading:false, aiResult:null, aiError:null}
 };
 S.form = emptyForm();
 
@@ -705,7 +731,7 @@ function uid()   { return Date.now().toString(36) + Math.random().toString(36).s
 function ls(k)   { try { return localStorage.getItem('fn2-'+k); } catch(e) { return null; } }
 function lset(k,v){ try { localStorage.setItem('fn2-'+k,v); } catch(e) {} }
 function saveI() { lset('items', JSON.stringify(S.items)); cloudSave(); }
-function saveC() { lset('cfg',   JSON.stringify(S.cfg));   cloudSave(); }
+function saveC() { lset('cfg',   JSON.stringify(S.cfg)); cloudSave(); }
 function saveR() { lset('receipts', JSON.stringify(S.receipts)); cloudSave(); }
 function compressImg(dataUrl) {
   return new Promise(function(resolve) {
@@ -728,196 +754,6 @@ function load() {
   try { S.frozen = JSON.parse(ls('frozen') || '[]'); } catch(e) { S.frozen = []; }
   try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
   try { var fs = parseFloat(ls('fridgeScale') || '1'); S.fridgeScale = isNaN(fs) ? 1 : Math.max(0.4, Math.min(1.3, fs)); } catch(e) { S.fridgeScale = 1; }
-}
-
-/* ══ Firebase REST API (SDK 없이 직접 통신) ══ */
-var _fbToken = null, _fbUid = null;
-var _FS_BASE = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_CONFIG.projectId + '/databases/(default)/documents';
-var _AUTH_BASE = 'https://identitytoolkit.googleapis.com/v1/accounts:';
-
-function fsEnc(v) {
-  if (v === null || v === undefined) return {nullValue: null};
-  if (typeof v === 'boolean') return {booleanValue: v};
-  if (typeof v === 'number') return Number.isInteger(v) ? {integerValue: ''+v} : {doubleValue: v};
-  if (typeof v === 'string') return {stringValue: v};
-  if (Array.isArray(v)) return {arrayValue: {values: v.map(fsEnc)}};
-  if (typeof v === 'object') {
-    var f = {}; Object.keys(v).forEach(function(k){ f[k] = fsEnc(v[k]); });
-    return {mapValue: {fields: f}};
-  }
-  return {stringValue: ''+v};
-}
-function fsDec(v) {
-  if (!v) return null;
-  if ('nullValue' in v) return null;
-  if ('booleanValue' in v) return v.booleanValue;
-  if ('integerValue' in v) return parseInt(v.integerValue, 10);
-  if ('doubleValue' in v) return v.doubleValue;
-  if ('stringValue' in v) return v.stringValue;
-  if ('arrayValue' in v) return (v.arrayValue.values || []).map(fsDec);
-  if ('mapValue' in v) {
-    var o = {}, f = v.mapValue.fields || {};
-    Object.keys(f).forEach(function(k){ o[k] = fsDec(f[k]); });
-    return o;
-  }
-  return null;
-}
-
-function initFirebase() {
-  var tok = sessionStorage.getItem('fb_tok');
-  var uid = sessionStorage.getItem('fb_uid');
-  var name = sessionStorage.getItem('fb_name') || 'User';
-  if (tok && uid) {
-    _fbToken = tok; _fbUid = uid;
-    S.auth = {loggedIn:true, uid:uid, name:name, avatar:null};
-    loadFromCloud().then(function(){ hideAuthScreen(); render(); });
-  } else {
-    showAuthScreen(); render();
-  }
-}
-
-function cloudSave() {
-  if (!_fbToken || !_fbUid) return;
-  var fields = {};
-  var data = {items:S.items, cfg:S.cfg, eggs:S.eggs, sauces:S.sauces, frozen:S.frozen, receipts:S.receipts, fridgeScale:S.fridgeScale};
-  Object.keys(data).forEach(function(k){ fields[k] = fsEnc(data[k]); });
-  fetch(_FS_BASE + '/users/' + _fbUid, {
-    method: 'PATCH',
-    headers: {'Authorization':'Bearer '+_fbToken, 'Content-Type':'application/json'},
-    body: JSON.stringify({fields: fields})
-  }).catch(function(e){ console.warn('cloudSave:', e); });
-}
-
-function resetLocalData() {
-  S.items = []; S.eggs = 6; S.sauces = []; S.frozen = []; S.receipts = [];
-  S.cfg = {notifyDays:3, notifOn:false}; S.fridgeScale = 1;
-  lset('items','[]'); lset('eggs','6'); lset('sauces3','[]');
-  lset('frozen','[]'); lset('receipts','[]');
-  lset('cfg', JSON.stringify(S.cfg)); lset('fridgeScale','1');
-}
-
-function loadFromCloud() {
-  if (!_fbToken || !_fbUid) return Promise.resolve();
-  return fetch(_FS_BASE + '/users/' + _fbUid, {
-    headers: {'Authorization': 'Bearer ' + _fbToken}
-  }).then(function(r){ return r.json(); }).then(function(doc) {
-    if (doc.fields) {
-      var d = {};
-      Object.keys(doc.fields).forEach(function(k){ d[k] = fsDec(doc.fields[k]); });
-      if (Array.isArray(d.items))    { S.items=d.items;    lset('items', JSON.stringify(d.items)); }
-      if (d.cfg)                     { S.cfg=Object.assign({notifyDays:3,notifOn:false},d.cfg); lset('cfg', JSON.stringify(d.cfg)); }
-      if (typeof d.eggs==='number')  { S.eggs=d.eggs;      lset('eggs', String(d.eggs)); }
-      if (Array.isArray(d.sauces))   { S.sauces=d.sauces;  lset('sauces3', JSON.stringify(d.sauces)); }
-      if (Array.isArray(d.frozen))   { S.frozen=d.frozen;  lset('frozen', JSON.stringify(d.frozen)); }
-      if (Array.isArray(d.receipts)) { S.receipts=d.receipts; lset('receipts', JSON.stringify(d.receipts)); }
-      if (d.fridgeScale)             { S.fridgeScale=d.fridgeScale; lset('fridgeScale', String(d.fridgeScale)); }
-    } else {
-      resetLocalData(); cloudSave();
-    }
-  }).catch(function(e){ console.warn('loadFromCloud:', e); });
-}
-
-/* ── Auth UI ── */
-var _authMethod = 'email', _authTab = 'login';
-
-function showAuthScreen() {
-  var el = document.getElementById('auth-screen');
-  if (!el) return;
-  el.style.display = 'flex'; el.style.opacity = '1'; el.style.pointerEvents = 'auto';
-}
-function hideAuthScreen() {
-  var el = document.getElementById('auth-screen');
-  if (!el) return;
-  el.style.opacity = '0'; el.style.pointerEvents = 'none';
-  setTimeout(function(){ el.style.display = 'none'; }, 380);
-}
-
-function switchAuthMethod(method) {
-  _authMethod = method;
-  var tabs = document.querySelectorAll('.auth-method-tab');
-  tabs.forEach(function(t, i){ t.classList.toggle('on', (i===0&&method==='email')||(i===1&&method==='phone')); });
-  document.getElementById('auth-email-form').classList.toggle('on', method==='email');
-  document.getElementById('auth-phone-form').classList.toggle('on', method==='phone');
-  document.getElementById('auth-main-btn').textContent = method==='phone' ? '인증번호 받기' : (_authTab==='login' ? '로그인' : '회원가입');
-  document.getElementById('auth-msg').textContent = '';
-}
-
-function switchAuthTab(tab) {
-  _authTab = tab;
-  document.getElementById('auth-tab-login').classList.toggle('on', tab==='login');
-  document.getElementById('auth-tab-reg').classList.toggle('on',   tab==='register');
-  document.getElementById('auth-main-btn').textContent = tab==='login' ? '로그인' : '회원가입';
-  var pwEl = document.getElementById('auth-pw');
-  if (pwEl) pwEl.autocomplete = tab==='login' ? 'current-password' : 'new-password';
-  document.getElementById('auth-msg').textContent = '';
-}
-
-function authEnter(e) { if (e.key==='Enter') authSubmit(); }
-
-function authSubmit() {
-  var msg = document.getElementById('auth-msg');
-  var btn = document.getElementById('auth-main-btn');
-  msg.textContent = '';
-  var email = (document.getElementById('auth-email').value||'').trim();
-  var pw    = document.getElementById('auth-pw').value||'';
-  if (!email || !pw) { msg.textContent = '이메일과 비밀번호를 입력해주세요'; return; }
-  if (_authTab === 'register' && pw.length < 6) { msg.textContent = '비밀번호는 6자 이상이어야 해요'; return; }
-  btn.disabled = true; btn.textContent = '처리 중...';
-  var endpoint = _authTab === 'register' ? 'signUp' : 'signInWithPassword';
-  fetch(_AUTH_BASE + endpoint + '?key=' + FIREBASE_CONFIG.apiKey, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({email: email, password: pw, returnSecureToken: true})
-  }).then(function(r){ return r.json(); }).then(function(data) {
-    btn.disabled = false;
-    btn.textContent = _authTab === 'register' ? '회원가입' : '로그인';
-    if (data.error) {
-      var code = (data.error.message||'UNKNOWN').toLowerCase().replace(/_/g,'-');
-      msg.textContent = fbErr('auth/'+code); return;
-    }
-    _fbToken = data.idToken; _fbUid = data.localId;
-    var name = data.displayName || email.split('@')[0];
-    sessionStorage.setItem('fb_tok', data.idToken);
-    sessionStorage.setItem('fb_uid', data.localId);
-    sessionStorage.setItem('fb_name', name);
-    S.auth = {loggedIn:true, uid:data.localId, name:name, avatar:null};
-    loadFromCloud().then(function(){ hideAuthScreen(); render(); });
-  }).catch(function() {
-    btn.disabled = false;
-    btn.textContent = _authTab === 'register' ? '회원가입' : '로그인';
-    msg.textContent = '네트워크 연결을 확인해주세요';
-  });
-}
-
-function doLogout() {
-  _fbToken = null; _fbUid = null;
-  sessionStorage.removeItem('fb_tok');
-  sessionStorage.removeItem('fb_uid');
-  sessionStorage.removeItem('fb_name');
-  resetLocalData();
-  S.auth = {loggedIn:false, uid:null, name:null, avatar:null};
-  showAuthScreen(); render();
-}
-
-function fbErr(code) {
-  var m = {
-    'auth/email-already-in-use':'이미 사용 중인 이메일이에요',
-    'auth/user-not-found':'존재하지 않는 계정이에요. 회원가입을 먼저 해주세요',
-    'auth/wrong-password':'비밀번호가 틀렸어요',
-    'auth/invalid-credential':'이메일 또는 비밀번호가 올바르지 않아요. 계정이 없다면 회원가입을 해주세요',
-    'auth/invalid-email':'이메일 형식이 올바르지 않아요',
-    'auth/weak-password':'비밀번호는 6자 이상이어야 해요',
-    'auth/popup-closed-by-user':'로그인 창이 닫혔어요',
-    'auth/invalid-phone-number':'전화번호 형식이 올바르지 않아요 (예: 010-1234-5678)',
-    'auth/invalid-verification-code':'인증번호가 올바르지 않아요',
-    'auth/code-expired':'인증번호가 만료됐어요. 다시 받아주세요',
-    'auth/too-many-requests':'요청이 너무 많아요. 잠시 후 다시 시도해주세요',
-    'auth/network-request-failed':'네트워크 연결을 확인해주세요',
-    'auth/popup-blocked':'팝업이 차단됐어요. 팝업 허용 후 다시 시도해주세요',
-    'auth/operation-not-allowed':'Firebase 콘솔에서 해당 로그인 방법을 활성화해주세요',
-    'auth/missing-email':'이메일을 입력해주세요'
-  };
-  return m[code] || '오류: '+code;
 }
 function esc(s) {
   if (!s && s !== 0) return '';
@@ -961,28 +797,32 @@ function setFridgeScale(d) {
 
 /* ══ Door ══ */
 function toggleDoor() {
-  var door = document.querySelector('.fridge-door');
-  var wrap = document.querySelector('.fridge-wrap');
-  if (!door) return;
-  var sc = S.fridgeScale || 1;
+  var dL = document.querySelector('.fridge-door-l');
+  var dR = document.querySelector('.fridge-door-r');
+  if (!dL || !dR) return;
   if (S.door) {
     S.door = false;
-    door.style.removeProperty('transition');
-    door.getBoundingClientRect();
-    door.style.removeProperty('pointer-events');
-    door.classList.remove('open');
-    if (wrap) wrap.style.transform = 'scale('+sc+')';
+    dL.style.removeProperty('transition');
+    dR.style.removeProperty('transition');
+    dL.getBoundingClientRect();
+    dL.classList.remove('open');
+    dR.classList.remove('open');
+    var hint = document.querySelector('.fridge-hint');
+    if (!hint) {
+      var wrap = document.querySelector('.fridge-wrap');
+      if (wrap) {
+        var h = document.createElement('div');
+        h.className = 'fridge-hint';
+        h.textContent = '탭해서 문 열기 👆';
+        wrap.parentNode.insertBefore(h, wrap);
+      }
+    }
   } else {
     S.door = true;
-    door.classList.add('open');
-    door.style.pointerEvents = 'none';
-    var appW = Math.min(window.innerWidth, 480);
-    var shift = Math.max(0, Math.min(Math.round(119 * sc), Math.floor((appW - 320 * sc) / 2)));
-    if (wrap) wrap.style.transform = (shift ? 'translateX('+shift+'px) ' : '') + 'scale('+sc+')';
-    setTimeout(function() {
-      var d = document.querySelector('.fridge-door');
-      if (d) d.style.removeProperty('pointer-events');
-    }, 700);
+    dL.classList.add('open');
+    dR.classList.add('open');
+    var hint2 = document.querySelector('.fridge-hint');
+    if (hint2) hint2.remove();
   }
 }
 function openDoor() {
@@ -1032,21 +872,6 @@ function darkenHex(hex) {
   r = Math.round(r*0.6); g = Math.round(g*0.6); b = Math.round(b*0.6);
   return '#'+('0'+r.toString(16)).slice(-2)+('0'+g.toString(16)).slice(-2)+('0'+b.toString(16)).slice(-2);
 }
-function sauceBinHtml() {
-  var bottles = '';
-  for (var i = 0; i < S.sauces.length; i++) {
-    var s = S.sauces[i];
-    var cap = darkenHex(s.color);
-    bottles += '<div class="sauce-btl">'
-      + '<div class="sauce-btl-cap" style="background:'+cap+'"></div>'
-      + '<div class="sauce-btl-body" style="background:'+s.color+'"></div>'
-      + '</div>';
-  }
-  return '<div class="sauce-bin-wrap">'
-    + '<div class="sauce-bin-lbl">소스 &middot; '+S.sauces.length+'종</div>'
-    + '<div class="sauce-bottles">'+(bottles||'<span style="font-size:.6rem;color:rgba(100,150,190,.5)">비어있음</span>')+'</div>'
-    + '</div>';
-}
 function sauceItemHtml(s) {
   var cap = darkenHex(s.color);
   var expHtml = '';
@@ -1064,31 +889,44 @@ function sauceItemHtml(s) {
     + '<button onclick="deleteSauce(\''+s.id+'\')" style="border:none;background:var(--red);color:#fff;border-radius:7px;padding:3px 9px;font-size:.78rem;cursor:pointer">삭제</button>'
     + '</div>';
 }
-
+function sauceBinHtml() {
+  var bottles = '';
+  for (var i = 0; i < S.sauces.length; i++) {
+    var s = S.sauces[i];
+    var cap = darkenHex(s.color);
+    bottles += '<div class="sauce-btl">'
+      + '<div class="sauce-btl-cap" style="background:'+cap+'"></div>'
+      + '<div class="sauce-btl-body" style="background:'+s.color+'"></div>'
+      + '</div>';
+  }
+  return '<div class="sauce-bin-wrap">'
+    + '<div class="sauce-bin-lbl">소스 &middot; '+S.sauces.length+'종</div>'
+    + '<div class="sauce-bottles">'+(bottles||'<span style="font-size:.6rem;color:rgba(100,150,190,.5)">비어있음</span>')+'</div>'
+    + '</div>';
+}
 function openSauceModal() {
   var list = '';
-  for (var i = 0; i < S.sauces.length; i++) { list += sauceItemHtml(S.sauces[i]); }
-  var today = new Date().toISOString().split('T')[0];
+  for (var i = 0; i < S.sauces.length; i++) {
+    list += sauceItemHtml(S.sauces[i]);
+  }
   var h = '<div class="mhandle"></div>'
     + '<div style="font-size:1rem;font-weight:700;margin-bottom:14px">🫙 소스 관리</div>'
     + '<div id="sauce-list" style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px;max-height:260px;overflow-y:auto">'
     + (list || '<div style="text-align:center;color:var(--muted);font-size:.85rem;padding:12px">등록된 소스가 없습니다</div>')
     + '</div>'
-    + '<div style="display:flex;flex-direction:column;gap:8px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:14px">'
+    + '<div style="display:flex;flex-direction:column;gap:7px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:14px">'
     + '<div style="display:flex;gap:8px;align-items:center">'
     + '<input id="sauce-name-inp" type="text" placeholder="소스 이름" maxlength="12" style="flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:.9rem">'
     + '<input id="sauce-color-inp" type="color" value="#cc2200" style="width:36px;height:32px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:transparent">'
+    + '<button onclick="addSauce()" style="border:none;background:var(--blue);color:#fff;border-radius:8px;padding:6px 14px;font-size:.85rem;cursor:pointer;font-weight:600">+ 추가</button>'
     + '</div>'
     + '<div style="display:flex;gap:8px;align-items:center">'
     + '<span style="font-size:.8rem;color:var(--muted);white-space:nowrap">유통기한</span>'
-    + '<input id="sauce-exp-inp" type="date" value="'+today+'" style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;padding:5px 8px">'
-    + '<button onclick="addSauce()" style="border:none;background:var(--blue);color:#fff;border-radius:8px;padding:6px 14px;font-size:.85rem;cursor:pointer;font-weight:600">+ 추가</button>'
+    + '<input id="sauce-exp-inp" type="date" value="'+today()+'" style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:5px 8px;font-size:.82rem;outline:none">'
     + '</div>'
     + '</div>'
     + '<button class="btn-s" onclick="closeModal();render()">닫기</button>';
   showModal(h);
-  var expInp = document.getElementById('sauce-exp-inp');
-  if (expInp) expInp.value = today;
 }
 function addSauce() {
   var nameEl = document.getElementById('sauce-name-inp');
@@ -1255,6 +1093,207 @@ function saveFrozenItem() {
   saveF(); render(); closeModal(); openFrozenModal();
 }
 
+/* ══ Firebase Auth & Firestore ══ */
+function fsEnc(v) {
+  if (v === null || v === undefined) return {nullValue: null};
+  if (typeof v === 'boolean') return {booleanValue: v};
+  if (typeof v === 'number') return Number.isInteger(v) ? {integerValue: String(v)} : {doubleValue: v};
+  if (typeof v === 'string') return {stringValue: v};
+  if (Array.isArray(v)) return {arrayValue: {values: v.map(fsEnc)}};
+  if (typeof v === 'object') {
+    var fields = {};
+    Object.keys(v).forEach(function(k) { fields[k] = fsEnc(v[k]); });
+    return {mapValue: {fields: fields}};
+  }
+  return {stringValue: String(v)};
+}
+function fsDec(v) {
+  if (!v) return null;
+  if ('nullValue' in v) return null;
+  if ('booleanValue' in v) return v.booleanValue;
+  if ('integerValue' in v) return Number(v.integerValue);
+  if ('doubleValue' in v) return Number(v.doubleValue);
+  if ('stringValue' in v) return v.stringValue;
+  if ('arrayValue' in v) return (v.arrayValue.values || []).map(fsDec);
+  if ('mapValue' in v) {
+    var obj = {};
+    var fields = v.mapValue.fields || {};
+    Object.keys(fields).forEach(function(k) { obj[k] = fsDec(fields[k]); });
+    return obj;
+  }
+  return null;
+}
+async function tryAutoLogin() {
+  var rt = localStorage.getItem('fbRefresh');
+  if (!rt) return false;
+  try {
+    var res = await fetch('https://securetoken.googleapis.com/v1/token?key=' + FIREBASE_CONFIG.apiKey, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt)
+    });
+    var data = await res.json();
+    if (!res.ok || !data.id_token) throw new Error('fail');
+    _fbToken = data.id_token;
+    _fbUid = data.user_id;
+    var name = localStorage.getItem('fbName') || '';
+    localStorage.setItem('fbRefresh', data.refresh_token);
+    sessionStorage.setItem('fbToken', _fbToken);
+    sessionStorage.setItem('fbUid', _fbUid);
+    sessionStorage.setItem('fbName', name);
+    S.auth = {loggedIn: true, uid: _fbUid, name: name, avatar: null};
+    hideAuthScreen();
+    return true;
+  } catch(e) {
+    localStorage.removeItem('fbRefresh');
+    return false;
+  }
+}
+async function initFirebase() {
+  var token = sessionStorage.getItem('fbToken');
+  var uid = sessionStorage.getItem('fbUid');
+  var name = sessionStorage.getItem('fbName');
+  if (token && uid) {
+    _fbToken = token;
+    _fbUid = uid;
+    S.auth = {loggedIn: true, uid: uid, name: name || null, avatar: null};
+    go('home');
+    loadFromCloud();
+  } else {
+    var ok = await tryAutoLogin();
+    if (ok) { go('home'); loadFromCloud(); }
+    // 로그인 안 됐으면 메인 렌더링 안 함 — 랜딩→로그인창이 처리
+  }
+}
+async function cloudSave() {
+  if (!_fbToken || !_fbUid) return;
+  var doc = {fields: {
+    items: fsEnc(S.items),
+    cfg: fsEnc(S.cfg),
+    eggs: fsEnc(S.eggs),
+    sauces: fsEnc(S.sauces),
+    frozen: fsEnc(S.frozen),
+    receipts: fsEnc(S.receipts),
+    fridgeScale: fsEnc(S.fridgeScale)
+  }};
+  try {
+    await fetch(_FS_BASE + '/users/' + _fbUid, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + _fbToken},
+      body: JSON.stringify(doc)
+    });
+  } catch(e) {}
+}
+function resetLocalData() {
+  S.items = []; S.eggs = 6; S.sauces = []; S.frozen = []; S.receipts = [];
+  S.cfg = {notifyDays: 3, notifOn: false}; S.fridgeScale = 1.0;
+  lset('items','[]'); lset('cfg','{}'); lset('eggs','6');
+  lset('sauces3','[]'); lset('frozen','[]'); lset('receipts','[]'); lset('fridgeScale','1');
+}
+async function loadFromCloud() {
+  if (!_fbToken || !_fbUid) return;
+  try {
+    var res = await fetch(_FS_BASE + '/users/' + _fbUid, {
+      headers: {'Authorization': 'Bearer ' + _fbToken}
+    });
+    if (res.status === 404) { render(); return; }
+    if (!res.ok) { render(); return; }
+    var data = await res.json();
+    if (data.fields) {
+      if (data.fields.items) S.items = fsDec(data.fields.items) || [];
+      if (data.fields.cfg) { var c = fsDec(data.fields.cfg); if(c){S.cfg.notifyDays=c.notifyDays||3;S.cfg.notifOn=!!c.notifOn;} }
+      if (data.fields.eggs !== undefined) S.eggs = fsDec(data.fields.eggs) || 6;
+      if (data.fields.sauces) S.sauces = fsDec(data.fields.sauces) || [];
+      if (data.fields.frozen) S.frozen = fsDec(data.fields.frozen) || [];
+      if (data.fields.receipts) S.receipts = fsDec(data.fields.receipts) || [];
+      if (data.fields.fridgeScale !== undefined) { var fs = fsDec(data.fields.fridgeScale); S.fridgeScale = isNaN(fs)?1:Math.max(0.4,Math.min(1.3,fs)); }
+    }
+  } catch(e) {}
+  render();
+}
+function showAuthScreen() {
+  var el = document.getElementById('auth-screen');
+  if (el) el.style.display = 'flex';
+}
+function hideAuthScreen() {
+  var el = document.getElementById('auth-screen');
+  if (el) el.style.display = 'none';
+}
+function switchAuthTab(tab) {
+  var isLogin = tab === 'login';
+  var loginBtn = document.getElementById('auth-tab-login');
+  var regBtn = document.getElementById('auth-tab-reg');
+  if (loginBtn) loginBtn.className = 'auth-toggle' + (isLogin ? ' on' : '');
+  if (regBtn) regBtn.className = 'auth-toggle' + (!isLogin ? ' on' : '');
+  var btn = document.getElementById('auth-main-btn');
+  if (btn) btn.textContent = isLogin ? '로그인' : '회원가입';
+  var msg = document.getElementById('auth-msg');
+  if (msg) msg.textContent = '';
+  S._authTab = tab;
+}
+async function authSubmit() {
+  var email = (document.getElementById('auth-email').value || '').trim();
+  var pw = document.getElementById('auth-pw').value || '';
+  var msg = document.getElementById('auth-msg');
+  if (!email || !pw) { if (msg) msg.textContent = '이메일과 비밀번호를 입력해주세요'; return; }
+  var isLogin = !S._authTab || S._authTab === 'login';
+  var endpoint = isLogin ? 'signInWithPassword' : 'signUp';
+  var btn = document.getElementById('auth-main-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '처리 중...'; }
+  if (msg) msg.textContent = '';
+  try {
+    var res = await fetch(_AUTH_BASE + endpoint + '?key=' + FIREBASE_CONFIG.apiKey, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: email, password: pw, returnSecureToken: true})
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(fbErr(data.error && data.error.message));
+    _fbToken = data.idToken;
+    _fbUid = data.localId;
+    var uname = data.email || email;
+    sessionStorage.setItem('fbToken', _fbToken);
+    sessionStorage.setItem('fbUid', _fbUid);
+    sessionStorage.setItem('fbName', uname);
+    localStorage.setItem('fbRefresh', data.refreshToken);
+    localStorage.setItem('fbName', uname);
+    S.auth = {loggedIn: true, uid: _fbUid, name: uname, avatar: null};
+    hideAuthScreen();
+    go('home');
+    loadFromCloud();
+    setTimeout(weeklyReport, 800);
+  } catch(e) {
+    if (msg) msg.textContent = e.message;
+    if (btn) { btn.disabled = false; btn.textContent = isLogin ? '로그인' : '회원가입'; }
+  }
+}
+function doLogout() {
+  if (!confirm('로그아웃 하시겠어요?')) return;
+  _fbToken = null; _fbUid = null;
+  sessionStorage.removeItem('fbToken');
+  sessionStorage.removeItem('fbUid');
+  sessionStorage.removeItem('fbName');
+  localStorage.removeItem('fbRefresh');
+  localStorage.removeItem('fbName');
+  S.auth = {loggedIn: false, uid: null, name: null, avatar: null};
+  resetLocalData();
+  render();
+  showAuthScreen();
+}
+function fbErr(code) {
+  var map = {
+    'EMAIL_NOT_FOUND': '등록되지 않은 이메일이에요',
+    'INVALID_PASSWORD': '비밀번호가 틀렸어요',
+    'USER_DISABLED': '비활성화된 계정이에요',
+    'EMAIL_EXISTS': '이미 사용 중인 이메일이에요',
+    'INVALID_EMAIL': '이메일 형식이 올바르지 않아요',
+    'TOO_MANY_ATTEMPTS_TRY_LATER': '요청이 너무 많아요. 잠시 후 다시 시도해주세요',
+    'INVALID_LOGIN_CREDENTIALS': '이메일 또는 비밀번호가 올바르지 않아요',
+    'WEAK_PASSWORD : Password should be at least 6 characters': '비밀번호는 6자 이상이어야 해요'
+  };
+  return map[code] || '오류: ' + (code || '알 수 없는 오류');
+}
+
 /* ══ Navigation ══ */
 function go(v) {
   if (v === 'add' && !S.editId) S.form = emptyForm();
@@ -1345,7 +1384,7 @@ function startBannerCycle() {
     if (mascotWrap) mascotWrap.innerHTML = tinyMascotSvg(bannerMood);
     if (oldBubble) {
       var newBubble = oldBubble.cloneNode(false);
-      newBubble.innerHTML = getMascotMsg(msgMood, item.name, item.price);
+      newBubble.innerHTML = wildMsg(getMascotMsg(msgMood, item.name, item.price));
       oldBubble.parentNode.replaceChild(newBubble, oldBubble);
     }
   }, 4500);
@@ -1365,7 +1404,7 @@ function renderBanner() {
     +'<button class="warn-banner-close" onclick="S.bannerDismissed=true;render()">✕</button>'
     +'<div style="display:flex;align-items:center;gap:10px">'
     +'<div class="banner-mascot">'+tinyMascotSvg(bannerMood)+'</div>'
-    +'<div class="banner-bubble">'+getMascotMsg(msgMood, item.name, item.price)+'</div>'
+    +'<div class="banner-bubble">'+wildMsg(getMascotMsg(msgMood, item.name, item.price))+'</div>'
     +'</div>'
     +'</div>';
 }
@@ -1393,7 +1432,6 @@ function vHome() {
 
 /* ══ Fridge ══ */
 function vFridge() {
-  var da = S.door ? 'class="fridge-door open" style="transition:none"' : 'class="fridge-door"';
   var shelves = '';
   for (var r = 0; r < SHELVES.length; r++) {
     shelves += '<div class="fridge-shelf">';
@@ -1418,7 +1456,7 @@ function vFridge() {
         for (var b = 0; b < maxB; b++) {
           var bd = dLeft(catItems[b].exp);
           var bc = dcls(bd);
-          blobHtml += '<div class="food-blob" style="background:'+ucol(bc)+';opacity:.82"></div>';
+          blobHtml += '<div class="food-blob" style="background:'+ucol(bc)+';opacity:.85"></div>';
         }
         blobHtml += '</div>';
         shelves += '<div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:2px;width:100%">';
@@ -1430,47 +1468,42 @@ function vFridge() {
     }
     shelves += '</div>';
   }
+  var binRow = '<div class="fridge-bin-row">'
+    + '<div class="door-bin door-bin-frozen" onclick="ev();openFrozenModal()">'+frozenBinHtml()+'</div>'
+    + '<div class="door-bin door-bin-egg" onclick="ev();openEggModal()">'+eggTrayHtml()+'</div>'
+    + '<div class="door-bin door-bin-sauce" onclick="ev();openSauceModal()">'+sauceBinHtml()+'</div>'
+    + '</div>';
   var empty = S.items.length === 0
     ? '<div class="empty" onclick="ev()"><div class="ei">🛒</div><div class="et">냉장고가 비어있어요!<br><span class="link" onclick="go(\'add\')">+ 식재료 추가하기</span></div></div>'
     : '';
   var sc = S.fridgeScale;
-  var shrink = sc < 1 ? Math.round(440 * (1 - sc)) : 0;
-  var shift = 0;
-  if (S.door) {
-    var appW = Math.min(window.innerWidth, 480);
-    shift = Math.max(0, Math.min(Math.round(119 * sc), Math.floor((appW - 320 * sc) / 2)));
-  }
-  var wrapTransform = (shift ? 'translateX('+shift+'px) ' : '') + 'scale('+sc+')';
-  var wrapStyle = 'transform:'+wrapTransform+';transform-origin:top center;'+(shrink?'margin-bottom:-'+shrink+'px':'');
+  var shrink = sc < 1 ? Math.round(380 * (1 - sc)) : 0;
+  var wrapStyle = 'transform:scale('+sc+');transform-origin:top center;'+(shrink?'margin-bottom:-'+shrink+'px':'');
+  var dlCls = S.door ? 'fridge-door-l open' : 'fridge-door-l';
+  var drCls = S.door ? 'fridge-door-r open' : 'fridge-door-r';
+  var doorTrans = S.door ? ' style="transition:none"' : '';
   return '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">'
     + '<button onclick="setFridgeScale(-0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>'
     + '<span style="font-size:.72rem;color:var(--muted);min-width:38px;text-align:center">'+Math.round(sc*100)+'%</span>'
     + '<button onclick="setFridgeScale(0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>'
     + '</div>'
-    + '<div class="fridge-wrap" onclick="toggleDoor()" style="'+wrapStyle+'">'
-    + '<div class="fridge-scene">'
+    + (S.door ? '' : '<div class="fridge-hint">탭해서 문 열기 👆</div>')
+    + '<div class="fridge-wrap" style="'+wrapStyle+'">'
     + '<div class="fridge-body">'
-    + '<div class="fridge-led"></div>'
-    + '<div class="fridge-freeze"><span>❄️ </span><span class="freeze-lbl">냉동 / 냉장실</span></div>'
+    + '<div class="fridge-topbar">❄️&nbsp;&nbsp;<span>냉동 · 냉장실</span></div>'
     + shelves
+    + binRow
+    + '<div class="fridge-doors">'
+    + '<div class="'+dlCls+'"'+doorTrans+' onclick="toggleDoor()">'
+    + '<div class="fdl-handle"></div>'
+    + '<div class="fdl-icon">❄️</div>'
+    + '<div class="fdl-lbl">냉동</div>'
     + '</div>'
-    + '<div '+da+'>'
-    + '<div class="door-face">'
-    + '<div class="door-handle"></div>'
-    + '<div class="door-emo">🧊</div>'
-    + '<div class="door-brand">Freshness</div>'
-    + '<div class="door-sub">유통기한 세이퍼</div>'
-    + '</div>'
-    + '<div class="door-back">'
-    + '<div class="door-bin door-bin-frozen" onclick="event.stopPropagation();openFrozenModal()">'
-    + frozenBinHtml()
-    + '</div>'
-    + '<div class="door-bin door-bin-egg" onclick="event.stopPropagation();openEggModal()">'
-    + eggTrayHtml()
-    + '</div>'
-    + '<div class="door-bin door-bin-sauce" onclick="event.stopPropagation();openSauceModal()">'
-    + sauceBinHtml()
-    + '</div>'
+    + '<div class="'+drCls+'"'+doorTrans+' onclick="toggleDoor()">'
+    + '<div class="fdr-handle"></div>'
+    + '<div class="fdr-icon">🌿</div>'
+    + '<div class="fdr-brand">Freshness</div>'
+    + '<div class="fdr-sub">신선해</div>'
     + '</div>'
     + '</div>'
     + '</div></div>'
@@ -1510,7 +1543,9 @@ function vList() {
     + '<button class="tab '+(S.filter==='all'?'on':'')+'" onclick="setFil(\'all\')">전체</button>'
     + '<button class="tab '+(S.filter==='wrn'?'on':'')+'" onclick="setFil(\'wrn\')">⚠️ 임박</button>'
     + '<button class="tab '+(S.filter==='exp'?'on':'')+'" onclick="setFil(\'exp\')">🚨 만료됨</button>'
-    + '</div><div class="food-list">';
+    + '</div>'
+    + '<div class="section-ttl">식재료 <span>'+list.length+'개</span></div>'
+    + '<div class="food-list">';
   if (!list.length) {
     h += '<div class="empty"><div class="ei">🛒</div><div class="et">등록된 식재료가 없어요<br><span class="link" onclick="go(\'add\')">+ 지금 추가하기</span></div></div>';
   } else {
@@ -1686,6 +1721,34 @@ function setNewsTab(id) {
   render();
   fetchNews();
 }
+function renderAiResult() {
+  var r = S.news.aiResult;
+  if (!r) return '';
+  var h = '<div class="ai-card">'
+    + '<div class="ai-card-hd"><span style="font-size:1.3rem">🤖</span><span class="ai-card-ttl">AI 구매 가이드</span></div>';
+  if (r.summary) h += '<div class="ai-summary">'+esc(r.summary)+'</div>';
+  h += '<div class="ai-guide-row">';
+  if (r.buy_now && r.buy_now.length) {
+    h += '<div class="ai-guide-col">'
+      + '<div class="ai-guide-col-ttl" style="color:var(--green)">✅ 지금 사면 이득</div>';
+    r.buy_now.forEach(function(item) {
+      h += '<div class="ai-guide-item"><span class="ai-guide-name">'+esc(item.name)+'</span><span class="ai-guide-reason">'+esc(item.reason)+'</span></div>';
+    });
+    h += '</div>';
+  }
+  if (r.buy_later && r.buy_later.length) {
+    h += '<div class="ai-guide-col">'
+      + '<div class="ai-guide-col-ttl" style="color:var(--red)">⏳ 구매 미루기</div>';
+    r.buy_later.forEach(function(item) {
+      h += '<div class="ai-guide-item"><span class="ai-guide-name">'+esc(item.name)+'</span><span class="ai-guide-reason">'+esc(item.reason)+'</span></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+  if (r.fridge_tip) h += '<div class="ai-fridge-tip">🧊 '+esc(r.fridge_tip)+'</div>';
+  h += '</div>';
+  return h;
+}
 function vNews() {
   var cur = S.news.cache[S.news.tab] || {items:[], lastFetch:0};
   var h = '<div class="view"><div class="ptitle">📰 식재료 뉴스</div>';
@@ -1694,6 +1757,18 @@ function vNews() {
     h += '<button class="tab '+(S.news.tab===tab.id?'on':'')+'" onclick="setNewsTab(\''+tab.id+'\')">'+tab.label+'</button>';
   });
   h += '</div>';
+  h += '<button class="ai-btn" onclick="analyzeNews()">'
+    + (S.news.aiLoading
+        ? '<span style="animation:spin 1s linear infinite;display:inline-block">⏳</span> AI 분석 중...'
+        : '🤖 AI 구매 가이드 분석')
+    + '</button>';
+  if (S.news.aiLoading) {
+    h += '<div style="text-align:center;padding:16px 0;color:var(--muted);font-size:.85rem">뉴스를 읽고 구매 가이드를 작성하는 중이에요...</div>';
+  } else if (S.news.aiError) {
+    h += '<div style="text-align:center;color:var(--red);font-size:.82rem;margin-bottom:12px">'+esc(S.news.aiError)+'</div>';
+  } else if (S.news.aiResult) {
+    h += renderAiResult();
+  }
   if (S.news.loading) {
     h += '<div style="text-align:center;padding:60px 0"><div style="font-size:2rem;margin-bottom:12px">🔄</div><div style="color:var(--muted);font-size:.9rem">뉴스 불러오는 중...</div></div>';
   } else if (S.news.error) {
@@ -1712,6 +1787,73 @@ function vNews() {
     h += '<div style="text-align:center;margin-top:16px"><button class="btn-s" onclick="S.news.cache[S.news.tab]={};fetchNews()">새로고침</button></div>';
   }
   return h + '</div>';
+}
+async function analyzeNews() {
+  if (S.news.aiLoading) return;
+  var cur = S.news.cache[S.news.tab] || {items:[]};
+  if (!cur.items.length) { alert('먼저 뉴스를 불러와주세요'); return; }
+  S.news.aiLoading = true; S.news.aiResult = null; S.news.aiError = null;
+  if (S.view === 'news') render();
+  var newsText = cur.items.slice(0, 10).map(function(it, i) {
+    return (i+1)+'. '+it.title;
+  }).join('\n');
+  var fridgeItems = S.items.slice().sort(function(a,b){ return dLeft(a.exp)-dLeft(b.exp); })
+    .slice(0, 15).map(function(it) {
+      var d = dLeft(it.exp);
+      return it.name+'(D'+(d>=0?'-':'+')+Math.abs(d)+')';
+    }).join(', ');
+  var prompt = '너는 스마트 식재료 관리 서비스 \'신선해\'의 핵심 AI 어시스턴트야.\n'
+    +'반드시 한국어로만 답해줘. 한자, 영어, 일본어 등 다른 언어는 절대 사용하지 마.\n'
+    +'너의 임무는 복잡한 농산물 물가 뉴스를 분석해서 사용자가 한눈에 이해할 수 있게 요약하고, 실질적인 구매 팁을 제공하는 거야.\n\n'
+    +'[말투 가이드]\n- 친절하고 다정한 말투 (~해요, ~입니다)\n- 전문 용어보다는 \'장바구니\', \'식탁\' 같은 쉬운 단어 사용\n- 이모지를 적절히 섞어서 가독성 높이기\n\n'
+    +'[분석 가이드]\n1. 뉴스에서 가격이 오른 품목과 내린 품목을 명확히 구분해.\n2. 가격 변동의 원인(날씨, 수입량 등)을 짧게 언급해.\n3. 지금 사면 좋을지, 기다려야 할지 구매 의견을 포함해.\n\n'
+    +'최근 식재료 뉴스:\n'+newsText
+    +'\n\n내 냉장고 현황: '+(fridgeItems||'없음')
+    +'\n\n아래 JSON 형식으로만 답해줘 (설명 없이 JSON만):\n'
+    +'{"summary":"핵심 뉴스 3줄 요약, 이모지 포함, 줄바꿈으로 구분","buy_now":[{"name":"재료명","reason":"구매 추천 이유 (가격 변동 원인 포함)"}],"buy_later":[{"name":"재료명","reason":"구매 미루는 이유 (가격 변동 원인 포함)"}],"fridge_tip":"내 냉장고 재료와 연결된 실용적인 팁"}';
+  try {
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 25000);
+    var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+GROQ_KEY
+      },
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:900,
+        messages:[
+          {role:'system', content:'당신은 한국어 전용 AI입니다. 반드시 순수한 한국어로만 답하세요. 단어 중간에 한자, 영어, 일본어를 절대 섞지 마세요. 예를 들어 유통기한을 유통기han처럼 쓰면 안 됩니다. JSON 값 안의 모든 텍스트는 완전한 한국어 단어와 이모지로만 작성하세요.'},
+          {role:'user', content:prompt}
+        ]
+      }),
+      signal:ctrl.signal
+    });
+    clearTimeout(t);
+    var data = await res.json();
+    if (!res.ok) throw new Error('HTTP '+res.status+': '+(data.error&&data.error.message||JSON.stringify(data)));
+    var text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    if (!text) throw new Error('응답없음: '+JSON.stringify(data));
+    var json = text.replace(/```json\n?|\n?```/g,'').trim();
+    var parsed = JSON.parse(json);
+    function stripForeign(s) {
+      if (!s) return s;
+      return s.replace(/[぀-ヿ㐀-䶿一-鿿豈-﫿]/g, '').replace(/\s{2,}/g,' ').trim();
+    }
+    function cleanItem(obj) {
+      return {name: stripForeign(obj.name), reason: stripForeign(obj.reason)};
+    }
+    parsed.summary = stripForeign(parsed.summary);
+    parsed.fridge_tip = stripForeign(parsed.fridge_tip);
+    if (parsed.buy_now) parsed.buy_now = parsed.buy_now.map(cleanItem);
+    if (parsed.buy_later) parsed.buy_later = parsed.buy_later.map(cleanItem);
+    S.news.aiResult = parsed;
+  } catch(e) {
+    S.news.aiError = '오류: '+e.message;
+  }
+  S.news.aiLoading = false;
+  if (S.view === 'news') render();
 }
 async function fetchNews() {
   if (S.news.loading) return;
@@ -1753,25 +1895,30 @@ function vSettings() {
   var dv = [1,2,3,5,7];
   for (var i=0;i<dv.length;i++) dopts += '<option value="'+dv[i]+'"'+(s.notifyDays===dv[i]?' selected':'')+'>'+dv[i]+'일 전</option>';
   var authRow = '';
-  if (S.auth.loggedIn) {
-    var av = S.auth.avatar
-      ? '<img class="auth-avatar" src="'+esc(S.auth.avatar)+'" alt="">'
-      : '<div class="auth-avatar-def">👤</div>';
+  if (S.auth && S.auth.loggedIn) {
     authRow = '<div class="ss"><div class="ss-ttl">계정</div>'
-      +'<div class="auth-user-row">'+av
-      +'<div><div style="font-weight:700;font-size:.95rem">'+esc(S.auth.name||S.auth.uid)+'</div>'
-      +'<div style="font-size:.76rem;color:var(--muted)">'+esc(S.auth.uid)+'</div></div></div>'
-      +'<button class="btn-d mt8" onclick="doLogout()">로그아웃</button></div>';
+      +'<div class="auth-user-row"><div class="auth-avatar-def">👤</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:.9rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(S.auth.name||'사용자')+'</div>'
+      +'<div style="font-size:.73rem;color:var(--muted)">로그인됨 · 클라우드 동기화 중</div></div>'
+      +'<button onclick="doLogout()" style="border:none;background:rgba(248,81,73,.12);color:var(--red);border-radius:9px;padding:6px 13px;font-size:.82rem;font-weight:600;cursor:pointer">로그아웃</button>'
+      +'</div></div>';
   }
   return '<div class="view"><div class="ptitle">설정</div>'
     + authRow
     +'<div class="ss"><div class="ss-ttl">AI 기능</div>'
-    +'<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px;">'
+    +'<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-bottom:8px">'
     +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">'
     +'<span>📷</span><span style="font-weight:600;font-size:.88rem">Google Vision AI</span>'
     +'<span style="margin-left:auto;font-size:.76rem;background:var(--green);color:#000;padding:2px 8px;border-radius:20px;font-weight:700">활성</span>'
     +'</div>'
     +'<p class="muted sm" style="line-height:1.5">Cloudflare Worker 경유로 처리돼요.<br>API 키 설정 불필요.</p>'
+    +'</div>'
+    +'<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px">'
+    +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">'
+    +'<span>🤖</span><span style="font-weight:600;font-size:.88rem">Gemini AI (뉴스 분석)</span>'
+    +'<span style="margin-left:auto;font-size:.76rem;background:var(--green);color:#000;padding:2px 8px;border-radius:20px;font-weight:700">활성</span>'
+    +'</div>'
+    +'<p class="muted sm" style="line-height:1.5">Cloudflare Worker 경유로 처리돼요.<br>누구나 바로 사용 가능해요.</p>'
     +'</div></div>'
     +'<div class="ss"><div class="ss-ttl">알림</div>'
     +'<div class="srow"><span class="srow-l">유통기한 알림</span><div class="toggle'+(s.notifOn?' on':'')+'" onclick="togNotif()"></div></div>'
@@ -1780,6 +1927,7 @@ function vSettings() {
     +'<button class="btn-s mt8" onclick="reqNotif()">알림 권한 요청</button></div>'
     +'<div class="ss"><div class="ss-ttl">데이터</div>'
     +'<div class="srow"><span class="srow-l">등록된 식재료</span><span class="muted">'+S.items.length+'개</span></div>'
+    +'<button class="btn-s mt8" onclick="lset(\'weeklyReport\',\'\');lset(\'autopop\',\'\');weeklyReport()">📊 주간 리포트 다시 보기</button>'
     +'<button class="btn-d mt8" onclick="clearAll()">모든 데이터 삭제</button></div>'
     +'<div class="ss"><div class="ss-ttl">정보</div>'
     +'<div class="srow"><span class="srow-l">냉장고 파머기</span><span class="muted">v3.0</span></div>'
@@ -1852,15 +2000,22 @@ function editItem(id) {
 
 /* ══ OCR via Google Vision / Cloudflare Worker ══ */
 async function gVision(imgData) {
-  var b64 = imgData.split(',')[1];
+  var compressed = await compressImg(imgData);
+  var b64 = compressed.split(',')[1];
   var res = await fetch(WORKER, {
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({requests:[{image:{content:b64},features:[{type:'DOCUMENT_TEXT_DETECTION'}]}]})
   });
-  if (!res.ok) throw new Error('Vision API 오류 ('+res.status+')');
+  if (!res.ok) {
+    var errBody = '';
+    try { errBody = await res.text(); } catch(e) {}
+    throw new Error('Worker 오류 ('+res.status+'): '+errBody.slice(0,200));
+  }
   var data = await res.json();
-  if (data.responses && data.responses[0] && data.responses[0].error) throw new Error(data.responses[0].error.message);
+  if (data.responses && data.responses[0] && data.responses[0].error) {
+    throw new Error('Vision 오류: '+data.responses[0].error.message+' (code '+data.responses[0].error.code+')');
+  }
   return (data.responses && data.responses[0] && data.responses[0].fullTextAnnotation && data.responses[0].fullTextAnnotation.text) || '';
 }
 
@@ -1898,15 +2053,23 @@ async function analyzeReceipt() {
   S.scan.loading=true; render();
   try {
     var txt=await gVision(S.scan.img);
+    S.scan._rawTxt = txt;
     var parsed=parseReceipt(txt);
     S.scan.items=parsed.map(function(i){ return Object.assign({},i,{sel:true}); });
-    if(!S.scan.items.length) alert('식재료를 찾지 못했어요. 영수증이 잘 보이게 다시 촬영해보세요.');
+    if(!S.scan.items.length) {
+      showModal('<div class="mhandle"></div>'
+        +'<div style="font-size:1rem;font-weight:700;margin-bottom:10px">😢 식재료를 찾지 못했어요</div>'
+        +'<p class="muted sm" style="margin-bottom:10px">OCR이 읽은 텍스트:</p>'
+        +'<div style="background:var(--surface2);border-radius:10px;padding:12px;font-size:.72rem;color:var(--muted);white-space:pre-wrap;max-height:200px;overflow-y:auto;word-break:break-all">'
+        +esc(txt||'(텍스트 없음)')+'</div>'
+        +'<p class="muted sm" style="margin-top:10px">영수증이 잘 보이게 다시 촬영하거나, 텍스트가 읽혔다면 직접 추가해주세요.</p>'
+        +'<button class="btn-s mt8" onclick="closeModal()">닫기</button>');
+    }
   } catch(err) { alert('분석 실패: '+err.message); }
   S.scan.loading=false; render();
 }
 function parseReceipt(txt) {
-  var SKIP=['합계','소계','부가세','vat','카드','현금','거스름','영수증','가맹점','사업자','전화','주소','tel','승인','할인','포인트','적립','잔액','결제','매출','점포','면세','과세','봉사료','총액','수량','단가','금액',
-    '상품번호','상품코드','품목번호','바코드','코드','번호','구매일','판매일','영업','시간','날짜','일자','거래','영수','점원','cashier','receipt','total','subtotal','tax','cash','credit','member','고객','회원','전표','교환','반품','취소','오류','error','품명','단위','규격','비고','note'];
+  var SKIP=['합계','소계','부가세','vat','카드','현금','거스름','영수증','가맹점','사업자','전화','주소','tel','승인','할인','포인트','적립','잔액','결제','매출','점포','면세','과세','봉사료','총액','수량','단가','금액','이용','고객','점장','날짜','시간','번호','receipt','store','total','cash'];
   var lines=txt.split('\n').map(function(l){ return l.trim(); }).filter(function(l){ return !!l; });
   var items=[];
   for (var i=0;i<lines.length;i++) {
@@ -1914,21 +2077,24 @@ function parseReceipt(txt) {
     for (var j=0;j<SKIP.length;j++) { if(low.indexOf(SKIP[j])>=0){skip=true;break;} }
     if (skip) continue;
     var kor=(line.match(/[가-힣]/g)||[]).length;
-    if (kor<2||line.length>50) continue;
-    // 숫자만 있거나 숫자+특수문자로만 이뤄진 줄 제외
-    if (/^[\d\s\-\.\,\*\/\(\)\[\]#@]+$/.test(line)) continue;
-    var qm=line.match(/(\d+)\s*(개|팩|봉|병|캔|g|kg|ml|l|묶음)/i);
+    if (kor<1||line.length>60) continue;
+    var qm=line.match(/(\d+)\s*(개|팩|봉|병|캔|g|kg|ml|l|묶음|ea)/i);
     var qty=qm?qm[1]+qm[2]:'';
-    // 숫자·단위·특수문자 제거 후 식재료명 추출
-    var name=line
-      .replace(/\d+\s*(개|팩|봉|병|캔|g|kg|ml|l|묶음)/gi,'')
-      .replace(/[\d,]+\s*원?\s*$/,'')
-      .replace(/^\s*[\d,]+\s*/,'')
-      .replace(/[*#@\[\]\/\\|]/g,' ')
-      .replace(/\s{2,}/g,' ').trim();
-    // 정제 후에도 한글 2자 이상 있어야 식재료로 인정
-    var nameKor=(name.match(/[가-힣]/g)||[]).length;
-    if (nameKor>=2) items.push({name:name, qty:qty, price:'', cat:'기타'});
+    var price='';
+    var pm=line.match(/([\d,]{3,})\s*원?\s*$/);
+    if (pm) {
+      price=pm[1].replace(/,/g,'');
+    } else {
+      for (var j2=i+1;j2<=Math.min(i+2,lines.length-1);j2++) {
+        var next=lines[j2];
+        if ((next.match(/[가-힣]/g)||[]).length>=1) break;
+        var nums=(next.match(/([\d,]{3,})/g)||[]).map(function(p){ return parseInt(p.replace(/,/g,'')); });
+        if (nums.length) { price=String(Math.max.apply(null,nums)); break; }
+      }
+    }
+    var name=line.replace(/[\d,]+\s*원?\s*$/,'').replace(/^\s*[\d,]+\s*/,'').replace(/\s{2,}/g,' ').trim();
+    name=name.replace(/^[A-Z0-9\-_]{4,}\s*/,'').trim();
+    if (name.length>=2) items.push({name:name, qty:qty, price:price, cat:'기타'});
   }
   return items;
 }
@@ -2039,6 +2205,18 @@ var MASCOT_MSGS = {
   ]
 };
 
+function wildMsg(msg) {
+  var sizes = ['0.72rem','0.78rem','0.85rem','0.9rem','0.95rem','1.02rem','1.08rem'];
+  var weights = ['400','500','600','700','800','900'];
+  var parts = msg.split(/(\s+)/);
+  return parts.map(function(part) {
+    if (!part.trim()) return part;
+    var sz = sizes[Math.floor(Math.random() * sizes.length)];
+    var fw = weights[Math.floor(Math.random() * weights.length)];
+    var fi = Math.random() < 0.2 ? 'italic' : 'normal';
+    return '<span style="font-size:'+sz+';font-weight:'+fw+';font-style:'+fi+';line-height:1.4;display:inline-block">'+part+'</span>';
+  }).join('');
+}
 function getMascotMsg(mood, itemName, itemPrice) {
   var pool = MASCOT_MSGS[mood] || MASCOT_MSGS.happy;
   var filtered = itemPrice ? pool : pool.filter(function(m){ return m.indexOf('{price}') === -1; });
@@ -2229,7 +2407,8 @@ function weeklyReport(){
     ? getMascotMsg('happy')
     : getMascotMsg(totalWasted>5000?'expired':'danger', wasted[0].name, wasted[0].price);
   var h = '<div class="report-overlay" id="report-overlay">'
-    +'<div class="report-card">'
+    +'<div class="report-card" style="position:relative">'
+    +'<button onclick="document.getElementById(\'report-overlay\').remove()" style="position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;padding:4px;line-height:1">✕</button>'
     +'<div style="text-align:center;font-size:1rem;font-weight:800;margin-bottom:16px">📊 이번 주 냉장고 리포트</div>'
     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">'
     +mascotSvg(mood).replace('width="98" height="122"','width="70" height="85"')
@@ -2298,7 +2477,6 @@ function loadTheme() {
 /* ══ Init ══ */
 load();
 loadTheme();
-go('home');
 initFirebase();
 checkExp();
 autoPopup();
@@ -2310,9 +2488,13 @@ function dismissLanding() {
   var lp = document.getElementById('landing');
   if (!lp) return;
   lp.classList.add('hide');
-  setTimeout(function(){ lp.remove(); weeklyReport(); }, 700);
+  if (!(S.auth && S.auth.loggedIn)) showAuthScreen();
+  setTimeout(function(){
+    lp.remove();
+    if (S.auth && S.auth.loggedIn) weeklyReport();
+  }, 700);
 }
-setTimeout(dismissLanding, 2000);
+setTimeout(dismissLanding, 3000);
 setInterval(checkExp, 30*60*1000);
 requestAnimationFrame(function(){ requestAnimationFrame(openDoor); });
 setTimeout(function(){ fetchNews(); }, 2000);
