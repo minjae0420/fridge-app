@@ -226,7 +226,7 @@ body.light .ai-fridge-tip{color:#6366f1;background:rgba(99,102,241,.06);border-c
 .door-bin-egg,.door-bin-sauce,.door-bin-frozen{}
 .etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:4px;}
 .etd-lbl{font-size:.62rem;font-weight:700;color:#2a8085;letter-spacing:.02em;text-align:center;}
-.etd-grid{display:grid;grid-template-columns:repeat(5,22px);justify-content:center;gap:4px;background:rgba(190,168,135,.15);border-radius:6px;padding:4px;}
+.etd-grid{display:grid;grid-template-columns:repeat(3,22px);justify-content:center;gap:4px;background:rgba(190,168,135,.15);border-radius:6px;padding:4px;}
 .etd-egg{width:22px;height:28px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
 .etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#fff 0%,#f4f2ee 45%,#e2ddd4 100%);}
 .etd-egg.off{background:rgba(150,128,95,.14);}
@@ -834,11 +834,11 @@ function openDoor() {
 /* ══ Eggs ══ */
 function saveEggs() { lset('eggs', String(S.eggs)); cloudSave(); }
 function eggTrayHtml() {
-  var MAX = 10;
+  var SLOTS = 6;
   var h = '<div class="etd-wrap">';
   h += '<div class="etd-lbl">계란 &middot; '+S.eggs+'개</div>';
   h += '<div class="etd-grid">';
-  for (var i = 0; i < MAX; i++) {
+  for (var i = 0; i < SLOTS; i++) {
     h += '<div class="etd-egg '+(i < S.eggs ? 'on' : 'off')+'"></div>';
   }
   h += '</div></div>';
