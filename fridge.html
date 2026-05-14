@@ -1206,7 +1206,7 @@ async function loadFromCloud() {
     var res = await fetch(_FS_BASE + '/users/' + _fbUid, {
       headers: {'Authorization': 'Bearer ' + _fbToken}
     });
-    if (res.status === 404) { render(); return; }
+    if (res.status === 404) { resetLocalData(); render(); return; }
     if (!res.ok) { render(); return; }
     var data = await res.json();
     if (data.fields) {
