@@ -800,6 +800,7 @@ function toggleDoor() {
   var dL = document.querySelector('.fridge-door-l');
   var dR = document.querySelector('.fridge-door-r');
   if (!dL || !dR) return;
+  var btn = document.getElementById('door-close-btn');
   if (S.door) {
     S.door = false;
     dL.style.removeProperty('transition');
@@ -807,8 +808,7 @@ function toggleDoor() {
     dL.getBoundingClientRect();
     dL.classList.remove('open');
     dR.classList.remove('open');
-    var ov = document.getElementById('fridge-close-ov');
-    if (ov) ov.parentNode.removeChild(ov);
+    if (btn) btn.style.display = 'none';
     var hint = document.querySelector('.fridge-hint');
     if (!hint) {
       var wrap = document.querySelector('.fridge-wrap');
@@ -823,14 +823,7 @@ function toggleDoor() {
     S.door = true;
     dL.classList.add('open');
     dR.classList.add('open');
-    var body = document.querySelector('.fridge-body');
-    if (body && !document.getElementById('fridge-close-ov')) {
-      var ov = document.createElement('div');
-      ov.id = 'fridge-close-ov';
-      ov.setAttribute('onclick', 'toggleDoor()');
-      ov.style.cssText = 'position:absolute;inset:0;z-index:10;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;';
-      body.appendChild(ov);
-    }
+    if (btn) btn.style.display = '';
     var hint2 = document.querySelector('.fridge-hint');
     if (hint2) hint2.remove();
   }
@@ -1496,7 +1489,7 @@ function vFridge() {
     + '<button onclick="setFridgeScale(-0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>'
     + '<span style="font-size:.72rem;color:var(--muted);min-width:38px;text-align:center">'+Math.round(sc*100)+'%</span>'
     + '<button onclick="setFridgeScale(0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>'
-    + (S.door ? '<button onclick="toggleDoor()" style="border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:0 12px;height:30px;font-size:.78rem;font-weight:600;cursor:pointer;touch-action:manipulation">🚪 닫기</button>' : '')
+    + '<button id="door-close-btn" onclick="toggleDoor()" style="display:'+(S.door?'':'none')+';border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:0 12px;height:30px;font-size:.78rem;font-weight:600;cursor:pointer;touch-action:manipulation">🚪 닫기</button>'
     + '</div>'
     + (S.door ? '' : '<div class="fridge-hint">탭해서 문 열기 👆</div>')
     + '<div class="fridge-wrap" style="'+wrapStyle+'">'
@@ -1504,7 +1497,6 @@ function vFridge() {
     + '<div class="fridge-topbar">❄️&nbsp;&nbsp;<span>냉동 · 냉장실</span></div>'
     + shelves
     + binRow
-    + (S.door ? '<div id="fridge-close-ov" onclick="toggleDoor()" style="position:absolute;inset:0;z-index:10;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;"></div>' : '')
     + '<div class="fridge-doors">'
     + '<div class="'+dlCls+'"'+doorTrans+' onclick="toggleDoor()">'
     + '<div class="fdl-handle"></div>'
