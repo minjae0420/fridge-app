@@ -712,7 +712,7 @@ var S = {
   imp:[],
   receipts:[],
   door:false,
-  eggs:6,
+  eggs:0,
   sauces:[],
   auth:{loggedIn:false, uid:null, name:null, avatar:null},
   frozen:[],
@@ -749,7 +749,7 @@ function compressImg(dataUrl) {
 function load() {
   try { S.items = JSON.parse(ls('items') || '[]'); } catch(e) { S.items = []; }
   try { var c = JSON.parse(ls('cfg') || '{}'); S.cfg.notifyDays = c.notifyDays||3; S.cfg.notifOn = !!c.notifOn; } catch(e) {}
-  try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
+  try { var eg = parseInt(ls('eggs') || '0', 10); S.eggs = isNaN(eg) ? 0 : eg; } catch(e) {}
   try { var sc = JSON.parse(ls('sauces3') || 'null'); S.sauces = Array.isArray(sc) ? sc : []; } catch(e) { S.sauces = []; }
   try { S.frozen = JSON.parse(ls('frozen') || '[]'); } catch(e) { S.frozen = []; }
   try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
@@ -1185,9 +1185,9 @@ async function cloudSave() {
   } catch(e) {}
 }
 function resetLocalData() {
-  S.items = []; S.eggs = 6; S.sauces = []; S.frozen = []; S.receipts = [];
+  S.items = []; S.eggs = 0; S.sauces = []; S.frozen = []; S.receipts = [];
   S.cfg = {notifyDays: 3, notifOn: false}; S.fridgeScale = 1.0;
-  lset('items','[]'); lset('cfg','{}'); lset('eggs','6');
+  lset('items','[]'); lset('cfg','{}'); lset('eggs','0');
   lset('sauces3','[]'); lset('frozen','[]'); lset('receipts','[]'); lset('fridgeScale','1');
 }
 async function loadFromCloud() {
@@ -1202,7 +1202,7 @@ async function loadFromCloud() {
     if (data.fields) {
       if (data.fields.items) S.items = fsDec(data.fields.items) || [];
       if (data.fields.cfg) { var c = fsDec(data.fields.cfg); if(c){S.cfg.notifyDays=c.notifyDays||3;S.cfg.notifOn=!!c.notifOn;} }
-      if (data.fields.eggs !== undefined) S.eggs = fsDec(data.fields.eggs) || 6;
+      if (data.fields.eggs !== undefined) S.eggs = fsDec(data.fields.eggs) || 0;
       if (data.fields.sauces) S.sauces = fsDec(data.fields.sauces) || [];
       if (data.fields.frozen) S.frozen = fsDec(data.fields.frozen) || [];
       if (data.fields.receipts) S.receipts = fsDec(data.fields.receipts) || [];
