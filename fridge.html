@@ -7,30 +7,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0818;--surface:rgba(255,255,255,.06);--surface2:rgba(255,255,255,.11);--border:rgba(255,255,255,.1);
-  --text:#ede8ff;--muted:#9d8ec0;
-  --blue:#a78bfa;--green:#38bdf8;--yellow:#fbbf24;--orange:#f97316;--red:#f87171;
+  --bg:#080808;--surface:rgba(255,255,255,.06);--surface2:rgba(255,255,255,.11);--border:rgba(255,255,255,.1);
+  --text:#edfff3;--muted:#5a8a6a;
+  --blue:#4ade80;--green:#38bdf8;--yellow:#fbbf24;--orange:#f97316;--red:#f87171;
   --r:18px;--nh:68px;
   --shadow:0 8px 32px rgba(0,0,0,.45);
   --shadow-sm:0 4px 16px rgba(0,0,0,.3);
 }
 body.light{
-  --bg:#f0eeff;--surface:rgba(255,255,255,.75);--surface2:rgba(255,255,255,.5);--border:rgba(180,160,255,.2);
-  --text:#1a1340;--muted:#7c6ea0;--blue:#6366f1;--green:#0ea5e9;
+  --bg:#ffffff;--surface:rgba(255,255,255,.75);--surface2:rgba(255,255,255,.5);--border:rgba(74,222,128,.2);
+  --text:#0a2010;--muted:#4a7a56;--blue:#16a34a;--green:#0ea5e9;
   --yellow:#f59e0b;--orange:#ea580c;--red:#ef4444;
-  --shadow:0 8px 32px rgba(100,80,200,.15);
-  --shadow-sm:0 4px 16px rgba(100,80,200,.1);
+  --shadow:0 8px 32px rgba(20,100,50,.15);
+  --shadow-sm:0 4px 16px rgba(20,100,50,.1);
 }
-body.light .hdr{background:rgba(240,238,255,.88);border-bottom:1px solid rgba(180,160,255,.2);}
-body.light .bnav{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 -6px 32px rgba(100,80,200,.12);}
-body.light select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237c6ea0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");}
-body.light .hdr-logo{background:linear-gradient(135deg,#7c3aed,#6366f1,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-body.light .fridge-body{background:#d6ecee;border-color:#5ab5ba;}
-body.light .fridge-topbar{background:#82c4c8;border-bottom-color:#5ab5ba;}
-body.light .fridge-door-l{background:#88c4c8;}
-body.light .fridge-door-r{background:#9fd3d7;}
-body.light .fdl-handle,body.light .fdr-handle{background:#42a8ad;}
-body.light .warn-banner{background:rgba(255,255,255,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.75);box-shadow:0 8px 32px rgba(100,80,200,.12),0 2px 8px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.95);}
+body.light .hdr{background:rgba(255,255,255,.92);border-bottom:1px solid rgba(74,222,128,.2);}
+body.light .bnav{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 -6px 32px rgba(20,100,50,.12);}
+body.light select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234a7a56' d='M6 8L0 0h12z'/%3E%3C/svg%3E");}
+body.light .hdr-logo{background:linear-gradient(135deg,#22c55e,#16a34a,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 6px rgba(34,197,94,.4));}
+body.light .fridge-body{border:3px solid #2e9990;box-shadow:0 8px 32px rgba(46,153,144,.2),0 0 0 3px rgba(109,203,196,.15),inset 0 1px 0 rgba(255,255,255,.9);}
+body.light .door-face{background:#7dd4cd;border:3px solid #2e9990;box-shadow:inset 7px 9px 0 rgba(255,255,255,.25),inset -3px -4px 0 rgba(0,0,0,.06);}
+body.light .fridge-wrap{filter:drop-shadow(0 6px 20px rgba(46,153,144,.3));}
+body.light .warn-banner{background:rgba(255,255,255,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.75);box-shadow:0 8px 32px rgba(20,100,50,.12),0 2px 8px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.95);}
 body.light .warn-banner-close{color:rgba(0,50,20,.4);}
 body.light .warn-banner-close:hover{color:rgba(0,50,20,.8);}
 body.light .warn-banner-price{color:#d32f2f;}
@@ -38,9 +36,9 @@ body.light .warn-banner-title{color:#e65100;}
 
 /* ── Warning Banner ── */
 .warn-banner{margin-bottom:16px;position:relative;
-  background:linear-gradient(135deg,rgba(139,92,246,.15) 0%,rgba(56,189,248,.08) 100%);
+  background:linear-gradient(135deg,rgba(74,222,128,.15) 0%,rgba(56,189,248,.08) 100%);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(167,139,250,.2);border-radius:var(--r);
+  border:1px solid rgba(134,239,172,.2);border-radius:var(--r);
   padding:14px 14px 14px 12px;animation:slideDown .35s ease;
   box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);}
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
@@ -105,17 +103,14 @@ body.light .banner-bubble::after{border-right-color:#f5fff8;}
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{background:#0d0818;}
-html.light-html{background:#f0eeff;}
+html.light-html{background:#ffffff;}
 body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
   background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;
   margin:0 auto;overflow-x:clip;touch-action:manipulation;position:relative;}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse at 20% 15%,rgba(139,92,246,.35) 0%,transparent 50%),
-             radial-gradient(ellipse at 85% 80%,rgba(56,189,248,.25) 0%,transparent 45%),
-             radial-gradient(ellipse at 60% 50%,rgba(167,139,250,.08) 0%,transparent 40%);}
+body::before{display:none;}
 body.light::before{
-  background:radial-gradient(ellipse at 20% 15%,rgba(139,92,246,.18) 0%,transparent 50%),
-             radial-gradient(ellipse at 85% 80%,rgba(14,165,233,.15) 0%,transparent 45%);}
+  background:radial-gradient(ellipse at 20% 15%,rgba(74,222,128,.15) 0%,transparent 50%),
+             radial-gradient(ellipse at 85% 80%,rgba(14,165,233,.12) 0%,transparent 45%);}
 main{position:relative;z-index:1;}
 button,a,[onclick]{touch-action:manipulation;cursor:pointer;}
 
@@ -125,15 +120,16 @@ button,a,[onclick]{touch-action:manipulation;cursor:pointer;}
   border-bottom:1px solid rgba(255,255,255,.07);
   padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
 .hdr-logo{font-size:1.15rem;font-weight:800;
-  background:linear-gradient(135deg,#c084fc,#818cf8,#38bdf8);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  background:linear-gradient(135deg,#7ee8a2,#80ff72,#87ceeb);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 8px rgba(128,255,114,.6)) drop-shadow(0 0 18px rgba(126,232,162,.35));}
 .icon-btn{width:40px;height:40px;border:none;background:var(--surface2);
   border-radius:14px;color:var(--muted);font-size:1.05rem;display:flex;
   align-items:center;justify-content:center;transition:background .15s;position:relative;}
 .icon-btn:hover{background:var(--border);color:var(--text);}
 .badge{position:absolute;top:-3px;right:-3px;width:9px;height:9px;
   background:var(--red);border-radius:50%;border:2px solid #0d0818;display:none;}
-body.light .badge{border-color:#f0eeff;}
+body.light .badge{border-color:#ffffff;}
 main{padding:20px 18px calc(var(--nh) + 28px);}
 .section-ttl{font-size:1.05rem;font-weight:800;margin-bottom:14px;letter-spacing:-.01em;color:var(--text);}
 .section-ttl span{font-size:.75rem;color:var(--muted);font-weight:600;margin-left:6px;}
@@ -148,9 +144,9 @@ main{padding:20px 18px calc(var(--nh) + 28px);}
 .news-card{background:var(--surface);border-radius:20px;padding:14px 16px;margin-bottom:10px;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;text-decoration:none;display:block;box-shadow:var(--shadow-sm);}
 .news-card:hover{transform:translateY(-1px);box-shadow:var(--shadow);}
 .news-title{font-size:.93rem;font-weight:700;line-height:1.45;margin-bottom:6px;color:var(--text);}
-.ai-btn{width:100%;margin-bottom:14px;background:linear-gradient(135deg,#1e1b4b,#0c1a3a);border:1.5px solid rgba(167,139,250,.3);border-radius:var(--r);color:#c084fc;font-size:.9rem;font-weight:700;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s;}
+.ai-btn{width:100%;margin-bottom:14px;background:linear-gradient(135deg,#0a200a,#051205);border:1.5px solid rgba(74,222,128,.3);border-radius:var(--r);color:#4ade80;font-size:.9rem;font-weight:700;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s;}
 .ai-btn:active{opacity:.8;}
-.ai-card{background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(56,189,248,.05));border:1.5px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px;margin-bottom:16px;}
+.ai-card{background:linear-gradient(135deg,rgba(134,239,172,.08),rgba(56,189,248,.05));border:1.5px solid rgba(134,239,172,.2);border-radius:var(--r);padding:16px;margin-bottom:16px;}
 .ai-card-hd{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
 .ai-card-ttl{font-size:.88rem;font-weight:800;color:var(--blue);}
 .ai-summary{font-size:.82rem;line-height:1.75;color:var(--text);background:var(--surface2);border-radius:10px;padding:12px 14px;margin-bottom:14px;white-space:pre-line;}
@@ -161,120 +157,224 @@ main{padding:20px 18px calc(var(--nh) + 28px);}
 .ai-guide-item:last-child{border-bottom:none;padding-bottom:0;}
 .ai-guide-name{font-size:.82rem;font-weight:700;}
 .ai-guide-reason{font-size:.72rem;color:var(--muted);line-height:1.4;}
-.ai-fridge-tip{font-size:.8rem;line-height:1.6;color:rgba(167,139,250,.9);background:rgba(139,92,246,.08);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:10px 14px;margin-top:4px;}
-body.light .ai-card{background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(14,165,233,.04));border-color:rgba(99,102,241,.2);}
-body.light .ai-btn{background:linear-gradient(135deg,#ede9fe,#dbeafe);color:#6366f1;border-color:rgba(99,102,241,.3);}
-body.light .ai-fridge-tip{color:#6366f1;background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.2);}
+.ai-fridge-tip{font-size:.8rem;line-height:1.6;color:rgba(74,222,128,.9);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:10px;padding:10px 14px;margin-top:4px;}
+body.light .ai-card{background:linear-gradient(135deg,rgba(22,163,74,.06),rgba(14,165,233,.04));border-color:rgba(22,163,74,.2);}
+body.light .ai-btn{background:linear-gradient(135deg,#dcfce7,#d1fae5);color:#16a34a;border-color:rgba(22,163,74,.3);}
+body.light .ai-fridge-tip{color:#16a34a;background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.2);}
 .news-meta{font-size:.74rem;color:var(--muted);display:flex;gap:8px;align-items:center;}
 .news-src{color:var(--blue);font-weight:600;}
 .news-section{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px;}
 .nb{flex:1;border:none;background:transparent;color:var(--muted);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4px;font-size:.7rem;transition:color .15s;cursor:pointer;font-weight:600;}
-.nb.on{color:var(--blue);}
+  gap:4px;font-size:.7rem;transition:color .15s,filter .15s;cursor:pointer;font-weight:600;}
 .nb .ni{font-size:1.45rem;}
+#nb-home.on{color:#00E5FF;filter:drop-shadow(0 0 6px rgba(0,229,255,.55));}
+#nb-add.on{color:#C8FF00;filter:drop-shadow(0 0 6px rgba(200,255,0,.55));}
+#nb-scan.on{color:#C8FF00;filter:drop-shadow(0 0 6px rgba(200,255,0,.55));}
+#nb-news.on{color:#FF2D7C;filter:drop-shadow(0 0 6px rgba(255,45,124,.55));}
+#nb-settings.on{color:#b77fff;filter:drop-shadow(0 0 6px rgba(183,127,255,.55));}
 
-/* ── Fridge flat 2D ── */
-.fridge-wrap{max-width:300px;margin:0 auto 20px;}
+/* ── Fridge scene ── */
+.fridge-wrap{max-width:320px;margin:0 auto 20px;cursor:pointer;transition:transform .65s cubic-bezier(.4,0,.2,1);}
+.fridge-scene{
+  perspective:1100px;
+  perspective-origin:center 40%;
+  position:relative;
+}
 .fridge-body{
   position:relative;
-  border-radius:22px;
-  border:3px solid #62bfc4;
+  border-radius:20px;
+  background:linear-gradient(160deg,#f0f8ff,#ffffff);
+  border:2px solid #87ceeb;
+  min-height:380px;
   overflow:hidden;
-  background:#daeef0;
+  box-shadow:0 8px 32px rgba(135,206,235,.3),0 0 0 4px rgba(135,206,235,.15),inset 0 1px 0 rgba(255,255,255,.9);
 }
-.fridge-topbar{
-  background:#8ecdd1;
-  border-bottom:3px solid #62bfc4;
-  padding:8px 14px;
-  display:flex;align-items:center;gap:6px;
-  font-size:.7rem;font-weight:800;color:#1e6568;letter-spacing:.05em;
-}
-.fridge-shelf{display:flex;padding:8px 8px 8px;gap:5px;position:relative;}
-.fridge-shelf::after{content:'';position:absolute;bottom:0;left:8px;right:8px;
-  height:2px;background:rgba(98,191,196,.25);}
+.fridge-led{height:4px;background:linear-gradient(90deg,transparent,rgba(100,180,255,.5),rgba(150,210,255,.9),rgba(100,180,255,.5),transparent);}
+.fridge-freeze{padding:9px 14px;border-bottom:1px solid rgba(100,180,255,.2);
+  display:flex;align-items:center;gap:8px;
+  background:linear-gradient(to bottom,rgba(100,180,255,.07),transparent);}
+.freeze-lbl{font-size:.7rem;color:rgba(70,130,200,.7);font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.fridge-shelf{display:flex;padding:10px 10px 10px;gap:6px;position:relative;}
+.fridge-shelf::after{content:'';position:absolute;bottom:0;left:4px;right:4px;
+  height:4px;
+  background:linear-gradient(180deg,rgba(180,220,255,.55),rgba(140,185,225,.28));
+  border-radius:2px;
+  box-shadow:0 2px 5px rgba(100,150,210,.15),0 -1px 0 rgba(255,255,255,.2);}
 .fridge-shelf:last-child::after{display:none;}
 
-/* ── Category slots flat ── */
+/* ── Category slots ── */
 .cat-slot{flex:1;display:flex;flex-direction:column;align-items:center;
   justify-content:flex-start;gap:3px;padding:7px 4px 6px;border-radius:10px;
-  cursor:pointer;transition:background .15s;position:relative;min-height:88px;
-  background:rgba(255,255,255,.62);
-  border:2px solid rgba(98,191,196,.18);}
-.cat-slot:hover{background:rgba(255,255,255,.88);}
-.cat-slot:active{transform:scale(.96);}
+  cursor:pointer;transition:all .18s;position:relative;min-height:96px;
+  background:rgba(50,90,130,.12);
+  border:1px solid rgba(90,140,180,.2);
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.1),inset 0 1px 2px rgba(0,0,0,.07),
+             inset 2px 0 3px rgba(0,0,0,.05),inset -2px 0 3px rgba(0,0,0,.05),
+             inset 0 -1px 0 rgba(255,255,255,.12),0 1px 0 rgba(255,255,255,.06);}
+.cat-slot:hover{background:rgba(80,130,180,.18);}
+.cat-slot:active{transform:scale(.94);}
 .cat-slot.empty{opacity:.2;pointer-events:none;}
+body.light .cat-slot{
+  background:linear-gradient(180deg,rgba(225,238,252,.5) 0%,rgba(200,225,248,.65) 100%);
+  border-color:rgba(140,190,225,.5);
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.06),inset 0 1px 2px rgba(0,0,0,.04),
+             inset 2px 0 3px rgba(0,0,0,.03),inset -2px 0 3px rgba(0,0,0,.03),
+             inset 0 -1px 0 rgba(255,255,255,.75),0 1px 0 rgba(255,255,255,.95);}
+body.light .cat-slot:hover{background:rgba(175,215,245,.55);}
 .cs-emo{font-size:1.7rem;line-height:1;margin-top:2px;}
-.cs-lbl{font-size:.55rem;color:#3a9298;text-align:center;line-height:1.2;font-weight:600;}
-.cs-cnt{font-size:.58rem;font-weight:700;background:rgba(98,191,196,.18);
-  border-radius:9px;padding:1px 6px;color:#1e6568;}
+.cs-lbl{font-size:.55rem;color:var(--muted);text-align:center;line-height:1.2;}
+.cs-cnt{font-size:.58rem;font-weight:700;background:var(--surface2);
+  border-radius:9px;padding:1px 6px;color:var(--text);}
 .food-blobs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;padding:2px 2px 0;width:100%;}
-.food-blob{width:10px;height:13px;border-radius:3px 3px 2px 2px;flex-shrink:0;}
-.udot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;}
-.u-expired{background:var(--red);}
-.u-danger{background:var(--orange);}
-.u-warning{background:var(--yellow);}
-.u-safe{background:var(--green);}
+.food-blob{width:10px;height:13px;border-radius:3px 3px 2px 2px;flex-shrink:0;
+  box-shadow:0 1px 3px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.35);}
+.udot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;box-shadow:0 0 6px currentColor;}
+.u-expired{background:var(--red);color:var(--red);}
+.u-danger{background:var(--orange);color:var(--orange);}
+.u-warning{background:var(--yellow);color:var(--yellow);}
+.u-safe{background:var(--green);color:var(--green);}
 
-/* ── Bottom bin row ── */
-.fridge-bin-row{display:flex;gap:5px;padding:6px 8px 8px;}
-.door-bin{flex:1;background:rgba(255,255,255,.55);border:2px solid rgba(98,191,196,.22);
-  border-radius:10px;position:relative;overflow:hidden;cursor:pointer;
-  transition:background .15s;}
-.door-bin:hover{background:rgba(255,255,255,.82);}
-.door-bin:active{transform:scale(.97);}
-.door-bin-egg,.door-bin-sauce,.door-bin-frozen{}
-.etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:4px;}
-.etd-lbl{font-size:.62rem;font-weight:700;color:#2a8085;letter-spacing:.02em;text-align:center;}
-.etd-grid{display:grid;grid-template-columns:repeat(3,22px);justify-content:center;gap:4px;background:rgba(190,168,135,.15);border-radius:6px;padding:4px;}
-.etd-egg{width:22px;height:28px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
-.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#fff 0%,#f4f2ee 45%,#e2ddd4 100%);}
-.etd-egg.off{background:rgba(150,128,95,.14);}
-.sauce-bin-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:5px;}
-.sauce-bin-lbl{font-size:.65rem;font-weight:700;color:#2a8085;text-align:center;}
-.sauce-bottles{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;align-items:flex-end;}
-.sauce-btl{display:flex;flex-direction:column;align-items:center;}
-.sauce-btl-cap{width:9px;height:6px;border-radius:2px 2px 0 0;}
-.sauce-btl-body{width:14px;height:28px;border-radius:2px 2px 4px 4px;}
-
-/* ── Two flat doors ── */
-.fridge-doors{position:absolute;inset:0;pointer-events:none;}
-.fridge-door-l{
-  position:absolute;left:0;top:0;bottom:0;width:42%;
-  background:#95ccd0;
-  border-right:3px solid #62bfc4;
-  border-radius:18px 0 0 18px;
+/* ── Fridge door ── */
+.fridge-door{
+  position:absolute;
+  inset:0;
+  transition:opacity .38s ease, transform .38s ease;
+  border-radius:20px;
+  cursor:pointer;
+}
+.fridge-door.open{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(.96);
+}
+.door-face{
+  position:absolute;inset:0;
+  background:#6dcbc4;
+  border-radius:20px;
+  border:3px solid #2e9990;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  cursor:pointer;pointer-events:all;
-  transform-origin:left center;
-  transition:transform .42s cubic-bezier(.4,0,.2,1);
+  box-shadow:inset 7px 9px 0 rgba(255,255,255,.22),inset -3px -4px 0 rgba(0,0,0,.08);
+  overflow:hidden;
 }
-.fridge-door-r{
-  position:absolute;right:0;top:0;bottom:0;left:42%;
-  background:#acd8db;
-  border-radius:0 18px 18px 0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  cursor:pointer;pointer-events:all;
-  transform-origin:right center;
-  transition:transform .42s cubic-bezier(.4,0,.2,1);
+/* 냉동/냉장 구분선 */
+.door-face::before{
+  content:'';position:absolute;
+  left:-3px;right:-3px;top:30%;
+  height:5px;background:#2e9990;z-index:2;
 }
-.fridge-door-l.open{transform:scaleX(0);}
-.fridge-door-r.open{transform:scaleX(0);}
-.fdl-handle{
-  position:absolute;right:9px;top:50%;transform:translateY(-50%);
-  width:5px;height:70px;border-radius:3px;background:#4bb0b5;
+/* 광택 하이라이트 */
+.door-face::after{
+  content:'';position:absolute;
+  top:3%;left:7%;width:16%;height:22%;
+  background:rgba(255,255,255,.28);
+  border-radius:50%;transform:rotate(-12deg);pointer-events:none;
 }
-.fdr-handle{
-  position:absolute;left:9px;top:50%;transform:translateY(-50%);
-  width:5px;height:70px;border-radius:3px;background:#4bb0b5;
+/* 냉장칸 핸들 (아래) */
+.door-handle{
+  position:absolute;right:16px;top:62%;transform:translateY(-50%);
+  width:11px;height:80px;border-radius:6px;z-index:3;
+  background:linear-gradient(to right,#8fa8a0,#e8f2ef,#c0d4ce,#8fa8a0);
+  box-shadow:2px 0 6px rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.4);
 }
-.fdl-icon{font-size:2rem;opacity:.5;}
-.fdl-lbl{font-size:.58rem;font-weight:800;color:rgba(20,72,76,.52);letter-spacing:.1em;text-transform:uppercase;}
-.fdr-icon{font-size:2.4rem;opacity:.42;}
-.fdr-brand{font-size:.65rem;font-weight:800;color:rgba(20,72,76,.42);letter-spacing:.16em;text-transform:uppercase;}
-.fdr-sub{font-size:.54rem;color:rgba(20,72,76,.28);letter-spacing:.04em;}
-/* open hint tap text */
-.fridge-hint{text-align:center;font-size:.65rem;color:#3a9298;margin-top:-8px;margin-bottom:4px;opacity:.7;letter-spacing:.02em;}
+/* 냉동칸 핸들 (위) */
+.door-handle-freeze{
+  position:absolute;right:16px;top:14%;transform:translateY(-50%);
+  width:11px;height:50px;border-radius:6px;z-index:3;
+  background:linear-gradient(to right,#8fa8a0,#e8f2ef,#c0d4ce,#8fa8a0);
+  box-shadow:2px 0 6px rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.4);
+}
+.door-emo{font-size:2rem;opacity:.45;position:absolute;top:9%;left:18px;}
+.door-brand{font-size:.68rem;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:.22em;text-transform:uppercase;}
+.door-sub{font-size:.56rem;color:rgba(255,255,255,.32);letter-spacing:.07em;}
+/* ── 냉장고 캐러셀 ── */
+.fridge-nav-row{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0;}
+.fridge-nav-arrow{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--surface2);border:1.5px solid var(--border);
+  color:var(--text);font-size:1.2rem;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.fridge-nav-arrow:active{background:rgba(74,222,128,.25);border-color:#4ade80;color:#4ade80;}
+.fridge-nav-arrow.hidden{visibility:hidden;pointer-events:none;}
+.fridge-close-btn{
+  height:30px;padding:0 12px;border:1.5px solid rgba(46,153,144,.45);border-radius:8px;
+  background:rgba(46,153,144,.12);color:#4ade80;font-size:.72rem;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:background .15s;
+}
+.fridge-close-btn:active{background:rgba(46,153,144,.3);}
+.fridge-page-dots{display:flex;gap:6px;}
+.fridge-page-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .2s;}
+.fridge-page-dot.on{background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,.5);}
+.door-bin{
+  flex:1;
+  background:linear-gradient(180deg,rgba(210,232,250,.35),rgba(190,220,245,.5));
+  border:1px solid rgba(150,200,232,.45);
+  border-radius:8px;
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.07),inset 0 -2px 0 rgba(255,255,255,.6),
+             0 1px 0 rgba(255,255,255,.4);
+  position:relative;overflow:hidden;
+}
+.door-bin::after{
+  content:'';position:absolute;top:0;left:6px;right:6px;height:3px;
+  background:linear-gradient(180deg,rgba(180,218,245,.7),rgba(160,205,238,.4));
+  border-radius:0 0 3px 3px;
+}
+.door-bin-egg{cursor:pointer;transition:background .15s;}
+.door-bin-egg:active{transform:scale(.97);}
+.etd-wrap{padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:5px;}
+.etd-lbl{font-size:.68rem;font-weight:700;color:rgba(80,130,190,.8);letter-spacing:.03em;text-align:center;}
+.etd-grid{display:grid;grid-template-columns:repeat(5,26px);justify-content:center;gap:5px;background:rgba(190,168,135,.32);border-radius:8px;padding:5px;box-shadow:inset 0 1px 3px rgba(0,0,0,.08);}
+.etd-egg{width:26px;height:34px;border-radius:50% 50% 45% 45% / 58% 58% 42% 42%;}
+.etd-egg.on{background:radial-gradient(ellipse at 38% 28%,#ffffff 0%,#f4f2ee 45%,#e2ddd4 100%);box-shadow:inset 0 -1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.9);}
+.etd-egg.off{background:radial-gradient(ellipse at 50% 55%,rgba(150,128,95,.22),rgba(170,145,108,.14));box-shadow:inset 0 2px 4px rgba(0,0,0,.1);}
+.door-bin-sauce{cursor:pointer;transition:background .15s;}
+.door-bin-sauce:active{transform:scale(.97);}
+.sauce-bin-wrap{padding:8px 10px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:6px;}
+.sauce-bin-lbl{font-size:.75rem;font-weight:700;color:rgba(80,130,190,.8);text-align:center;}
+.sauce-bottles{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;align-items:flex-end;}
+.sauce-btl{display:flex;flex-direction:column;align-items:center;}
+.sauce-btl-cap{width:10px;height:7px;border-radius:3px 3px 0 0;box-shadow:0 -1px 2px rgba(0,0,0,.12);}
+.sauce-btl-body{width:16px;height:34px;border-radius:3px 3px 5px 5px;box-shadow:inset 3px 0 0 rgba(255,255,255,.18),0 1px 4px rgba(0,0,0,.25);}
+.door-bin-frozen{cursor:pointer;transition:background .15s;}
+.door-bin-frozen:active{transform:scale(.97);}
+/* ── Dashboard ── */
+.dash-header{padding:24px 20px 4px;}
+.dash-greeting{font-size:1.6rem;font-weight:900;color:var(--text);margin-bottom:5px;letter-spacing:-.01em;}
+.dash-date{font-size:.78rem;color:var(--muted);font-weight:500;}
+.dash-pills{display:flex;gap:7px;padding:14px 20px 6px;flex-wrap:wrap;}
+.dash-pill{padding:6px 14px;border-radius:20px;font-size:.74rem;font-weight:700;display:flex;align-items:center;gap:5px;}
+.dp-all{background:rgba(135,206,235,.14);color:#87ceeb;}
+.dp-wrn{background:rgba(251,191,36,.14);color:#fbbf24;}
+.dp-exp{background:rgba(248,113,113,.14);color:#f87171;}
+.dash-bento{display:flex;flex-direction:column;gap:12px;padding:10px 20px 20px;}
+.dash-card{border-radius:24px;cursor:pointer;position:relative;overflow:hidden;transition:transform .14s;}
+.dash-card:active{transform:scale(.97);}
+.dash-card-inner{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 18px;height:100%;position:relative;z-index:1;}
+.dash-card-icon{position:absolute;bottom:-14px;right:-8px;font-size:6rem;line-height:1;
+  opacity:.18;pointer-events:none;z-index:0;user-select:none;}
+.dash-card-title{font-size:1.15rem;font-weight:900;color:#000;margin-bottom:2px;}
+.dash-card-sub{font-size:.74rem;color:rgba(0,0,0,.48);font-weight:500;}
+.dash-card-arr{font-size:1.4rem;color:rgba(0,0,0,.28);font-weight:700;line-height:1;flex-shrink:0;}
+.dc-fridge{background:#00E5FF;height:120px;}
+.dc-fridge .dash-card-title{font-size:1.3rem;}
+.dc-fridge .dash-card-icon{font-size:7rem;bottom:-16px;right:-10px;}
+.dash-bento-row{display:flex;gap:12px;height:200px;}
+.dc-news{background:#FF2D7C;flex:1.15;}
+.dc-news .dash-card-title{color:#fff;}
+.dc-news .dash-card-sub{color:rgba(255,255,255,.6);}
+.dc-news .dash-card-arr{color:rgba(255,255,255,.35);}
+.dc-news .dash-card-icon{font-size:7rem;bottom:-16px;right:-10px;}
+.dash-bento-col{display:flex;flex-direction:column;gap:12px;flex:1;}
+.dc-receipt{background:#C8FF00;flex:1;}
+.dc-receipt .dash-card-icon{font-size:4.5rem;bottom:-10px;right:-6px;}
+.dc-add{background:rgba(255,255,255,.07);border:2px dashed rgba(255,255,255,.18);flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.dc-add .dash-card-icon{position:static;font-size:1.5rem;opacity:.6;bottom:auto;right:auto;}
+.dc-add .dash-card-title{font-size:.85rem;color:var(--muted);text-align:center;font-weight:700;}
+.dash-back{background:none;border:none;color:var(--blue);font-size:.85rem;cursor:pointer;
+  padding:10px 20px 4px;font-weight:700;display:flex;align-items:center;gap:4px;letter-spacing:.01em;}
 /* ── Stats ── */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px;}
 .stat{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -282,7 +382,7 @@ body.light .ai-fridge-tip{color:#6366f1;background:rgba(99,102,241,.06);border-c
   box-shadow:0 4px 24px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.1);}
 .stat-n{font-size:2.2rem;font-weight:800;line-height:1;margin-bottom:5px;}
 .stat-l{font-size:.72rem;color:var(--muted);font-weight:600;letter-spacing:.02em;}
-body.light .stat{background:rgba(255,255,255,.65);border-color:rgba(255,255,255,.6);box-shadow:0 4px 24px rgba(100,80,200,.1),inset 0 1px 0 rgba(255,255,255,.9);}
+body.light .stat{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.6);box-shadow:0 4px 24px rgba(20,100,50,.1),inset 0 1px 0 rgba(255,255,255,.9);}
 
 /* ── Tabs ── */
 .tabs,.vtabs{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none;}
@@ -290,7 +390,7 @@ body.light .stat{background:rgba(255,255,255,.65);border-color:rgba(255,255,255,
 .tab,.vtab{padding:10px 20px;border-radius:24px;border:none;
   background:var(--surface2);color:var(--muted);font-size:.83rem;cursor:pointer;
   transition:all .18s;white-space:nowrap;font-weight:700;}
-.tab.on,.vtab.on{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;box-shadow:0 4px 16px rgba(167,139,250,.4);}
+.tab.on,.vtab.on{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;box-shadow:0 4px 16px rgba(74,222,128,.35);}
 
 /* ── Food cards ── */
 .food-list{display:flex;flex-direction:column;gap:12px;}
@@ -304,7 +404,7 @@ body.light .stat{background:rgba(255,255,255,.65);border-color:rgba(255,255,255,
 .food-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3);}
 .food-card:active{transform:scale(.98);}
 body.light .food-card{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.6);
-  box-shadow:0 4px 20px rgba(100,80,200,.08),inset 0 1px 0 rgba(255,255,255,.95);}
+  box-shadow:0 4px 20px rgba(20,100,50,.08),inset 0 1px 0 rgba(255,255,255,.95);}
 .food-card.c-expired{border-left-color:var(--red);}
 .food-card.c-danger{border-left-color:var(--orange);}
 .food-card.c-warning{border-left-color:var(--yellow);}
@@ -334,7 +434,7 @@ body.light .food-emo{background:rgba(255,255,255,.6);border-color:rgba(255,255,2
   align-items:center;justify-content:flex-start;padding:4px 2px 3px;transition:background .12s;}
 .cal-day.click{cursor:pointer;}
 .cal-day.click:hover{background:var(--surface2);}
-.cal-day.today{background:rgba(167,139,250,.15);}
+.cal-day.today{background:rgba(134,239,172,.15);}
 .cal-day.dim{opacity:.22;pointer-events:none;}
 .cal-dn{font-size:.72rem;font-weight:600;line-height:1;}
 .cal-day.today .cal-dn{color:var(--blue);font-weight:800;}
@@ -365,11 +465,11 @@ select.inp{appearance:none;
   border-radius:14px;color:var(--text);cursor:pointer;text-align:center;
   transition:all .15s;font-size:.7rem;font-family:inherit;font-weight:600;}
 .cat-btn .ce{font-size:1.3rem;display:block;margin-bottom:2px;}
-.cat-btn.on{background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(56,189,248,.15));color:var(--blue);box-shadow:0 0 0 2px var(--blue);}
+.cat-btn.on{background:linear-gradient(135deg,rgba(134,239,172,.2),rgba(56,189,248,.15));color:var(--blue);box-shadow:0 0 0 2px var(--blue);}
 .btn-p{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),var(--green));
   border:none;border-radius:16px;color:#fff;font-size:.95rem;font-weight:700;
   cursor:pointer;transition:opacity .15s,transform .12s;font-family:inherit;
-  box-shadow:0 4px 16px rgba(167,139,250,.4);}
+  box-shadow:0 4px 16px rgba(134,239,172,.4);}
 .btn-p:hover{opacity:.9;}
 .btn-p:active{transform:scale(.97);}
 .btn-s{width:100%;padding:12px;background:var(--surface2);border:none;
@@ -387,7 +487,7 @@ select.inp{appearance:none;
 .stack{display:flex;flex-direction:column;gap:8px;}
 
 /* ── Scan ── */
-.drop-area{background:var(--surface);border:2px dashed rgba(167,139,250,.3);border-radius:var(--r);
+.drop-area{background:var(--surface);border:2px dashed rgba(134,239,172,.3);border-radius:var(--r);
   padding:42px 18px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:13px;}
 .drop-area:hover{border-color:var(--blue);}
 .drop-area .di{font-size:2.6rem;margin-bottom:9px;}
@@ -407,7 +507,7 @@ select.inp{appearance:none;
   padding:16px 18px;display:flex;align-items:center;justify-content:space-between;
   margin-bottom:10px;box-shadow:0 4px 16px rgba(0,0,0,.2);}
 .srow-l{font-size:.93rem;font-weight:600;}
-body.light .srow{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.5);box-shadow:0 4px 16px rgba(100,80,200,.08);}
+body.light .srow{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.5);box-shadow:0 4px 16px rgba(20,100,50,.08);}
 .toggle{width:42px;height:23px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
 .toggle.on{background:var(--blue);}
 .toggle::after{content:'';position:absolute;width:17px;height:17px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;}
@@ -511,7 +611,7 @@ body.light .srow{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.
 .auth-inp-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
 .auth-msg{font-size:.82rem;color:var(--red);margin-bottom:10px;min-height:18px;text-align:center;}
 .auth-btn{width:100%;padding:13px;
-  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  background:linear-gradient(135deg,#4ade80,#38bdf8);
   border:none;border-radius:var(--r);color:#fff;font-size:.95rem;font-weight:700;
   cursor:pointer;font-family:inherit;transition:opacity .15s;}
 .auth-btn:hover{opacity:.88;}
@@ -519,7 +619,7 @@ body.light .srow{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.
 .auth-user-row{display:flex;align-items:center;gap:10px;padding:12px 13px;
   background:var(--surface);border:none;border-radius:var(--r);margin-bottom:6px;box-shadow:var(--shadow-sm);}
 .auth-avatar-def{width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  background:linear-gradient(135deg,#4ade80,#38bdf8);
   display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 
 /* ── Mascot ── */
@@ -647,7 +747,7 @@ body.light .mascot-bubble::after{border-bottom-color:#f5faff;}
 <main id="main"></main>
 
 <nav class="bnav">
-  <button class="nb on" id="nb-home"     onclick="go('home')">    <span class="ni">&#x1F9CA;</span>냉장고</button>
+  <button class="nb on" id="nb-home"     onclick="go('home')">    <span class="ni">&#x1F3E0;</span>홈</button>
   <button class="nb"    id="nb-add"      onclick="go('add')">     <span class="ni">&#x2795;</span>추가</button>
   <button class="nb"    id="nb-scan"     onclick="go('scan')">    <span class="ni">&#x1F4F7;</span>영수증</button>
   <button class="nb"    id="nb-news"     onclick="go('news')">    <span class="ni">&#x1F4F0;</span>뉴스</button>
@@ -705,19 +805,21 @@ var BANNER_TEMPLATES = [
 
 var _n = new Date();
 var S = {
-  view:'home', tab:'fridge', filter:'all',
+  view:'home', tab:'dashboard', filter:'all',
   items:[], cfg:{notifyDays:3, notifOn:false},
   editId:null, form:null,
   scan:{img:null, items:[], loading:false},
   imp:[],
   receipts:[],
   door:false,
-  eggs:0,
+  eggs:6,
   sauces:[],
   auth:{loggedIn:false, uid:null, name:null, avatar:null},
   frozen:[],
   bannerDismissed:false,
   fridgeScale:1.0,
+  fridgeTab:'interior',
+  fridgeBodyHeight:0,
   cy:_n.getFullYear(), cm:_n.getMonth(),
   news:{tab:'all', loading:false, error:null, cache:{}, aiLoading:false, aiResult:null, aiError:null}
 };
@@ -749,7 +851,7 @@ function compressImg(dataUrl) {
 function load() {
   try { S.items = JSON.parse(ls('items') || '[]'); } catch(e) { S.items = []; }
   try { var c = JSON.parse(ls('cfg') || '{}'); S.cfg.notifyDays = c.notifyDays||3; S.cfg.notifOn = !!c.notifOn; } catch(e) {}
-  try { var eg = parseInt(ls('eggs') || '0', 10); S.eggs = isNaN(eg) ? 0 : eg; } catch(e) {}
+  try { var eg = parseInt(ls('eggs') || '6', 10); S.eggs = isNaN(eg) ? 6 : eg; } catch(e) {}
   try { var sc = JSON.parse(ls('sauces3') || 'null'); S.sauces = Array.isArray(sc) ? sc : []; } catch(e) { S.sauces = []; }
   try { S.frozen = JSON.parse(ls('frozen') || '[]'); } catch(e) { S.frozen = []; }
   try { S.receipts = JSON.parse(ls('receipts') || '[]'); } catch(e) { S.receipts = []; }
@@ -797,36 +899,17 @@ function setFridgeScale(d) {
 
 /* ══ Door ══ */
 function toggleDoor() {
-  var dL = document.querySelector('.fridge-door-l');
-  var dR = document.querySelector('.fridge-door-r');
-  if (!dL || !dR) return;
-  var btn = document.getElementById('door-close-btn');
-  if (S.door) {
-    S.door = false;
-    dL.style.removeProperty('transition');
-    dR.style.removeProperty('transition');
-    dL.getBoundingClientRect();
-    dL.classList.remove('open');
-    dR.classList.remove('open');
-    if (btn) btn.style.display = 'none';
-    var hint = document.querySelector('.fridge-hint');
-    if (!hint) {
-      var wrap = document.querySelector('.fridge-wrap');
-      if (wrap) {
-        var h = document.createElement('div');
-        h.className = 'fridge-hint';
-        h.textContent = '탭해서 문 열기 👆';
-        wrap.parentNode.insertBefore(h, wrap);
-      }
-    }
-  } else {
-    S.door = true;
-    dL.classList.add('open');
-    dR.classList.add('open');
-    if (btn) btn.style.display = '';
-    var hint2 = document.querySelector('.fridge-hint');
-    if (hint2) hint2.remove();
+  S.door = !S.door;
+  if (!S.door) S.fridgeTab = 'interior';
+  render();
+}
+function setFridgeTab(t) {
+  if (t === 'door') {
+    var el = document.querySelector('.fridge-body');
+    if (el) S.fridgeBodyHeight = el.offsetHeight;
   }
+  S.fridgeTab = t;
+  render();
 }
 function openDoor() {
   if (openDoor._done) return;
@@ -837,11 +920,11 @@ function openDoor() {
 /* ══ Eggs ══ */
 function saveEggs() { lset('eggs', String(S.eggs)); cloudSave(); }
 function eggTrayHtml() {
-  var SLOTS = 6;
+  var MAX = 10;
   var h = '<div class="etd-wrap">';
   h += '<div class="etd-lbl">계란 &middot; '+S.eggs+'개</div>';
   h += '<div class="etd-grid">';
-  for (var i = 0; i < SLOTS; i++) {
+  for (var i = 0; i < MAX; i++) {
     h += '<div class="etd-egg '+(i < S.eggs ? 'on' : 'off')+'"></div>';
   }
   h += '</div></div>';
@@ -1188,9 +1271,9 @@ async function cloudSave() {
   } catch(e) {}
 }
 function resetLocalData() {
-  S.items = []; S.eggs = 0; S.sauces = []; S.frozen = []; S.receipts = [];
+  S.items = []; S.eggs = 6; S.sauces = []; S.frozen = []; S.receipts = [];
   S.cfg = {notifyDays: 3, notifOn: false}; S.fridgeScale = 1.0;
-  lset('items','[]'); lset('cfg','{}'); lset('eggs','0');
+  lset('items','[]'); lset('cfg','{}'); lset('eggs','6');
   lset('sauces3','[]'); lset('frozen','[]'); lset('receipts','[]'); lset('fridgeScale','1');
 }
 async function loadFromCloud() {
@@ -1199,13 +1282,13 @@ async function loadFromCloud() {
     var res = await fetch(_FS_BASE + '/users/' + _fbUid, {
       headers: {'Authorization': 'Bearer ' + _fbToken}
     });
-    if (res.status === 404) { resetLocalData(); render(); return; }
+    if (res.status === 404) { render(); return; }
     if (!res.ok) { render(); return; }
     var data = await res.json();
     if (data.fields) {
       if (data.fields.items) S.items = fsDec(data.fields.items) || [];
       if (data.fields.cfg) { var c = fsDec(data.fields.cfg); if(c){S.cfg.notifyDays=c.notifyDays||3;S.cfg.notifOn=!!c.notifOn;} }
-      if (data.fields.eggs !== undefined) S.eggs = fsDec(data.fields.eggs) || 0;
+      if (data.fields.eggs !== undefined) S.eggs = fsDec(data.fields.eggs) || 6;
       if (data.fields.sauces) S.sauces = fsDec(data.fields.sauces) || [];
       if (data.fields.frozen) S.frozen = fsDec(data.fields.frozen) || [];
       if (data.fields.receipts) S.receipts = fsDec(data.fields.receipts) || [];
@@ -1301,6 +1384,7 @@ function fbErr(code) {
 function go(v) {
   if (v === 'add' && !S.editId) S.form = emptyForm();
   if (v !== 'add') S.editId = null;
+  if (v === 'home') S.tab = 'dashboard';
   S.view = v;
   document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('on'); });
   var nb = document.getElementById('nb-'+v);
@@ -1416,9 +1500,49 @@ function renderBanner() {
 function vHome() {
   var exp = S.items.filter(function(i){ return dLeft(i.exp) < 0; }).length;
   var wrn = S.items.filter(function(i){ var d=dLeft(i.exp); return d>=0 && d<=S.cfg.notifyDays; }).length;
+  var t = new Date();
+  var dateStr = t.getFullYear()+'년 '+(t.getMonth()+1)+'월 '+t.getDate()+'일 '+['일','월','화','수','목','금','토'][t.getDay()]+'요일';
+
+  if (!S.tab || S.tab === 'dashboard') {
+    return '<div class="view">'
+      + renderBanner()
+      + '<div class="dash-header">'
+      + '<div class="dash-greeting">안녕하세요 👋</div>'
+      + '<div class="dash-date">'+dateStr+'</div>'
+      + '</div>'
+      + '<div class="dash-pills">'
+      + '<span class="dash-pill dp-all">🧊 전체 '+S.items.length+'개</span>'
+      + '<span class="dash-pill dp-wrn">⚠️ 임박 '+wrn+'개</span>'
+      + (exp ? '<span class="dash-pill dp-exp">🚨 만료 '+exp+'개</span>' : '')
+      + '</div>'
+      + '<div class="dash-bento">'
+      + '<div class="dash-card dc-fridge" onclick="setTab(\'fridge\')">'
+      + '<span class="dash-card-icon">🧊</span>'
+      + '<div class="dash-card-inner"><div><div class="dash-card-title">냉장고</div><div class="dash-card-sub">식재료 '+S.items.length+'개 보관 중</div></div><span class="dash-card-arr">›</span></div>'
+      + '</div>'
+      + '<div class="dash-bento-row">'
+      + '<div class="dash-card dc-news" onclick="go(\'news\')">'
+      + '<span class="dash-card-icon">📰</span>'
+      + '<div class="dash-card-inner"><div><div class="dash-card-title">뉴스</div><div class="dash-card-sub">식품 안전 정보</div></div><span class="dash-card-arr">›</span></div>'
+      + '</div>'
+      + '<div class="dash-bento-col">'
+      + '<div class="dash-card dc-receipt" onclick="go(\'scan\')">'
+      + '<span class="dash-card-icon">🧾</span>'
+      + '<div class="dash-card-inner"><div><div class="dash-card-title" style="font-size:.95rem">영수증</div></div><span class="dash-card-arr" style="font-size:1.1rem">›</span></div>'
+      + '</div>'
+      + '<div class="dash-card dc-add" onclick="go(\'add\')">'
+      + '<span class="dash-card-icon">＋</span>'
+      + '<div class="dash-card-title">식재료 추가</div>'
+      + '</div>'
+      + '</div>'
+      + '</div>'
+      + '</div>';
+  }
+
   var body = S.tab==='fridge' ? vFridge() : S.tab==='list' ? vList() : vCal();
   return '<div class="view">'
     + renderBanner()
+    + '<button class="dash-back" onclick="setTab(\'dashboard\')">← 홈으로</button>'
     + '<div class="stats">'
     + '<div class="stat"><div class="stat-n" style="color:#87ceeb">'+S.items.length+'</div><div class="stat-l">전체</div></div>'
     + '<div class="stat"><div class="stat-n" style="color:var(--yellow)">'+wrn+'</div><div class="stat-l">임박</div></div>'
@@ -1435,6 +1559,12 @@ function vHome() {
 
 /* ══ Fridge ══ */
 function vFridge() {
+  var sc = S.fridgeScale;
+  var shrink = sc < 1 ? Math.round(440 * (1 - sc)) : 0;
+  var wrapStyle = 'transform:scale('+sc+');transform-origin:top center;'+(shrink?'margin-bottom:-'+shrink+'px':'');
+  var isDoor = S.fridgeTab === 'door';
+
+  /* ── 냉장고 내부 선반 ── */
   var shelves = '';
   for (var r = 0; r < SHELVES.length; r++) {
     shelves += '<div class="fridge-shelf">';
@@ -1459,7 +1589,7 @@ function vFridge() {
         for (var b = 0; b < maxB; b++) {
           var bd = dLeft(catItems[b].exp);
           var bc = dcls(bd);
-          blobHtml += '<div class="food-blob" style="background:'+ucol(bc)+';opacity:.85"></div>';
+          blobHtml += '<div class="food-blob" style="background:'+ucol(bc)+';opacity:.82"></div>';
         }
         blobHtml += '</div>';
         shelves += '<div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:2px;width:100%">';
@@ -1471,46 +1601,73 @@ function vFridge() {
     }
     shelves += '</div>';
   }
-  var binRow = '<div class="fridge-bin-row">'
-    + '<div class="door-bin door-bin-frozen" onclick="ev();openFrozenModal()">'+frozenBinHtml()+'</div>'
-    + '<div class="door-bin door-bin-egg" onclick="ev();openEggModal()">'+eggTrayHtml()+'</div>'
-    + '<div class="door-bin door-bin-sauce" onclick="ev();openSauceModal()">'+sauceBinHtml()+'</div>'
+
+  /* ── 문 수납 (fridge-shelf 구조 그대로 — 내부와 동일 높이 보장) ── */
+  var doorShelves = '<div class="fridge-shelf">'
+    + '<div class="door-bin door-bin-frozen" style="flex:1;min-height:96px" onclick="ev();openFrozenModal()">'+frozenBinHtml()+'</div>'
+    + '</div>'
+    + '<div class="fridge-shelf">'
+    + '<div class="door-bin door-bin-egg" style="flex:1;min-height:96px" onclick="ev();openEggModal()">'+eggTrayHtml()+'</div>'
+    + '</div>'
+    + '<div class="fridge-shelf">'
+    + '<div class="door-bin door-bin-sauce" style="flex:1;min-height:96px" onclick="ev();openSauceModal()">'+sauceBinHtml()+'</div>'
     + '</div>';
-  var empty = S.items.length === 0
+
+  var da = S.door ? 'class="fridge-door open" style="transition:none"' : 'class="fridge-door"';
+  var doorEl = isDoor ? '' : (
+    '<div '+da+' onclick="ev();toggleDoor()">'
+    + '<div class="door-face">'
+    + '<div class="door-handle"></div>'
+    + '<div class="door-handle-freeze"></div>'
+    + '<div class="door-emo">🧊</div>'
+    + '<div class="door-brand">Freshness</div>'
+    + '<div class="door-sub">유통기한 세이퍼</div>'
+    + '</div></div>'
+  );
+  var freezeLbl = isDoor ? '🚪 문 수납칸' : '❄️ <span class="freeze-lbl">냉동 / 냉장실</span>';
+
+
+  var closeBtnEl = (!isDoor && S.door)
+    ? '<button class="fridge-close-btn" onclick="ev();toggleDoor()">✕ 닫기</button>'
+    : '';
+
+  var dots = '<div class="fridge-page-dots">'
+    + '<div class="fridge-page-dot'+(isDoor?'':' on')+'"></div>'
+    + '<div class="fridge-page-dot'+(isDoor?' on':'')+'"></div>'
+    + '</div>';
+
+  var empty = (!isDoor && S.items.length === 0)
     ? '<div class="empty" onclick="ev()"><div class="ei">🛒</div><div class="et">냉장고가 비어있어요!<br><span class="link" onclick="go(\'add\')">+ 식재료 추가하기</span></div></div>'
     : '';
-  var sc = S.fridgeScale;
-  var shrink = sc < 1 ? Math.round(380 * (1 - sc)) : 0;
-  var wrapStyle = 'transform:scale('+sc+');transform-origin:top center;'+(shrink?'margin-bottom:-'+shrink+'px':'');
-  var dlCls = S.door ? 'fridge-door-l open' : 'fridge-door-l';
-  var drCls = S.door ? 'fridge-door-r open' : 'fridge-door-r';
-  var doorTrans = S.door ? ' style="transition:none"' : '';
-  return '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">'
+
+  var navRow = '<div class="fridge-nav-row">'
+    + (isDoor
+        ? '<button class="fridge-nav-arrow" onclick="ev();setFridgeTab(\'interior\')">‹</button>'
+        : '<button class="fridge-nav-arrow hidden">‹</button>')
+    + '<div style="display:flex;align-items:center;gap:6px">'
+    + dots
+    + '</div>'
+    + (isDoor
+        ? '<button class="fridge-nav-arrow hidden">›</button>'
+        : '<button class="fridge-nav-arrow" onclick="ev();setFridgeTab(\'door\')">›</button>')
+    + '</div>';
+
+  return '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px">'
     + '<button onclick="setFridgeScale(-0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>'
     + '<span style="font-size:.72rem;color:var(--muted);min-width:38px;text-align:center">'+Math.round(sc*100)+'%</span>'
     + '<button onclick="setFridgeScale(0.1)" style="width:30px;height:30px;border:1px solid var(--border);background:var(--surface2);border-radius:8px;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>'
-    + '<button id="door-close-btn" onclick="toggleDoor()" style="display:'+(S.door?'':'none')+';border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:0 12px;height:30px;font-size:.78rem;font-weight:600;cursor:pointer;touch-action:manipulation">🚪 닫기</button>'
+    + closeBtnEl
     + '</div>'
-    + (S.door ? '' : '<div class="fridge-hint">탭해서 문 열기 👆</div>')
     + '<div class="fridge-wrap" style="'+wrapStyle+'">'
-    + '<div class="fridge-body">'
-    + '<div class="fridge-topbar">❄️&nbsp;&nbsp;<span>냉동 · 냉장실</span></div>'
-    + shelves
-    + binRow
-    + '<div class="fridge-doors">'
-    + '<div class="'+dlCls+'"'+doorTrans+' onclick="toggleDoor()">'
-    + '<div class="fdl-handle"></div>'
-    + '<div class="fdl-icon">❄️</div>'
-    + '<div class="fdl-lbl">냉동</div>'
+    + '<div class="fridge-scene">'
+    + '<div class="fridge-body"'+(isDoor && S.fridgeBodyHeight ? ' style="height:'+S.fridgeBodyHeight+'px"' : '')+'>'
+    + '<div class="fridge-led"></div>'
+    + '<div class="fridge-freeze">'+freezeLbl+'</div>'
+    + (isDoor ? doorShelves : shelves)
     + '</div>'
-    + '<div class="'+drCls+'"'+doorTrans+' onclick="toggleDoor()">'
-    + '<div class="fdr-handle"></div>'
-    + '<div class="fdr-icon">🌿</div>'
-    + '<div class="fdr-brand">Freshness</div>'
-    + '<div class="fdr-sub">신선해</div>'
-    + '</div>'
-    + '</div>'
+    + doorEl
     + '</div></div>'
+    + navRow
     + empty;
 }
 function ev() { event && event.stopPropagation && event.stopPropagation(); }
@@ -2084,9 +2241,21 @@ function parseReceipt(txt) {
     if (kor<1||line.length>60) continue;
     var qm=line.match(/(\d+)\s*(개|팩|봉|병|캔|g|kg|ml|l|묶음|ea)/i);
     var qty=qm?qm[1]+qm[2]:'';
+    var price='';
+    var pm=line.match(/([\d,]{3,})\s*원?\s*$/);
+    if (pm) {
+      price=pm[1].replace(/,/g,'');
+    } else {
+      for (var j2=i+1;j2<=Math.min(i+2,lines.length-1);j2++) {
+        var next=lines[j2];
+        if ((next.match(/[가-힣]/g)||[]).length>=1) break;
+        var nums=(next.match(/([\d,]{3,})/g)||[]).map(function(p){ return parseInt(p.replace(/,/g,'')); });
+        if (nums.length) { price=String(Math.max.apply(null,nums)); break; }
+      }
+    }
     var name=line.replace(/[\d,]+\s*원?\s*$/,'').replace(/^\s*[\d,]+\s*/,'').replace(/\s{2,}/g,' ').trim();
     name=name.replace(/^[A-Z0-9\-_]{4,}\s*/,'').trim();
-    if (name.length>=2) items.push({name:name, qty:qty, price:'', cat:'기타'});
+    if (name.length>=2) items.push({name:name, qty:qty, price:price, cat:'기타'});
   }
   return items;
 }
@@ -2488,7 +2657,7 @@ function dismissLanding() {
 }
 setTimeout(dismissLanding, 3000);
 setInterval(checkExp, 30*60*1000);
-requestAnimationFrame(function(){ requestAnimationFrame(openDoor); });
+/* door no longer auto-opens */
 setTimeout(function(){ fetchNews(); }, 2000);
 </script>
 </body>
