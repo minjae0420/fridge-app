@@ -1838,7 +1838,7 @@ function vScan() {
         selOpts += '<option value="'+CATS[j].id+'"'+((sc.items[i].cat||'기타')===CATS[j].id?' selected':'')+'>'+CATS[j].e+' '+CATS[j].l+'</option>';
       }
       h += '<div class="rrow">'
-        +'<input type="checkbox"'+(sc.items[i].sel?' checked':'')+' onchange="toggleRI('+i+',this.checked)">'
+        +'<input type="checkbox" onchange="toggleRI('+i+',this.checked)">'
         +'<div class="rfields">'
         +'<input class="inp" value="'+esc(sc.items[i].name)+'" placeholder="상품명" oninput="editRI('+i+',\'name\',this.value)">'
         +'<input class="inp" type="number" value="'+esc(sc.items[i].price||'')+'" placeholder="가격 (원)" oninput="editRI('+i+',\'price\',this.value)">'
