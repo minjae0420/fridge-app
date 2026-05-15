@@ -2216,7 +2216,7 @@ async function analyzeReceipt() {
     var txt=await gVision(S.scan.img);
     S.scan._rawTxt = txt;
     var parsed=parseReceipt(txt);
-    S.scan.items=parsed.map(function(i){ return Object.assign({},i,{sel:true}); });
+    S.scan.items=parsed.map(function(i){ return Object.assign({},i,{sel:false}); });
     if(!S.scan.items.length) {
       showModal('<div class="mhandle"></div>'
         +'<div style="font-size:1rem;font-weight:700;margin-bottom:10px">😢 식재료를 찾지 못했어요</div>'
